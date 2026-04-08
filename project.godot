@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Shinobi Strike"
-run/main_scene="uid://c6g6agxbnf61l"
+run/main_scene="uid://bj2u3rpy8wy7q"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
