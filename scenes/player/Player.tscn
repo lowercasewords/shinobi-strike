@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c6g6agxbnf61l"]
+
+[ext_resource type="Texture2D" uid="uid://crvyh6rngs165" path="res://assets/player_stand.png" id="1_p0vlq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_p0vlq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wr5hl"]
+size = Vector2(7, 29)
+
+[node name="Player" type="CharacterBody2D" unique_id=990773869]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_v6fml")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
+position = Vector2(0.5, 1.5)
+shape = SubResource("RectangleShape2D_wr5hl")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1170208015]
