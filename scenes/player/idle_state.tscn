@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dcp5omecschbm"]
+
+[ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/player/idle_state.gd" id="1_41xhr"]
+
+[node name="IdleState" type="Node2D" unique_id=1309792451]
+script = ExtResource("1_41xhr")

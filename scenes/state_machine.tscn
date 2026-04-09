@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://7py16ttb4ant"]
+
+[ext_resource type="Script" uid="uid://33136d856app" path="res://scenes/state_machine.gd" id="1_nj0rb"]
+[ext_resource type="PackedScene" uid="uid://h0ngk8f30c1m" path="res://scenes/player/walk_state.tscn" id="2_7f3de"]
+[ext_resource type="PackedScene" uid="uid://dcp5omecschbm" path="res://scenes/player/idle_state.tscn" id="3_04s10"]
+
+[node name="StateMachine" type="Node2D" unique_id=707672712]
+script = ExtResource("1_nj0rb")
+
+[node name="WalkState" parent="." unique_id=1875810555 instance=ExtResource("2_7f3de")]
+
+[node name="IdleState" parent="." unique_id=1309792451 instance=ExtResource("3_04s10")]

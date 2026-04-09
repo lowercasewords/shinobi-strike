@@ -1,7 +1,19 @@
-# Checklist 
+# Checklist & Scope
 
-## Player
-## Enemies
-## Maps
-## Sound & Music
-## Menu & UI
+## Scope
+
+## Checklist
+
+### Player
+[] Stand
+[] Walk
+[] Run
+[] Jump
+[] Fall
+[] Wall-jump
+[] Wall-run
+
+### Enemies
+### Maps
+### Sound & Music
+### Menu & UI
