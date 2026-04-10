@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b13iqmhck4jma"
-path="res://.godot/imported/player_walk_turn_2.png-b15e841666e514ee9ac2f26673b9b915.ctex"
+path="res://.godot/imported/player_turn_2.png-80ad3b09b33bd585359f9b3151271314.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/player/player_walk_turn_2.png"
-dest_files=["res://.godot/imported/player_walk_turn_2.png-b15e841666e514ee9ac2f26673b9b915.ctex"]
+source_file="res://assets/sprites/player/player_turn_2.png"
+dest_files=["res://.godot/imported/player_turn_2.png-80ad3b09b33bd585359f9b3151271314.ctex"]
 
 [params]
 

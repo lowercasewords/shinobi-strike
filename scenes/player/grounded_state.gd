@@ -5,24 +5,35 @@ class_name GroundedState extends State
 	#coyote_timer = Timer.new()
 	#self.add_child(coyote_timer)
 
+func jump_state_triggered() -> bool:
+	"""
+	Is jump state triggered this tic?
+	"""
+	return player.is_jumping and player.state_machine.current_state.name.to_lower() != StateMachine.JUMP
+	
+func turn_state_triggered() -> bool:
+	"""
+	Is turn state triggered this tic?
+	"""
+	return player.just_changed_directions and player.state_machine.current_state.name.to_lower() != StateMachine.TURN
+	
 func check_grounded_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
 	
-	if not player.is_on_floor() and current_state_name != StateMachine.FALL:
-		transitioned.emit(self, StateMachine.FALL)
-		return StateMachine.FALL
-		
-	if player.is_jumping and current_state_name != StateMachine.JUMP:
+	if jump_state_triggered():
 		transitioned.emit(self, StateMachine.JUMP)
 		return StateMachine.JUMP
 	
-	# While landing, grounded states won't start
-	if player.animated_sprite.animation != "land" or (player.animated_sprite.animation == "land" and not player.animated_sprite.is_playing()):
-		if player.direction != 0 and current_state_name != StateMachine.WALK:
-			transitioned.emit(self, StateMachine.WALK)
-			#print(player.state_machidne.current_state)
-			return StateMachine.WALK
-		elif player.direction == 0 and player.velocity.x == 0 and current_state_name != StateMachine.IDLE:
-			transitioned.emit(self, StateMachine.IDLE)
-			return StateMachine.IDLE
+	if turn_state_triggered():
+		transitioned.emit(self, StateMachine.TURN)
+		return StateMachine.TURN
+	
+	if player.direction != 0 and current_state_name != StateMachine.WALK:
+		transitioned.emit(self, StateMachine.WALK)
+		return StateMachine.WALK
+	
+	if player.direction == 0 and player.velocity.x == 0 and current_state_name != StateMachine.IDLE:
+		transitioned.emit(self, StateMachine.IDLE)
+		return StateMachine.IDLE
+		
 	return ""

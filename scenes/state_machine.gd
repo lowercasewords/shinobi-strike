@@ -9,6 +9,7 @@ const WALK = "walk"
 const JUMP = "jump"
 const LAND = "land"
 const FALL = "fall"
+const TURN = "turn"
 
 # Mapping of state nodes to their string names
 var states: Dictionary = {}

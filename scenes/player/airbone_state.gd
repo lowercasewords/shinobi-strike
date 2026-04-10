@@ -6,13 +6,12 @@ func physics_update(_delta: float) -> void:
 	
 func check_airbone_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
-	
+
 	if player.just_landed and current_state_name != StateMachine.LAND:
 		transitioned.emit(self, StateMachine.LAND)
-		print("		land")
 		return StateMachine.LAND
 		
-	if player.velocity.y > 0 and current_state_name != StateMachine.FALL:
+	if not player.is_on_floor() and player.velocity.y > 0 and current_state_name != StateMachine.FALL:
 		transitioned.emit(self, StateMachine.FALL)
 		return StateMachine.FALL
 	return ""

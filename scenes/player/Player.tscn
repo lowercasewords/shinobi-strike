@@ -28,14 +28,15 @@
 [ext_resource type="Texture2D" uid="uid://chw05i2p6bd6n" path="res://assets/sprites/player/player_land_2.png" id="14_8nn5r"]
 [ext_resource type="Script" uid="uid://bsyh8g21vunej" path="res://scenes/player/jump_state.gd" id="14_ov1oi"]
 [ext_resource type="Texture2D" uid="uid://bc7meijdhk13f" path="res://assets/sprites/player/player_land_3.png" id="15_kvwax"]
-[ext_resource type="Texture2D" uid="uid://bqx70q7sn8mli" path="res://assets/sprites/player/player_walk_turn_1.png" id="20_5ttev"]
+[ext_resource type="Texture2D" uid="uid://bqx70q7sn8mli" path="res://assets/sprites/player/player_turn_1.png" id="20_5ttev"]
 [ext_resource type="Script" uid="uid://bqf4onwxnfx6u" path="res://scenes/player/land_state.gd" id="20_ro0t8"]
 [ext_resource type="Texture2D" uid="uid://bmabm4vpstt6f" path="res://assets/sprites/player/player_walk_windup_1.png" id="20_x3qp0"]
 [ext_resource type="Texture2D" uid="uid://6aq3muqfcstq" path="res://assets/sprites/player/player_walk_windup_2.png" id="21_76i7i"]
-[ext_resource type="Texture2D" uid="uid://b13iqmhck4jma" path="res://assets/sprites/player/player_walk_turn_2.png" id="21_geaob"]
-[ext_resource type="Texture2D" uid="uid://dnxrxd87sve3o" path="res://assets/sprites/player/player_walk_turn_3.png" id="22_qsmrd"]
-[ext_resource type="Texture2D" uid="uid://by4kf00u4wj7b" path="res://assets/sprites/player/player_walk_turn_4.png" id="23_jtlb7"]
+[ext_resource type="Texture2D" uid="uid://b13iqmhck4jma" path="res://assets/sprites/player/player_turn_2.png" id="21_geaob"]
+[ext_resource type="Texture2D" uid="uid://dnxrxd87sve3o" path="res://assets/sprites/player/player_turn_3.png" id="22_qsmrd"]
+[ext_resource type="Texture2D" uid="uid://by4kf00u4wj7b" path="res://assets/sprites/player/player_turn_4.png" id="23_jtlb7"]
 [ext_resource type="Script" uid="uid://dfk71xyg06unw" path="res://scenes/player/fall_state.gd" id="31_geaob"]
+[ext_resource type="Script" uid="uid://bplkgw5hlnp7w" path="res://scenes/player/turn_state.gd" id="37_eac1a"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
 animations = [{
@@ -128,6 +129,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("20_5ttev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_geaob")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_qsmrd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_jtlb7")
+}],
+"loop": false,
+"name": &"turn",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("7_20koh")
 }, {
 "duration": 1.0,
@@ -142,23 +160,6 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 14.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("20_5ttev")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_geaob")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_qsmrd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_jtlb7")
-}],
-"loop": false,
-"name": &"walk_turn",
-"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -180,7 +181,7 @@ script = ExtResource("1_c3xxp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"jump_windup"
+animation = &"turn"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
@@ -218,3 +219,7 @@ metadata/_custom_type_script = "uid://bqf4onwxnfx6u"
 [node name="Fall" type="Node2D" parent="StateMachine" unique_id=1024835885]
 script = ExtResource("31_geaob")
 metadata/_custom_type_script = "uid://dfk71xyg06unw"
+
+[node name="Turn" type="Node2D" parent="StateMachine" unique_id=2112800140]
+script = ExtResource("37_eac1a")
+metadata/_custom_type_script = "uid://bplkgw5hlnp7w"
