@@ -1,6 +1,6 @@
 class_name Player extends CharacterBody2D
 
-const SPEED = 300.0
+const SPEED = 200.0
 const JUMP_VELOCITY = -300.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -43,6 +43,7 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 	
 	# Calculate state physics
+
 	state_machine.current_state.physics_update(delta)
 	
 	move_and_slide()

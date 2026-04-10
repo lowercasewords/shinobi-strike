@@ -7,8 +7,8 @@
 ### Player
 [X] Idle
 [] Walk
-	[] Acceleration/Deceleration
-		[] During turning
+	[X] Acceleration/Deceleration
+		[X] During turning
 	[] Animation speed (fps) affected by speed
 [] Run
 [] Jump

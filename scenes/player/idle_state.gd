@@ -7,6 +7,7 @@ func enter() -> void:
 	player.animated_sprite.play("idle")
 
 func physics_update(_delta: float) -> void:
+	super.physics_update(_delta)
 	check_grounded_transitions()
 
 func _on_animation_finished():
