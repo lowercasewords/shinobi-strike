@@ -7,12 +7,19 @@
 [ext_resource type="Texture2D" uid="uid://csnowq2mpbgja" path="res://assets/sprites/player/player_stand_4.png" id="4_npwbq"]
 [ext_resource type="Texture2D" uid="uid://df707f7n24d1o" path="res://assets/sprites/player/player_stand_5.png" id="5_v42im"]
 [ext_resource type="Texture2D" uid="uid://fyroju00wulk" path="res://assets/sprites/player/player_walk_1.png" id="7_20koh"]
+[ext_resource type="Texture2D" uid="uid://dlq2n15ub0e03" path="res://assets/sprites/player/player_jump_1.png" id="7_kswpp"]
 [ext_resource type="Script" uid="uid://33136d856app" path="res://scenes/state_machine.gd" id="7_pn6s4"]
-[ext_resource type="PackedScene" uid="uid://dcp5omecschbm" path="res://scenes/player/idle_state.tscn" id="8_7oing"]
 [ext_resource type="Texture2D" uid="uid://ckyui67r76bm4" path="res://assets/sprites/player/player_walk_2.png" id="8_ov1oi"]
-[ext_resource type="PackedScene" uid="uid://h0ngk8f30c1m" path="res://scenes/player/walk_state.tscn" id="9_5stf6"]
+[ext_resource type="Texture2D" uid="uid://cpfor6prba62k" path="res://assets/sprites/player/player_jump_2.png" id="8_v5i4m"]
+[ext_resource type="Texture2D" uid="uid://bwl4adjgyisbc" path="res://assets/sprites/player/player_jump_3.png" id="9_p1lr0"]
 [ext_resource type="Texture2D" uid="uid://b63a6728t0j6c" path="res://assets/sprites/player/player_walk_3.png" id="9_rn7t0"]
 [ext_resource type="Texture2D" uid="uid://c5ggj6b33pbyb" path="res://assets/sprites/player/player_walk_4.png" id="10_8qjgm"]
+[ext_resource type="Texture2D" uid="uid://b4fk6117qyrsg" path="res://assets/sprites/player/player_jump_windup_1.png" id="10_ro0t8"]
+[ext_resource type="Texture2D" uid="uid://6ssnw87rl0xq" path="res://assets/sprites/player/player_jump_windup_2.png" id="11_8nn5r"]
+[ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/player/idle_state.gd" id="12_20koh"]
+[ext_resource type="Texture2D" uid="uid://bu73a1ixbigbm" path="res://assets/sprites/player/player_jump_windup_3.png" id="12_kvwax"]
+[ext_resource type="Script" uid="uid://bt4sxdqgb50lo" path="res://scenes/player/walk_state.gd" id="13_ov1oi"]
+[ext_resource type="Script" uid="uid://bsyh8g21vunej" path="res://scenes/player/jump_state.gd" id="14_ov1oi"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
 animations = [{
@@ -35,6 +42,34 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_kswpp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_v5i4m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_p1lr0")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_ro0t8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_8nn5r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kvwax")
+}],
+"loop": false,
+"name": &"jump_windup",
+"speed": 17.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -62,8 +97,10 @@ script = ExtResource("1_c3xxp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"walk"
+animation = &"jump_windup"
 autoplay = "idle"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
 position = Vector2(0.5, 1.5)
@@ -75,6 +112,14 @@ shape = SubResource("RectangleShape2D_wr5hl")
 script = ExtResource("7_pn6s4")
 metadata/_custom_type_script = "uid://33136d856app"
 
-[node name="Idle" parent="StateMachine" unique_id=1309792451 instance=ExtResource("8_7oing")]
+[node name="Idle" type="Node2D" parent="StateMachine" unique_id=459655538]
+script = ExtResource("12_20koh")
+metadata/_custom_type_script = "uid://bedamvreg4ic1"
 
-[node name="Walk" parent="StateMachine" unique_id=1875810555 instance=ExtResource("9_5stf6")]
+[node name="Walk" type="Node2D" parent="StateMachine" unique_id=119462687]
+script = ExtResource("13_ov1oi")
+metadata/_custom_type_script = "uid://bt4sxdqgb50lo"
+
+[node name="Jump" type="Node2D" parent="StateMachine" unique_id=99532296]
+script = ExtResource("14_ov1oi")
+metadata/_custom_type_script = "uid://bsyh8g21vunej"

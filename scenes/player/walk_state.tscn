@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://h0ngk8f30c1m"]
-
-[ext_resource type="Script" uid="uid://bt4sxdqgb50lo" path="res://scenes/player/walk_state.gd" id="1_pfj8d"]
-
-[node name="WalkState" type="Node2D" unique_id=1875810555]
-script = ExtResource("1_pfj8d")
-metadata/_custom_type_script = "uid://33136d856app"

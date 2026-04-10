@@ -1,5 +1,7 @@
 class_name State extends Node2D
 
+@onready var player: Player = owner 
+
 # Abstract class for entities that need complex states
 
 signal transitioned(new_state_name: String)
