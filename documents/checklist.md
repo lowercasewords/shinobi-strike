@@ -2,6 +2,9 @@
 
 ## Scope
 
+- Enemies loose a limb after 1 or 3 hits 
+- A finisher animation can be perform on an enemy without a limb, killing them in a process
+
 ## Checklist
 
 ### Player

@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://dttnn0ar6ir6e" path="res://assets/sprites/player/player_fall_2.png" id="3_ye1dr"]
 [ext_resource type="Texture2D" uid="uid://dhmjd1x5hyivp" path="res://assets/sprites/player/player_fall_3.png" id="4_bvphr"]
 [ext_resource type="Texture2D" uid="uid://csnowq2mpbgja" path="res://assets/sprites/player/player_stand_4.png" id="4_npwbq"]
+[ext_resource type="Texture2D" uid="uid://iq1hcwxslmt3" path="res://assets/sprites/player/player_fall_vertical_1.png" id="5_05p8n"]
 [ext_resource type="Texture2D" uid="uid://df707f7n24d1o" path="res://assets/sprites/player/player_stand_5.png" id="5_v42im"]
+[ext_resource type="Texture2D" uid="uid://brvaqicygc6f0" path="res://assets/sprites/player/player_fall_vertical_2.png" id="6_eac1a"]
 [ext_resource type="Texture2D" uid="uid://fyroju00wulk" path="res://assets/sprites/player/player_walk_1.png" id="7_20koh"]
+[ext_resource type="Texture2D" uid="uid://da0bife6wl0n3" path="res://assets/sprites/player/player_fall_vertical_3.png" id="7_ijyjs"]
 [ext_resource type="Texture2D" uid="uid://dlq2n15ub0e03" path="res://assets/sprites/player/player_jump_1.png" id="7_kswpp"]
 [ext_resource type="Script" uid="uid://33136d856app" path="res://scenes/state_machine.gd" id="7_pn6s4"]
 [ext_resource type="Texture2D" uid="uid://ckyui67r76bm4" path="res://assets/sprites/player/player_walk_2.png" id="8_ov1oi"]
@@ -48,6 +51,20 @@ animations = [{
 }],
 "loop": true,
 "name": &"fall",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_05p8n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_eac1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ijyjs")
+}],
+"loop": true,
+"name": &"fall_vertical",
 "speed": 10.0
 }, {
 "frames": [{
@@ -163,7 +180,7 @@ script = ExtResource("1_c3xxp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"jump_windup"
+animation = &"fall"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
