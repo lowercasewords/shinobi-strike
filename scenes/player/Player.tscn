@@ -36,6 +36,9 @@
 [ext_resource type="Texture2D" uid="uid://dnxrxd87sve3o" path="res://assets/sprites/player/player_turn_3.png" id="22_qsmrd"]
 [ext_resource type="Texture2D" uid="uid://by4kf00u4wj7b" path="res://assets/sprites/player/player_turn_4.png" id="23_jtlb7"]
 [ext_resource type="Script" uid="uid://dfk71xyg06unw" path="res://scenes/player/fall_state.gd" id="31_geaob"]
+[ext_resource type="AudioStream" uid="uid://bs13psisdbg0l" path="res://assets/sounds/footstep_1.wav" id="34_u3hyo"]
+[ext_resource type="AudioStream" uid="uid://b2uecitjga1fr" path="res://assets/sounds/footstep_2.wav" id="35_pysui"]
+[ext_resource type="AudioStream" uid="uid://bqtj55w0gkb4h" path="res://assets/sounds/footstep_3.wav" id="36_4ntn1"]
 [ext_resource type="Script" uid="uid://bplkgw5hlnp7w" path="res://scenes/player/turn_state.gd" id="37_eac1a"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
@@ -176,6 +179,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wr5hl"]
 size = Vector2(7, 29)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gtkor"]
+playback_mode = 1
+streams_count = 3
+stream_0/stream = ExtResource("34_u3hyo")
+stream_1/stream = ExtResource("35_pysui")
+stream_2/stream = ExtResource("36_4ntn1")
+
 [node name="Player" type="CharacterBody2D" unique_id=990773869]
 script = ExtResource("1_c3xxp")
 
@@ -207,6 +217,9 @@ metadata/_custom_type_script = "uid://bedamvreg4ic1"
 [node name="Walk" type="Node2D" parent="StateMachine" unique_id=119462687]
 script = ExtResource("13_ov1oi")
 metadata/_custom_type_script = "uid://bt4sxdqgb50lo"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/Walk" unique_id=1454386527]
+stream = SubResource("AudioStreamRandomizer_gtkor")
 
 [node name="Jump" type="Node2D" parent="StateMachine" unique_id=99532296]
 script = ExtResource("14_ov1oi")

@@ -2,7 +2,7 @@ class_name WalkState extends GroundedState
 
 #const MAX_SPEED: float = 300.0
 var windup_movement = 100.0
-
+@onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 func enter() -> void:
 	# Play walk animation here if you have one
 	if player.state_machine.current_state.name == StateMachine.IDLE:
@@ -16,6 +16,9 @@ func windup_finsh() -> void:
 		
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
+	
+	if player.animated_sprite.frame == 0 and not audio_stream.playing:
+		audio_stream.play()
 
 	# Scale the walking animation depending on the speed
 	if player.animated_sprite.animation == "walk":

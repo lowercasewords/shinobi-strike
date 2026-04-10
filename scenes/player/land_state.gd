@@ -9,6 +9,7 @@ func physics_update(_delta: float) -> void:
 		transitioned.emit(self, StateMachine.TURN)
 	elif jump_state_triggered():
 		transitioned.emit(self, StateMachine.JUMP)
+		
 	basic_movement(_delta, player.SPEED)
 
 func _on_animation_finished():
