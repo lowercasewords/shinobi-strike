@@ -1,13 +1,14 @@
 class_name GroundedState extends State
 
+#var coyote_timer: Timer
+#func _ready():
+	#coyote_timer = Timer.new()
+	#self.add_child(coyote_timer)
+
 func check_grounded_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
 	
 	if player.is_on_floor():
-		if player.just_landed and current_state_name != StateMachine.LAND:
-			transitioned.emit(self, StateMachine.LAND)
-			return StateMachine.LAND
-			
 		if Input.is_action_just_pressed("ui_accept") and current_state_name != StateMachine.JUMP:
 			transitioned.emit(self, StateMachine.JUMP)
 			return StateMachine.JUMP

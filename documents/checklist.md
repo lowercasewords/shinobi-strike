@@ -7,7 +7,9 @@
 ### Player
 [X] Idle
 [] Walk
-	[] Accelleration/Deceleration
+	[] Acceleration/Deceleration
+		[] During turning
+	[] Animation speed (fps) affected by speed
 [] Run
 [] Jump
 	[] Coyote Time: Allows a small window of time (e.g., 2-5 frames) for a player to jump after leaving a ledge, making movement feel forgiving.
@@ -16,7 +18,7 @@
 	[] Fast Deceleration/Stopping: While acceleration can feel smooth, rapid deceleration prevents a "slippery" feeling, making movement feel tighter.
 	[X] Air Control: Allowing players to change direction or momentum while in the air to prevent feeling locked into a jump trajectory.
 	[] Corner Correction: Automatically pushing the player slightly if their head grazes a corner, preventing frustration from barely missing a jump. 
-[] Land
+[X] Land
 [] Fall
 [] Wall-jump
 [] Wall-run

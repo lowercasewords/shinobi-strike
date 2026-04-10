@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c2wdufkqurqwi" path="res://scenes/player/player.gd" id="1_c3xxp"]
 [ext_resource type="Texture2D" uid="uid://crvyh6rngs165" path="res://assets/sprites/player/player_stand_1.png" id="1_p0vlq"]
+[ext_resource type="Texture2D" uid="uid://bnj8pgapekeag" path="res://assets/sprites/player/player_fall_1.png" id="2_qsmrd"]
 [ext_resource type="Texture2D" uid="uid://df1n4onmri7yu" path="res://assets/sprites/player/player_stand_2.png" id="2_tpg5x"]
 [ext_resource type="Texture2D" uid="uid://clnmcfyounb31" path="res://assets/sprites/player/player_stand_3.png" id="3_c3xxp"]
 [ext_resource type="Texture2D" uid="uid://csnowq2mpbgja" path="res://assets/sprites/player/player_stand_4.png" id="4_npwbq"]
@@ -30,9 +31,18 @@
 [ext_resource type="Texture2D" uid="uid://b13iqmhck4jma" path="res://assets/sprites/player/player_walk_turn_2.png" id="21_geaob"]
 [ext_resource type="Texture2D" uid="uid://dnxrxd87sve3o" path="res://assets/sprites/player/player_walk_turn_3.png" id="22_qsmrd"]
 [ext_resource type="Texture2D" uid="uid://by4kf00u4wj7b" path="res://assets/sprites/player/player_walk_turn_4.png" id="23_jtlb7"]
+[ext_resource type="Script" uid="uid://dfk71xyg06unw" path="res://scenes/player/fall_state.gd" id="31_geaob"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qsmrd")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_p0vlq")
@@ -149,7 +159,7 @@ script = ExtResource("1_c3xxp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"walk_turn"
+animation = &"fall"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
@@ -183,3 +193,7 @@ metadata/_custom_type_script = "uid://bsyh8g21vunej"
 [node name="Land" type="Node2D" parent="StateMachine" unique_id=127668468]
 script = ExtResource("20_ro0t8")
 metadata/_custom_type_script = "uid://bqf4onwxnfx6u"
+
+[node name="Fall" type="Node2D" parent="StateMachine" unique_id=1024835885]
+script = ExtResource("31_geaob")
+metadata/_custom_type_script = "uid://dfk71xyg06unw"

@@ -1,7 +1,7 @@
 class_name JumpState extends AirboneState
 
 func enter() -> void:
-	player.animated_sprite.play("jump_windup")
+	player.animated_sprite.play("jump_windup")	
 	
 func windup_finsh() -> void:
 	if player.is_on_floor():
