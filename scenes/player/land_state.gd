@@ -1,8 +1,13 @@
 class_name LandState extends GroundedState
 
+@onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 func enter() -> void:
 	player.animated_sprite.play("land")
+	audio_stream.volume_db = randf_range(-5.0, 9.0)
+	audio_stream.play()
 	
+
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	if turn_state_triggered():

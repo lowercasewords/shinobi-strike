@@ -40,6 +40,7 @@
 [ext_resource type="AudioStream" uid="uid://b2uecitjga1fr" path="res://assets/sounds/footstep_2.wav" id="35_pysui"]
 [ext_resource type="AudioStream" uid="uid://bqtj55w0gkb4h" path="res://assets/sounds/footstep_3.wav" id="36_4ntn1"]
 [ext_resource type="Script" uid="uid://bplkgw5hlnp7w" path="res://scenes/player/turn_state.gd" id="37_eac1a"]
+[ext_resource type="AudioStream" uid="uid://b4mn3er3war7v" path="res://assets/sounds/land_1.wav" id="39_pysui"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
 animations = [{
@@ -228,6 +229,10 @@ metadata/_custom_type_script = "uid://bsyh8g21vunej"
 [node name="Land" type="Node2D" parent="StateMachine" unique_id=127668468]
 script = ExtResource("20_ro0t8")
 metadata/_custom_type_script = "uid://bqf4onwxnfx6u"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/Land" unique_id=2126612517]
+stream = ExtResource("39_pysui")
+volume_db = -10.0
 
 [node name="Fall" type="Node2D" parent="StateMachine" unique_id=1024835885]
 script = ExtResource("31_geaob")
