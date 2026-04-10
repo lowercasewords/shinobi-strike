@@ -8,6 +8,3 @@ func enter() -> void:
 
 func physics_update(_delta: float) -> void:
 	var transitioned_via_grounded: bool = check_grounded_transitions()
-	if not transitioned_via_grounded:
-		if player.direction != 0:
-			transitioned.emit(self, StateMachine.WALK)

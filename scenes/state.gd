@@ -9,7 +9,8 @@ func enter(): pass
 func exit(): pass
 func update(_delta: float): pass
 func physics_update(_delta: float): pass
-
+func _on_animation_finished(): pass
+		
 func basic_movement(speed: float):
 	if player.direction:
 		player.velocity.x = player.direction * speed

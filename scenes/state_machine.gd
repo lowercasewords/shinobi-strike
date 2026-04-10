@@ -3,8 +3,11 @@ class_name StateMachine extends Node2D
 @export var initial_state: State
 
 var current_state: State
+
 const IDLE = "idle"
 const WALK = "walk"
+const JUMP = "jump"
+const LAND = "land"
 
 # Mapping of state nodes to their string names
 var states: Dictionary = {}

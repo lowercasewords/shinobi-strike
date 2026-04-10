@@ -19,7 +19,11 @@
 [ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/player/idle_state.gd" id="12_20koh"]
 [ext_resource type="Texture2D" uid="uid://bu73a1ixbigbm" path="res://assets/sprites/player/player_jump_windup_3.png" id="12_kvwax"]
 [ext_resource type="Script" uid="uid://bt4sxdqgb50lo" path="res://scenes/player/walk_state.gd" id="13_ov1oi"]
+[ext_resource type="Texture2D" uid="uid://buswhidteaars" path="res://assets/sprites/player/player_land_1.png" id="13_ro0t8"]
+[ext_resource type="Texture2D" uid="uid://chw05i2p6bd6n" path="res://assets/sprites/player/player_land_2.png" id="14_8nn5r"]
 [ext_resource type="Script" uid="uid://bsyh8g21vunej" path="res://scenes/player/jump_state.gd" id="14_ov1oi"]
+[ext_resource type="Texture2D" uid="uid://bc7meijdhk13f" path="res://assets/sprites/player/player_land_3.png" id="15_kvwax"]
+[ext_resource type="Script" uid="uid://bqf4onwxnfx6u" path="res://scenes/player/land_state.gd" id="20_ro0t8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
 animations = [{
@@ -73,6 +77,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("13_ro0t8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_8nn5r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_kvwax")
+}],
+"loop": false,
+"name": &"land",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("7_20koh")
 }, {
 "duration": 1.0,
@@ -97,7 +115,7 @@ script = ExtResource("1_c3xxp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"jump_windup"
+animation = &"land"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
@@ -105,6 +123,7 @@ position = Vector2(0.5, 1.5)
 shape = SubResource("RectangleShape2D_wr5hl")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1170208015]
+visible = false
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
@@ -123,3 +142,7 @@ metadata/_custom_type_script = "uid://bt4sxdqgb50lo"
 [node name="Jump" type="Node2D" parent="StateMachine" unique_id=99532296]
 script = ExtResource("14_ov1oi")
 metadata/_custom_type_script = "uid://bsyh8g21vunej"
+
+[node name="Land" type="Node2D" parent="StateMachine" unique_id=127668468]
+script = ExtResource("20_ro0t8")
+metadata/_custom_type_script = "uid://bqf4onwxnfx6u"
