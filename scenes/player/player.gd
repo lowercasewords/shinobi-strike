@@ -1,7 +1,7 @@
 class_name Player extends CharacterBody2D
 
 const SPEED = 200.0
-const JUMP_VELOCITY = -300.0
+const JUMP_VELOCITY_INITIAL_THURST = -300.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
@@ -11,6 +11,7 @@ var just_changed_directions: bool = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_landed: bool = false
 var just_landed: bool = false
+var is_jumping: bool = false
 
 func _ready():
 	is_landed = is_on_floor()
@@ -20,6 +21,8 @@ func _physics_process(delta):
 	# Get input direction (-1, 0, 1) and handle movement/deceleration
 	var last_direction = direction
 	direction = Input.get_axis("ui_left", "ui_right")
+	is_jumping = Input.is_action_pressed("ui_accept")
+	
 	if last_direction != direction and direction != 0:
 		just_changed_directions = true
 	else:

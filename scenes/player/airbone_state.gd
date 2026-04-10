@@ -9,6 +9,7 @@ func check_airbone_transitions() -> String:
 	
 	if player.just_landed and current_state_name != StateMachine.LAND:
 		transitioned.emit(self, StateMachine.LAND)
+		print("		land")
 		return StateMachine.LAND
 		
 	if player.velocity.y > 0 and current_state_name != StateMachine.FALL:

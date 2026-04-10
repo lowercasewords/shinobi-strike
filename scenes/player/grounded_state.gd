@@ -12,7 +12,7 @@ func check_grounded_transitions() -> String:
 		transitioned.emit(self, StateMachine.FALL)
 		return StateMachine.FALL
 		
-	if Input.is_action_just_pressed("ui_accept") and current_state_name != StateMachine.JUMP:
+	if player.is_jumping and current_state_name != StateMachine.JUMP:
 		transitioned.emit(self, StateMachine.JUMP)
 		return StateMachine.JUMP
 	

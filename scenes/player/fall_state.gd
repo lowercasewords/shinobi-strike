@@ -1,9 +1,6 @@
 class_name FallState extends AirboneState
 
 const VERTICAL_FALL_SPEED_THRESHOLD: float = 5.0
-#func enter() -> void:
-	# Play walk animation here if you have one
-
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
