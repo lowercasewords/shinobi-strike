@@ -159,8 +159,10 @@ shape = SubResource("RectangleShape2D_wr5hl")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1170208015]
 visible = false
 position_smoothing_enabled = true
-position_smoothing_speed = 15.0
+position_smoothing_speed = 10.0
 drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_right_margin = 0.1
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=150581391]
 script = ExtResource("7_pn6s4")

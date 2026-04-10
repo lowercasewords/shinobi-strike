@@ -22,7 +22,6 @@ func _physics_process(delta):
 	direction = Input.get_axis("ui_left", "ui_right")
 	if last_direction != direction and direction != 0:
 		just_changed_directions = true
-		print("hi")
 	else:
 		just_changed_directions = false
 	

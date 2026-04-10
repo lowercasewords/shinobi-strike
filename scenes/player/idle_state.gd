@@ -7,4 +7,8 @@ func enter() -> void:
 	player.animated_sprite.play("idle")
 
 func physics_update(_delta: float) -> void:
-	var transitioned_via_grounded: bool = check_grounded_transitions()
+	check_grounded_transitions()
+
+func _on_animation_finished():
+	if player.state_machine.current_state.name.to_lower() == StateMachine.IDLE and (player.animated_sprite.animation == "walk_windup"):
+		player.animated_sprite.play("idle")
