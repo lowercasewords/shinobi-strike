@@ -17,8 +17,11 @@ func _ready():
 		await player.ready
 		player.animated_sprite.animation_finished.connect(_on_animation_finished)
 
-var acceleration: float = 1000.0
-var friction: float = 1200.0
+const ACCELERATION: float = 300.0
+const FRICTION: float = 1200.0
+var friction: float = FRICTION
+var acceleration: float = ACCELERATION
+
 func basic_movement(delta: float, max_speed: float):
 	if player.direction:
 		# 2. Determine target velocity
