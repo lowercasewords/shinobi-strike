@@ -7,6 +7,7 @@ const JUMP_VELOCITY = -300.0
 @onready var state_machine: StateMachine = $StateMachine
 
 var direction: float = 0
+var just_changed_directions: bool = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_landed: bool = false
 var just_landed: bool = false
@@ -17,7 +18,13 @@ func _ready():
 	
 func _physics_process(delta):
 	# Get input direction (-1, 0, 1) and handle movement/deceleration
+	var last_direction = direction
 	direction = Input.get_axis("ui_left", "ui_right")
+	if last_direction != direction and direction != 0:
+		just_changed_directions = true
+		print("hi")
+	else:
+		just_changed_directions = false
 	
 	just_landed = false
 	if not is_landed and is_on_floor():

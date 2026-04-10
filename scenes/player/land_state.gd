@@ -5,4 +5,4 @@ func enter() -> void:
 	
 func physics_update(_delta: float) -> void:
 	check_grounded_transitions()
-	basic_movement(player.SPEED)
+	basic_movement(_delta, player.SPEED)

@@ -1,10 +1,5 @@
 class_name JumpState extends AirboneState
 
-func _ready():
-	if not player.is_node_ready():
-		await player.ready
-		player.animated_sprite.animation_finished.connect(_on_animation_finished)
-	
 func enter() -> void:
 	player.animated_sprite.play("jump_windup")
 	
@@ -15,7 +10,7 @@ func windup_finsh() -> void:
 	
 func physics_update(_delta: float) -> void:
 	if not check_airbone_transitions():
-		basic_movement(player.SPEED)
+		basic_movement(_delta, player.SPEED)
 		
 		if player.just_landed:
 			transitioned.emit(self, StateMachine.WALK)

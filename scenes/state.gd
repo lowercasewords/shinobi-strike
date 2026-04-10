@@ -9,11 +9,28 @@ func enter(): pass
 func exit(): pass
 func update(_delta: float): pass
 func physics_update(_delta: float): pass
+func windup_finsh() -> void: pass
 func _on_animation_finished(): pass
-		
-func basic_movement(speed: float):
+
+func _ready():
+	if not player.is_node_ready():
+		await player.ready
+		player.animated_sprite.animation_finished.connect(_on_animation_finished)
+
+var acceleration: float = 1000.0
+var friction: float = 1200.0
+func basic_movement(delta: float, max_speed: float):
 	if player.direction:
-		player.velocity.x = player.direction * speed
+		# 2. Determine target velocity
+		var target_velocity = player.direction * max_speed
+		
+		if player.direction != 0:
+			# 3. Accelerate towards target
+			player.velocity.x = move_toward(player.velocity.x, target_velocity, acceleration * delta)
+		else:
+			# 4. Apply friction (slow down)
+			player.velocity.x = move_toward(player.velocity.x, 0, friction * delta)
+		
 	else:
 		# Smoothly slow down
-		player.velocity.x = move_toward(player.velocity.x, 0, speed * 0.1)
+		player.velocity.x = move_toward(player.velocity.x, 0, max_speed * delta)
