@@ -20,6 +20,18 @@ func _on_animation_finished(): pass
 
 func fall_state_triggered() -> bool:
 	return not player.is_on_floor() and player.velocity.y > 0 and player.state_machine.current_state.name.to_lower() != StateMachine.FALL
+
+func sidewalls_collision_direction() -> float:
+	var wall_direction_horiz: float = 0
+	for i in player.get_slide_collision_count():
+		var collision = player.get_slide_collision(i)
+		var normal = collision.get_normal()
+		
+		wall_direction_horiz = normal.x
+	return wall_direction_horiz
+
+func wall_run_v_state_triggerd() -> bool:
+	return sidewalls_collision_direction() != 0
 	
 func _ready():
 	if not player.is_node_ready():

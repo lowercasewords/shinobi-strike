@@ -11,6 +11,7 @@ const LAND = "land"
 const FALL = "fall"
 const TURN = "turn"
 const WALLRUNV = "wallrunv"
+const WALLCLING = "wallcling"
 
 # Mapping of state nodes to their string names
 var states: Dictionary = {}

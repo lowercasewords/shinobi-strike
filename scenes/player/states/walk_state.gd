@@ -26,11 +26,14 @@ func physics_update(_delta: float) -> void:
 	if player.animated_sprite.animation == "walk":
 		var speed_ratio = max(abs(player.velocity.x) / player.SPEED, 0.5)
 		player.animated_sprite.speed_scale = speed_ratio
-		
-	# Stopping with a smooth animation
-	var new_state: String = check_grounded_transitions()
-	if new_state == StateMachine.IDLE:
-		player.animated_sprite.play_backwards("walk_windup")
+	
+	if wall_run_v_state_triggerd():
+		transitioned.emit(self, StateMachine.WALLRUNV)
+	else:
+		# Stopping with a smooth animation
+		var new_state: String = check_grounded_transitions()
+		if new_state == StateMachine.IDLE:
+			player.animated_sprite.play_backwards("walk_windup")
 		
 	basic_movement(_delta, player.SPEED)
 

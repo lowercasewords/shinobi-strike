@@ -4,7 +4,6 @@ const VERTICAL_FALL_SPEED_THRESHOLD: float = 5.0
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
-	
 	if check_airbone_transitions() == "":
 		if abs(player.velocity.x) > VERTICAL_FALL_SPEED_THRESHOLD:
 			if player.animated_sprite.animation != "fall":  

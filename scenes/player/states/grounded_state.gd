@@ -16,10 +16,10 @@ func turn_state_triggered() -> bool:
 	Is turn state triggered this tic?
 	"""
 	return player.just_changed_directions and player.state_machine.current_state.name.to_lower() != StateMachine.TURN
-	
+
 func check_grounded_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
-
+	
 	if fall_state_triggered():
 		transitioned.emit(self, StateMachine.FALL)
 		return StateMachine.FALL

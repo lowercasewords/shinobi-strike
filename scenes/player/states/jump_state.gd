@@ -1,7 +1,7 @@
 class_name JumpState extends AirboneState
 
 var mario_jump_timer: Timer
-const MARIO_JUMP_TIME: float = 2
+const MARIO_JUMP_TIME: float = 1
 const MARIO_JUMP_STRENGTH: float = -4
 
 func _init():
@@ -10,7 +10,10 @@ func _init():
 	self.add_child(mario_jump_timer)
 	
 func enter() -> void:
-	player.animated_sprite.play("jump_windup")	
+	if player.is_on_floor():
+		player.animated_sprite.play("jump_windup")
+	else:
+		windup_finsh()
 	
 func windup_finsh() -> void:
 	if player.is_on_floor():
