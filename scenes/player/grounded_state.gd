@@ -19,7 +19,11 @@ func turn_state_triggered() -> bool:
 	
 func check_grounded_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
-	
+
+	if fall_state_triggered():
+		transitioned.emit(self, StateMachine.FALL)
+		return StateMachine.FALL
+		
 	if jump_state_triggered():
 		transitioned.emit(self, StateMachine.JUMP)
 		return StateMachine.JUMP

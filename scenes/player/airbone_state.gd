@@ -11,7 +11,8 @@ func check_airbone_transitions() -> String:
 		transitioned.emit(self, StateMachine.LAND)
 		return StateMachine.LAND
 		
-	if not player.is_on_floor() and player.velocity.y > 0 and current_state_name != StateMachine.FALL:
+	if fall_state_triggered():
 		transitioned.emit(self, StateMachine.FALL)
 		return StateMachine.FALL
+		
 	return ""
