@@ -41,6 +41,7 @@
 [ext_resource type="Texture2D" uid="uid://q7bxrpilepub" path="res://assets/sprites/player/player_wall_run_v_4.png" id="30_4ntn1"]
 [ext_resource type="Script" uid="uid://dfk71xyg06unw" path="res://scenes/player/states/fall_state.gd" id="31_geaob"]
 [ext_resource type="AudioStream" uid="uid://bs13psisdbg0l" path="res://assets/sounds/footstep_1.wav" id="34_u3hyo"]
+[ext_resource type="Script" uid="uid://dv0mhfj5jkjpx" path="res://scenes/player/camera_2d.gd" id="35_ooivl"]
 [ext_resource type="AudioStream" uid="uid://b2uecitjga1fr" path="res://assets/sounds/footstep_2.wav" id="35_pysui"]
 [ext_resource type="AudioStream" uid="uid://bqtj55w0gkb4h" path="res://assets/sounds/footstep_3.wav" id="36_4ntn1"]
 [ext_resource type="Script" uid="uid://bplkgw5hlnp7w" path="res://scenes/player/states/turn_state.gd" id="37_eac1a"]
@@ -229,11 +230,10 @@ position = Vector2(0.5, 1.5)
 shape = SubResource("RectangleShape2D_wr5hl")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1170208015]
+process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
-drag_vertical_enabled = true
-drag_left_margin = 0.1
-drag_right_margin = 0.1
+script = ExtResource("35_ooivl")
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=150581391]
 script = ExtResource("7_pn6s4")
