@@ -19,7 +19,7 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
 	if player.animated_sprite.frame == 0 and not audio_stream.playing:
-		audio_stream.volume_db = randf_range(-5.0, 5.0)
+		audio_stream.volume_db = randf_range(-5.0, 1.0)
 		audio_stream.play()
 
 	# Scale the walking animation depending on the speed

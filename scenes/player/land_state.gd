@@ -4,7 +4,7 @@ class_name LandState extends GroundedState
 
 func enter() -> void:
 	player.animated_sprite.play("land")
-	audio_stream.volume_db = randf_range(-5.0, 9.0)
+	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	audio_stream.play()
 	
 

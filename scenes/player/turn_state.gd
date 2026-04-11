@@ -3,6 +3,8 @@ class_name TurnState extends GroundedState
 const TURN_ACCELERATION = ACCELERATION
 const TURN_SPEED_THRESHOLD = 10
 
+@onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 func enter() -> void:
 	# Changing walking direction 
 	player.animated_sprite.play("turn")
@@ -14,6 +16,11 @@ func exit():
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
+	# 
+	if player.animated_sprite.frame == 0 and not audio_stream.playing:
+		audio_stream.volume_db = randf_range(5.0, 10.0)
+		audio_stream.play()
+		
 	# While turning
 	if player.animated_sprite.animation == "turn" and player.animated_sprite.is_playing():
 		# Friction is adjusted during turning

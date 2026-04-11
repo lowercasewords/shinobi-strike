@@ -41,6 +41,7 @@
 [ext_resource type="AudioStream" uid="uid://bqtj55w0gkb4h" path="res://assets/sounds/footstep_3.wav" id="36_4ntn1"]
 [ext_resource type="Script" uid="uid://bplkgw5hlnp7w" path="res://scenes/player/turn_state.gd" id="37_eac1a"]
 [ext_resource type="AudioStream" uid="uid://b4mn3er3war7v" path="res://assets/sounds/land_1.wav" id="39_pysui"]
+[ext_resource type="AudioStream" uid="uid://difyipfkv5sxl" path="res://assets/sounds/turn_1.wav" id="42_4ntn1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
 animations = [{
@@ -241,3 +242,6 @@ metadata/_custom_type_script = "uid://dfk71xyg06unw"
 [node name="Turn" type="Node2D" parent="StateMachine" unique_id=2112800140]
 script = ExtResource("37_eac1a")
 metadata/_custom_type_script = "uid://bplkgw5hlnp7w"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/Turn" unique_id=819652463]
+stream = ExtResource("42_4ntn1")
