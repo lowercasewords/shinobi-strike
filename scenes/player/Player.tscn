@@ -53,6 +53,7 @@
 [ext_resource type="Script" uid="uid://c12fdx6vajhxa" path="res://scenes/player/wall_jump_v_state.gd" id="36_ooivl"]
 [ext_resource type="Script" uid="uid://bplkgw5hlnp7w" path="res://scenes/player/states/turn_state.gd" id="37_eac1a"]
 [ext_resource type="AudioStream" uid="uid://b4mn3er3war7v" path="res://assets/sounds/land_1.wav" id="39_pysui"]
+[ext_resource type="Texture2D" uid="uid://dhmhc5lj657nd" path="res://assets/sprites/player/player_wall_v_slide_1.png" id="41_7r4bu"]
 [ext_resource type="AudioStream" uid="uid://difyipfkv5sxl" path="res://assets/sounds/turn_1.wav" id="42_4ntn1"]
 [ext_resource type="Script" uid="uid://bt6o5ar4jplfo" path="res://scenes/player/states/wall_run_v_state.gd" id="43_gtkor"]
 [ext_resource type="Script" uid="uid://bycc8lffu2b80" path="res://scenes/player/states/wall_cling_v_state.gd" id="48_q4eru"]
@@ -246,6 +247,14 @@ animations = [{
 "loop": true,
 "name": &"wall_run_v",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("41_7r4bu")
+}],
+"loop": true,
+"name": &"wall_slide_v",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wr5hl"]
@@ -269,7 +278,7 @@ max_results = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"wall_cling_v_windup"
+animation = &"wall_slide_v"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
