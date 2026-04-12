@@ -6,6 +6,7 @@ const JUMP_VELOCITY_INITIAL_THURST = -300.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
 @onready var camera: Camera2D = $Camera2D
+@onready var wall_cast: ShapeCast2D = $ShapeCast2D
 
 var direction: float = 0
 var just_changed_directions: bool = false
@@ -17,7 +18,7 @@ var is_jumping: bool = false
 func _ready():
 	is_landed = is_on_floor()
 	just_landed = false
-
+	
 func _physics_process(delta):
 	# Get input direction (-1, 0, 1) and handle movement/deceleration
 	var last_direction = direction
@@ -36,12 +37,6 @@ func _physics_process(delta):
 	elif is_landed and not is_on_floor():
 		is_landed = false
 	
-	# Flip the sprite left or right
-	if direction < 0:
-		animated_sprite.flip_h = true
-	elif direction > 0:
-		animated_sprite.flip_h = false
-			
 	# Add gravity
 	if not is_on_floor():
 		velocity.y += gravity * delta

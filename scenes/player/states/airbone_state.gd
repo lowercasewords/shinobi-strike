@@ -7,9 +7,9 @@ func physics_update(_delta: float) -> void:
 func check_airbone_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
 
-	if wall_run_v_state_triggerd():
-		transitioned.emit(self, StateMachine.WALLRUNV)
-		return StateMachine.WALLRUNV
+	if wall_cling_v_state_triggerd():
+		transitioned.emit(self, StateMachine.WALLCLINGV)
+		return StateMachine.WALLCLINGV
 		
 	if player.just_landed and current_state_name != StateMachine.LAND:
 		transitioned.emit(self, StateMachine.LAND)

@@ -40,15 +40,25 @@
 [ext_resource type="Texture2D" uid="uid://c5ggj6b33pbyb" path="res://assets/sprites/player/player_walk_4.png" id="28_kk601"]
 [ext_resource type="Texture2D" uid="uid://q7bxrpilepub" path="res://assets/sprites/player/player_wall_run_v_4.png" id="30_4ntn1"]
 [ext_resource type="Script" uid="uid://dfk71xyg06unw" path="res://scenes/player/states/fall_state.gd" id="31_geaob"]
+[ext_resource type="Texture2D" uid="uid://cwkx4wpxnkq5r" path="res://assets/sprites/player/player_wall_cling_v_1.png" id="31_h1ws3"]
+[ext_resource type="Texture2D" uid="uid://b2wispce642r1" path="res://assets/sprites/player/player_wall_cling_v_2.png" id="32_mwk7e"]
+[ext_resource type="Texture2D" uid="uid://c7ibw0a0d2kdy" path="res://assets/sprites/player/player_wall_cling_v_3.png" id="33_udvyq"]
 [ext_resource type="AudioStream" uid="uid://bs13psisdbg0l" path="res://assets/sounds/footstep_1.wav" id="34_u3hyo"]
+[ext_resource type="Texture2D" uid="uid://bmbdcln0u85vp" path="res://assets/sprites/player/player_wall_cling_v_windup_1.png" id="34_udvyq"]
+[ext_resource type="Texture2D" uid="uid://dicnttsh3x2w6" path="res://assets/sprites/player/player_wall_cling_v_windup_2.png" id="35_ktadw"]
 [ext_resource type="Script" uid="uid://dv0mhfj5jkjpx" path="res://scenes/player/camera_2d.gd" id="35_ooivl"]
 [ext_resource type="AudioStream" uid="uid://b2uecitjga1fr" path="res://assets/sounds/footstep_2.wav" id="35_pysui"]
 [ext_resource type="AudioStream" uid="uid://bqtj55w0gkb4h" path="res://assets/sounds/footstep_3.wav" id="36_4ntn1"]
+[ext_resource type="Texture2D" uid="uid://cv8045pc4japv" path="res://assets/sprites/player/player_wall_cling_v_windup_3.png" id="36_ktadw"]
+[ext_resource type="Script" uid="uid://c12fdx6vajhxa" path="res://scenes/player/wall_jump_v_state.gd" id="36_ooivl"]
 [ext_resource type="Script" uid="uid://bplkgw5hlnp7w" path="res://scenes/player/states/turn_state.gd" id="37_eac1a"]
 [ext_resource type="AudioStream" uid="uid://b4mn3er3war7v" path="res://assets/sounds/land_1.wav" id="39_pysui"]
 [ext_resource type="AudioStream" uid="uid://difyipfkv5sxl" path="res://assets/sounds/turn_1.wav" id="42_4ntn1"]
 [ext_resource type="Script" uid="uid://bt6o5ar4jplfo" path="res://scenes/player/states/wall_run_v_state.gd" id="43_gtkor"]
-[ext_resource type="Script" uid="uid://bycc8lffu2b80" path="res://scenes/player/states/wall_cling_state.gd" id="48_q4eru"]
+[ext_resource type="Script" uid="uid://bycc8lffu2b80" path="res://scenes/player/states/wall_cling_v_state.gd" id="48_q4eru"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ktadw"]
+size = Vector2(12.87, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
 animations = [{
@@ -184,9 +194,40 @@ animations = [{
 "name": &"walk_windup",
 "speed": 10.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("31_h1ws3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_mwk7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_udvyq")
+}],
 "loop": true,
-"name": &"wall_cling",
+"name": &"wall_cling_v",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("34_udvyq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_ktadw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_ktadw")
+}],
+"loop": false,
+"name": &"wall_cling_v_windup",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_p0vlq")
+}],
+"loop": true,
+"name": &"wall_jump_v",
 "speed": 5.0
 }, {
 "frames": [{
@@ -208,7 +249,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wr5hl"]
-size = Vector2(7, 29)
+size = Vector2(8, 29)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gtkor"]
 playback_mode = 1
@@ -220,13 +261,19 @@ stream_2/stream = ExtResource("36_4ntn1")
 [node name="Player" type="CharacterBody2D" unique_id=990773869]
 script = ExtResource("1_c3xxp")
 
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=1249686623]
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_ktadw")
+target_position = Vector2(-4.78, 0)
+max_results = 5
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"wall_cling"
+animation = &"wall_cling_v_windup"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
-position = Vector2(0.5, 1.5)
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_wr5hl")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1170208015]
@@ -235,7 +282,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 script = ExtResource("35_ooivl")
 
-[node name="StateMachine" type="Node2D" parent="." unique_id=150581391]
+[node name="StateMachine" type="Node2D" parent="." unique_id=669458681]
 script = ExtResource("7_pn6s4")
 metadata/_custom_type_script = "uid://33136d856app"
 
@@ -249,6 +296,13 @@ metadata/_custom_type_script = "uid://bt4sxdqgb50lo"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/Walk" unique_id=1454386527]
 stream = SubResource("AudioStreamRandomizer_gtkor")
+
+[node name="Turn" type="Node2D" parent="StateMachine" unique_id=2112800140]
+script = ExtResource("37_eac1a")
+metadata/_custom_type_script = "uid://bplkgw5hlnp7w"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/Turn" unique_id=819652463]
+stream = ExtResource("42_4ntn1")
 
 [node name="Jump" type="Node2D" parent="StateMachine" unique_id=99532296]
 script = ExtResource("14_ov1oi")
@@ -270,13 +324,22 @@ metadata/_custom_type_script = "uid://dfk71xyg06unw"
 script = ExtResource("43_gtkor")
 metadata/_custom_type_script = "uid://bt6o5ar4jplfo"
 
-[node name="Turn" type="Node2D" parent="StateMachine" unique_id=2112800140]
-script = ExtResource("37_eac1a")
-metadata/_custom_type_script = "uid://bplkgw5hlnp7w"
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/Turn" unique_id=819652463]
-stream = ExtResource("42_4ntn1")
-
-[node name="WallCling" type="Node2D" parent="StateMachine" unique_id=548738841]
+[node name="WallClingV" type="Node2D" parent="StateMachine" unique_id=548738841]
 script = ExtResource("48_q4eru")
 metadata/_custom_type_script = "uid://bycc8lffu2b80"
+
+[node name="Timer" type="Timer" parent="StateMachine/WallClingV" unique_id=737249304]
+wait_time = 0.5
+one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/WallClingV" unique_id=201736303]
+stream = ExtResource("39_pysui")
+volume_db = -10.0
+
+[node name="WallJumpV" type="Node2D" parent="StateMachine" unique_id=1219127945]
+script = ExtResource("36_ooivl")
+metadata/_custom_type_script = "uid://c12fdx6vajhxa"
+
+[node name="Timer" type="Timer" parent="StateMachine/WallJumpV" unique_id=63717429]
+wait_time = 5.0
+one_shot = true

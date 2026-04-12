@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4mjd7rygfora"
-path="res://.godot/imported/player_wall_cling_1.png-d435a9c06992c471a5a7b1708fff75ce.ctex"
+uid="uid://c7ibw0a0d2kdy"
+path="res://.godot/imported/player_wall_cling_v_3.png-58045f8d05bb3cc2fecdfa9411f3efc8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/player/player_wall_cling_1.png"
-dest_files=["res://.godot/imported/player_wall_cling_1.png-d435a9c06992c471a5a7b1708fff75ce.ctex"]
+source_file="res://assets/sprites/player/player_wall_cling_v_3.png"
+dest_files=["res://.godot/imported/player_wall_cling_v_3.png-58045f8d05bb3cc2fecdfa9411f3efc8.ctex"]
 
 [params]
 

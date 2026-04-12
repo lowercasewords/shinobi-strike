@@ -6,7 +6,7 @@ var windup_movement = 100.0
 
 func enter() -> void:
 	# Play walk animation here if you have one
-	if player.state_machine.current_state.name == StateMachine.IDLE:
+	if player.state_machine.current_state.name.to_lower() == StateMachine.IDLE:
 		player.animated_sprite.play("walk_windup")
 	else:
 		player.animated_sprite.play("walk")
@@ -27,8 +27,8 @@ func physics_update(_delta: float) -> void:
 		var speed_ratio = max(abs(player.velocity.x) / player.SPEED, 0.5)
 		player.animated_sprite.speed_scale = speed_ratio
 	
-	if wall_run_v_state_triggerd():
-		transitioned.emit(self, StateMachine.WALLRUNV)
+	if wall_cling_v_state_triggerd():
+		transitioned.emit(self, StateMachine.WALLCLINGV)
 	else:
 		# Stopping with a smooth animation
 		var new_state: String = check_grounded_transitions()

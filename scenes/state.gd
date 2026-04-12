@@ -6,6 +6,7 @@ class_name State extends Node2D
 
 const ACCELERATION: float = 200.0
 const FRICTION: float = 740.0
+const WALL_CLING_SPEED_THRESHOLD: float = 100.0
 var friction: float = FRICTION
 var acceleration: float = ACCELERATION
 	
@@ -22,16 +23,22 @@ func fall_state_triggered() -> bool:
 	return not player.is_on_floor() and player.velocity.y > 0 and player.state_machine.current_state.name.to_lower() != StateMachine.FALL
 
 func sidewalls_collision_direction() -> float:
-	var wall_direction_horiz: float = 0
-	for i in player.get_slide_collision_count():
-		var collision = player.get_slide_collision(i)
-		var normal = collision.get_normal()
+	# Force the cast to update immediately (prevents 1-frame lag bugs)
+	player.wall_cast.force_shapecast_update()
+	
+	var wall_direction: float = 0
+	# Are we hitting a valid wall?
+	if player.wall_cast.is_colliding():
+		# Grab the normal from the very first thing the cast hit (index 0)
+		var wall_normal = player.wall_cast.get_collision_normal(0)
+		wall_direction = -sign(wall_normal.x)
 		
-		wall_direction_horiz = normal.x
-	return wall_direction_horiz
-
-func wall_run_v_state_triggerd() -> bool:
-	return sidewalls_collision_direction() != 0
+	#print("p: ", player.direction)
+	#print("w: ", wall_direction)
+	return wall_direction
+	
+func wall_cling_v_state_triggerd() -> bool:
+	return not player.state_machine.current_state is WallState and sidewalls_collision_direction() == player.direction and player.direction != 0
 	
 func _ready():
 	if not player.is_node_ready():
@@ -39,6 +46,13 @@ func _ready():
 		player.animated_sprite.animation_finished.connect(_on_animation_finished)
 
 func basic_movement(delta: float, max_speed: float):
+	
+	# Flip the sprite left or right
+	if player.direction < 0:
+		player.animated_sprite.flip_h = true
+	elif player.direction > 0:
+		player.animated_sprite.flip_h = false
+			
 	# Determine target velocity
 	var target_velocity = player.direction * max_speed
 	# Player wants to move
