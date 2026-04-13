@@ -13,6 +13,7 @@ const TURN = "turn"
 const WALLRUNV = "wallrunv"
 const WALLJUMPV = "walljumpv"
 const WALLCLINGV = "wallclingv"
+const WALLSLIDEV = "wallslidev"
 
 # Mapping of state nodes to their string names
 var states: Dictionary = {}
@@ -36,7 +37,7 @@ func _process(delta: float) -> void:
 	if current_state:
 		current_state.update(delta)
 
-func _physics_process(delta: float) -> void:
+func physics_process(delta: float) -> void:
 	if current_state:
 		current_state.physics_update(delta)
 
