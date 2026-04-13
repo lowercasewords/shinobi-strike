@@ -17,6 +17,10 @@ var AIRBONE_ACCELERATION = ACCELERATION*3
 func physics_update(_delta: float) -> void:
 	#super.physics_update(_delta)
 	#player.velocity.y += custom_gravity * _delta
+	
+	if not player.is_on_floor():
+		player.velocity.y += player.gravity * _delta
+	
 	acceleration = AIRBONE_ACCELERATION
 	
 func check_airbone_transitions() -> String:

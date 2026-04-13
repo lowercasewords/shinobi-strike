@@ -1,7 +1,7 @@
 class_name WallSlideV extends WallState
 
-const SLIDE_GRAVITY = 0.5     # How fast they accelerate downwards once sliding
-const MAX_SLIDE_SPEED = 100.0   # The terminal velocity of the slide
+const SLIDE_GRAVITY = 30     # How fast they accelerate downwards once sliding
+const MAX_SLIDE_SPEED = 200.0   # The terminal velocity of the slide
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)

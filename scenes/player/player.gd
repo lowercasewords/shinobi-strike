@@ -42,9 +42,7 @@ func _physics_process(delta):
 	elif is_landed and not is_on_floor():
 		is_landed = false
 	
-	if not is_on_floor():
-		velocity.y += gravity * delta
-	
 	# Calculate state physics
 	state_machine.physics_process(delta)
+	print(velocity.y)
 	move_and_slide()
