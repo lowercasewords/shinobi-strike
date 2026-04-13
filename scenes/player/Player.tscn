@@ -52,14 +52,21 @@
 [ext_resource type="Texture2D" uid="uid://cv8045pc4japv" path="res://assets/sprites/player/player_wall_cling_v_windup_3.png" id="36_ktadw"]
 [ext_resource type="Script" uid="uid://c12fdx6vajhxa" path="res://scenes/player/wall_jump_v_state.gd" id="36_ooivl"]
 [ext_resource type="Script" uid="uid://bplkgw5hlnp7w" path="res://scenes/player/states/turn_state.gd" id="37_eac1a"]
+[ext_resource type="Texture2D" uid="uid://b1fj1uobrrl68" path="res://assets/sprites/player/player_wall_jump_v_1.png" id="37_t8twg"]
+[ext_resource type="Texture2D" uid="uid://ckvk3gsyt0w4v" path="res://assets/sprites/player/player_wall_jump_v_2.png" id="38_ijqjm"]
+[ext_resource type="Texture2D" uid="uid://dhs3hf5lsdluy" path="res://assets/sprites/player/player_wall_jump_v_3.png" id="39_2357c"]
 [ext_resource type="AudioStream" uid="uid://b4mn3er3war7v" path="res://assets/sounds/land_1.wav" id="39_pysui"]
-[ext_resource type="Texture2D" uid="uid://dhmhc5lj657nd" path="res://assets/sprites/player/player_wall_v_slide_1.png" id="41_7r4bu"]
+[ext_resource type="Texture2D" uid="uid://b6021w8w2rvbw" path="res://assets/sprites/player/player_wall_jump_v_windup_1.png" id="40_duftu"]
+[ext_resource type="Texture2D" uid="uid://dwy6oacltehgy" path="res://assets/sprites/player/player_wall_slide_v_1.png" id="41_7r4bu"]
 [ext_resource type="AudioStream" uid="uid://difyipfkv5sxl" path="res://assets/sounds/turn_1.wav" id="42_4ntn1"]
+[ext_resource type="Texture2D" uid="uid://cb21wdauwbvgn" path="res://assets/sprites/player/player_wall_slide_v_2.png" id="42_use2k"]
+[ext_resource type="Texture2D" uid="uid://bkgfddrobsg21" path="res://assets/sprites/player/player_wall_slide_v_3.png" id="43_7647m"]
 [ext_resource type="Script" uid="uid://bt6o5ar4jplfo" path="res://scenes/player/states/wall_run_v_state.gd" id="43_gtkor"]
 [ext_resource type="Script" uid="uid://bycc8lffu2b80" path="res://scenes/player/states/wall_cling_v_state.gd" id="48_q4eru"]
+[ext_resource type="Script" uid="uid://chkywte85wcv2" path="res://scenes/player/states/wall_slide_v.gd" id="64_ijqjm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ktadw"]
-size = Vector2(12.87, 20)
+size = Vector2(12.87, 9.38)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6fml"]
 animations = [{
@@ -221,14 +228,28 @@ animations = [{
 }],
 "loop": false,
 "name": &"wall_cling_v_windup",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("37_t8twg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_ijqjm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_2357c")
+}],
+"loop": false,
+"name": &"wall_jump_v",
 "speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_p0vlq")
+"texture": ExtResource("40_duftu")
 }],
-"loop": true,
-"name": &"wall_jump_v",
+"loop": false,
+"name": &"wall_jump_v_windup",
 "speed": 5.0
 }, {
 "frames": [{
@@ -251,6 +272,12 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("41_7r4bu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_use2k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_7647m")
 }],
 "loop": true,
 "name": &"wall_slide_v",
@@ -258,7 +285,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wr5hl"]
-size = Vector2(8, 29)
+size = Vector2(8, 24)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gtkor"]
 playback_mode = 1
@@ -278,11 +305,11 @@ max_results = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"wall_slide_v"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
-position = Vector2(0, 1.5)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_wr5hl")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1170208015]
@@ -352,3 +379,7 @@ metadata/_custom_type_script = "uid://c12fdx6vajhxa"
 [node name="Timer" type="Timer" parent="StateMachine/WallJumpV" unique_id=63717429]
 wait_time = 5.0
 one_shot = true
+
+[node name="WallSlideV" type="Node2D" parent="StateMachine" unique_id=850225916]
+script = ExtResource("64_ijqjm")
+metadata/_custom_type_script = "uid://chkywte85wcv2"

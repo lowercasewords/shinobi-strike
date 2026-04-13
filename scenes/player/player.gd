@@ -39,7 +39,6 @@ func _physics_process(delta):
 	
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		print(velocity.y)
 	
 	# Calculate state physics
 	state_machine.physics_process(delta)
