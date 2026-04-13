@@ -1,7 +1,6 @@
 class_name TurnState extends GroundedState
 
 const TURN_ACCELERATION = ACCELERATION
-const TURN_SPEED_THRESHOLD = 10
 
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
@@ -16,7 +15,8 @@ func exit():
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	# 
+	basic_movement(_delta, player.SPEED)
+	# Turn sound
 	if player.animated_sprite.frame == 0 and not audio_stream.playing:
 		audio_stream.volume_db = randf_range(5.0, 10.0)
 		audio_stream.play()
@@ -32,4 +32,4 @@ func physics_update(_delta: float) -> void:
 	else:
 		check_grounded_transitions()
 	
-	basic_movement(_delta, player.SPEED)
+	

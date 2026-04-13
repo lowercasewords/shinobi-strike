@@ -10,6 +10,7 @@ const JUMP_VELOCITY_INITIAL_THURST = -300.0
 
 var direction: float = 0
 var just_changed_directions: bool = false
+var changing_direction: bool = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_landed: bool = false
 var just_landed: bool = false
@@ -25,9 +26,13 @@ func _physics_process(delta):
 	direction = Input.get_axis("ui_left", "ui_right")
 	is_jumping = Input.is_action_pressed("ui_accept")
 	
-	if velocity.normalized().x*direction < 0:
-		just_changed_directions = true
+	# If wanting to go opposite to the current's velocity
+	if velocity.normalized().x * direction < 0:
+		just_changed_directions = !changing_direction
+		changing_direction = true
+	# If wanting to go the same way to the current's velocity
 	else:
+		changing_direction = false
 		just_changed_directions = false
 	
 	just_landed = false

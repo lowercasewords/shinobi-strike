@@ -4,6 +4,7 @@ class_name GroundedState extends State
 #func _ready():
 	#coyote_timer = Timer.new()
 	#self.add_child(coyote_timer)
+const TURN_SPEED_THRESHOLD: float = 50
 
 func jump_state_triggered() -> bool:
 	"""
@@ -15,7 +16,7 @@ func turn_state_triggered() -> bool:
 	"""
 	Is turn state triggered this tic?
 	"""
-	return player.just_changed_directions and player.state_machine.current_state.name.to_lower() != StateMachine.TURN
+	return player.just_changed_directions and abs(player.velocity.x) > TURN_SPEED_THRESHOLD and player.state_machine.current_state.name.to_lower() != StateMachine.TURN
 
 func check_grounded_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
