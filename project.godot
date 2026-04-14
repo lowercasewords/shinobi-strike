@@ -75,6 +75,10 @@ zoom_out={
 
 sensors/enable_gravity=true
 
+[layer_names]
+
+2d_physics/layer_2="Interactable Background"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

@@ -23,5 +23,5 @@ tile_set = SubResource("TileSet_ymjof")
 position = Vector2(-160, 200)
 
 [node name="TestWallBg" parent="." unique_id=313138753 instance=ExtResource("3_rp362")]
-position = Vector2(0, 168)
+position = Vector2(-56, 184)
 region_rect = Rect2(0, 0, 128, 64)

@@ -3,6 +3,9 @@ class_name Player extends CharacterBody2D
 const SPEED = 200.0
 const JUMP_VELOCITY_INITIAL_THURST = -300.0
 
+signal area2d_enter(area2d: Area2D)
+signal area2d_exit(area2d: Area2D)
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
 @onready var camera: Camera2D = $Camera2D

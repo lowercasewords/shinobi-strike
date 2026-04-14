@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bwbdvoel2ecvx" path="res://assets/sprites/level/test_wall_bg.png" id="1_o2wmw"]
 [ext_resource type="Script" uid="uid://b2ejgp82e1fn1" path="res://scenes/levels/test_wall_bg.gd" id="2_783j5"]
+[ext_resource type="Script" uid="uid://cdi6xnqorvhv4" path="res://scenes/levels/area_2d.gd" id="3_epuj0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pk616"]
 size = Vector2(16, 16)
@@ -15,6 +16,9 @@ region_rect = Rect2(0, 0, 16, 16)
 script = ExtResource("2_783j5")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=313138753]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("3_epuj0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2146364433]
 shape = SubResource("RectangleShape2D_pk616")

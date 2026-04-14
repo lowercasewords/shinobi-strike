@@ -64,6 +64,7 @@
 [ext_resource type="Script" uid="uid://bt6o5ar4jplfo" path="res://scenes/player/states/wall_run_v_state.gd" id="43_gtkor"]
 [ext_resource type="Script" uid="uid://bycc8lffu2b80" path="res://scenes/player/states/wall_cling_v_state.gd" id="48_q4eru"]
 [ext_resource type="Script" uid="uid://chkywte85wcv2" path="res://scenes/player/states/wall_slide_v.gd" id="64_ijqjm"]
+[ext_resource type="Script" uid="uid://sl3qbdibuelf" path="res://scenes/player/states/wall_run_state.gd" id="65_2357c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ktadw"]
 size = Vector2(12.87, 9.38)
@@ -295,6 +296,8 @@ stream_1/stream = ExtResource("35_pysui")
 stream_2/stream = ExtResource("36_4ntn1")
 
 [node name="Player" type="CharacterBody2D" unique_id=990773869]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_c3xxp")
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=1249686623]
@@ -385,6 +388,10 @@ one_shot = true
 [node name="WallSlideV" type="Node2D" parent="StateMachine" unique_id=850225916]
 script = ExtResource("64_ijqjm")
 metadata/_custom_type_script = "uid://chkywte85wcv2"
+
+[node name="WallRun" type="Node2D" parent="StateMachine" unique_id=67663672]
+script = ExtResource("65_2357c")
+metadata/_custom_type_script = "uid://sl3qbdibuelf"
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=927083260]
 wait_time = 0.2
