@@ -1,6 +1,6 @@
 class_name WallClingStateV extends WallState
 
-const CLING_FRICTION = 2000.0    # How aggressively the wall eats their momentum
+const CLING_FRICTION = 10000.0    # How aggressively the wall eats their momentum
 
 @onready var cling_timer: Timer = $Timer
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
