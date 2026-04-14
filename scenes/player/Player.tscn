@@ -250,7 +250,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"wall_jump_v_windup",
-"speed": 15.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
