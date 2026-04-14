@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c6g6agxbnf61l" path="res://scenes/player/Player.tscn" id="1_d141s"]
 [ext_resource type="Texture2D" uid="uid://b3lh63j2chett" path="res://assets/sprites/level/test_tile.png" id="1_s11cq"]
+[ext_resource type="PackedScene" uid="uid://bb012cnw0u4qa" path="res://scenes/levels/test_wall_bg.tscn" id="3_rp362"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s11cq"]
 texture = ExtResource("1_s11cq")
@@ -19,4 +20,8 @@ tile_map_data = PackedByteArray("AAAPAAcAAQAAAAAAAAAOAAcAAQAAAAAAAAANAAcAAQAAAAA
 tile_set = SubResource("TileSet_ymjof")
 
 [node name="Player" parent="." unique_id=990773869 instance=ExtResource("1_d141s")]
-position = Vector2(832, 16)
+position = Vector2(-160, 200)
+
+[node name="TestWallBg" parent="." unique_id=313138753 instance=ExtResource("3_rp362")]
+position = Vector2(0, 168)
+region_rect = Rect2(0, 0, 128, 64)
