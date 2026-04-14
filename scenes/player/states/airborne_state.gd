@@ -13,7 +13,7 @@ class_name AirborneState extends State
 	#if Input.is_action_just_pressed("ui_accept"):
 		#player.velocity.y = jump_velocity
 
-var AIRBONE_ACCELERATION = ACCELERATION*2
+var AIRBONE_ACCELERATION = ACCELERATION*3
 var AIRBONE_FRICTION = FRICTION/3
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)

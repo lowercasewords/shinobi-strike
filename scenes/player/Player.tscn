@@ -267,7 +267,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"wall_run_v",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -305,7 +305,7 @@ max_results = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"wall_jump_v_windup"
+animation = &"wall_run_v"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
