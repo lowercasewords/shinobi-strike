@@ -41,6 +41,5 @@ func check_airbone_transitions() -> String:
 	if fall_state_triggered():
 		transitioned.emit(self, StateMachine.FALL)
 		return StateMachine.FALL
-	
 		
 	return ""

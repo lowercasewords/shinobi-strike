@@ -385,3 +385,7 @@ one_shot = true
 [node name="WallSlideV" type="Node2D" parent="StateMachine" unique_id=850225916]
 script = ExtResource("64_ijqjm")
 metadata/_custom_type_script = "uid://chkywte85wcv2"
+
+[node name="CoyoteTimer" type="Timer" parent="." unique_id=927083260]
+wait_time = 0.2
+one_shot = true

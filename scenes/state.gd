@@ -19,8 +19,11 @@ func physics_update(_delta: float) -> void:
 func windup_finsh() -> void: pass
 func _on_animation_finished(): pass
 
+func check_grounded() -> bool:
+	return player.is_on_floor() or not player.coyote_timer.is_stopped()
+	
 func fall_state_triggered() -> bool:
-	return not player.is_on_floor() and player.velocity.y > 0 and player.state_machine.current_state.name.to_lower() != StateMachine.FALL
+	return not check_grounded() and player.state_machine.current_state.name.to_lower() != StateMachine.FALL
 
 func sidewalls_collision_direction() -> float:
 	# Force the cast to update immediately (prevents 1-frame lag bugs)

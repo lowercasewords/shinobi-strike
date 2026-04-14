@@ -6,16 +6,16 @@ const MARIO_JUMP_STRENGTH: float = -8
 @onready var mario_jump_timer: Timer = $Timer
 
 func enter() -> void:
-	if player.is_on_floor():
+	if check_grounded():
 		player.animated_sprite.play("jump_windup")
 	else:
 		windup_finsh()
 	
 func windup_finsh() -> void:
-	if player.is_on_floor():
+	if check_grounded():
 		mario_jump_timer.start()
 		player.animated_sprite.play('jump')
-		player.velocity.y += JUMP_VELOCITY_INITIAL_THURST
+		player.velocity.y = JUMP_VELOCITY_INITIAL_THURST
 	
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)

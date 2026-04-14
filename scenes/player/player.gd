@@ -7,6 +7,7 @@ const JUMP_VELOCITY_INITIAL_THURST = -300.0
 @onready var state_machine: StateMachine = $StateMachine
 @onready var camera: Camera2D = $Camera2D
 @onready var wall_cast: ShapeCast2D = $ShapeCast2D
+@onready var coyote_timer: Timer = $CoyoteTimer
 
 # Direction overrides requested by external sources (such as the states) 
 var requested_direction: float = 0
@@ -17,6 +18,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_landed: bool = false
 var just_landed: bool = false
 var is_jumping: bool = false
+var was_on_ground: bool = false
 
 func _ready():
 	is_landed = is_on_floor()
@@ -31,9 +33,15 @@ func _physics_process(delta):
 	else:
 		direction = requested_direction
 		
-	print("		direction: ", direction)
 	is_jumping = Input.is_action_pressed("ui_accept")
 	
+	if is_on_floor():
+		was_on_ground = true
+		coyote_timer.stop()
+	elif not is_on_floor() and was_on_ground:
+		was_on_ground = false
+		coyote_timer.start()
+		
 	# If wanting to go opposite to the current's velocity
 	if velocity.normalized().x * direction < 0:
 		just_changed_directions = !changing_direction
