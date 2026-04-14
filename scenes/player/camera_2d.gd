@@ -1,6 +1,41 @@
-## camera_lookahead.gd
 extends Camera2D
-#
+
+# Expose these so you can easily tweak them in the Inspector
+@export var min_zoom: float = 0.2  # How far out they can see
+@export var max_zoom: float = 1.0  # How close in they can look
+@export var zoom_step: float = 0.2 # How much one key press zooms
+@export var zoom_speed: float = 10.0 # How fast the camera glides to the new zoom
+
+# We store what the zoom *should* be, so lerp can smoothly chase it
+var target_zoom: float = 1.0
+
+func _ready() -> void:
+	# Initialize target_zoom to whatever the camera starts at
+	target_zoom = zoom.x
+
+func _process(delta: float) -> void:
+	handle_zoom_input()
+	
+	# Smoothly glide the actual camera zoom toward our target
+	var current_zoom = lerp(zoom.x, target_zoom, zoom_speed * delta)
+	zoom = Vector2(current_zoom, current_zoom)
+
+func handle_zoom_input() -> void:
+	# Note: On a standard keyboard, the '+' key is technically the '=' key 
+	# unless you hold shift. We check for KEY_EQUAL to catch the unshifted press!
+	
+	if Input.is_action_just_pressed("zoom_in"):
+		# Zoom In
+		target_zoom += zoom_step
+	elif Input.is_action_just_pressed("zoom_out"):
+		# Zoom Out
+		target_zoom -= zoom_step
+
+	# CRITICAL: Clamp the zoom so it never exceeds your min/max limits
+	target_zoom = clamp(target_zoom, min_zoom, max_zoom)
+
+## camera_lookahead.gd
+#extends Camera2D
 #@export var lookahead_distance: float = 60.0 
 #@export var smooth_speed: float = 3.0 
 #@export var switch_delay: float = 0.3 # NEW: Wait 0.3 seconds before panning
