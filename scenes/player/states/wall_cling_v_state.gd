@@ -9,10 +9,13 @@ const CLING_FRICTION = 2000.0    # How aggressively the wall eats their momentum
 	#cling_timer.connect("timeout", _on_cling_cling_timeout)
 	
 func enter():
+	var wall_direction: float = sidewalls_collision_direction()
+	
 	player.animated_sprite.play("wall_cling_v_windup")
 	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	cling_timer.start()
 	audio_stream.play()
+	player.overriden_direction(wall_direction)
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -23,7 +26,10 @@ func physics_update(_delta: float) -> void:
 
 	# If not exited the wall state yet
 	if check_default_exit(wall_direction) == "":
-		if cling_timer.is_stopped():
+		
+		if player.is_jumping:
+			transitioned.emit(self, StateMachine.WALLJUMPV)
+		elif cling_timer.is_stopped():
 			if player.is_on_floor():
 				transitioned.emit(self, StateMachine.LAND)
 			elif player.direction == wall_direction:

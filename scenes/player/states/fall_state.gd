@@ -1,4 +1,4 @@
-class_name FallState extends AirboneState
+class_name FallState extends AirborneState
 
 const VERTICAL_FALL_SPEED_THRESHOLD: float = 5.0
 

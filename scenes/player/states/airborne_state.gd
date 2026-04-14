@@ -1,12 +1,12 @@
-class_name AirboneState extends State
+class_name AirborneState extends State
 
 # 1. Design your perfect jump in the Inspector
-@export var jump_height: float = 64.0 # e.g., Jump 2 tiles high (32x32 tiles)
-@export var jump_time_to_peak: float = 0.3 # Feels snappy and responsive
-
-# 2. Let the engine calculate the perfect physics
-@onready var jump_velocity: float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
-@onready var custom_gravity: float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
+#@export var jump_height: float = 64.0 # e.g., Jump 2 tiles high (32x32 tiles)
+#@export var jump_time_to_peak: float = 0.3 # Feels snappy and responsive
+#
+## 2. Let the engine calculate the perfect physics
+#@onready var jump_velocity: float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
+#@onready var custom_gravity: float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
 
 #func enter() -> void:
 	## If we transitioned here because we pressed Jump in the Ground state:
@@ -16,7 +16,9 @@ class_name AirboneState extends State
 var AIRBONE_ACCELERATION = ACCELERATION*3
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
-	#player.velocity.y += custom_gravity * _delta
+	
+	apply_gravity(_delta)
+	
 	acceleration = AIRBONE_ACCELERATION
 	
 func check_airbone_transitions() -> String:

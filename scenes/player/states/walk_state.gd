@@ -18,6 +18,8 @@ func windup_finsh() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
+	basic_movement(_delta, player.SPEED)
+	
 	if player.animated_sprite.frame == 0 and not audio_stream.playing:
 		audio_stream.volume_db = randf_range(-5.0, 1.0)
 		audio_stream.play()
@@ -27,15 +29,15 @@ func physics_update(_delta: float) -> void:
 		var speed_ratio = max(abs(player.velocity.x) / player.SPEED, 0.5)
 		player.animated_sprite.speed_scale = speed_ratio
 	
-	if wall_cling_v_state_triggerd():
-		transitioned.emit(self, StateMachine.WALLCLINGV)
-	else:
+	#if wall_cling_v_state_triggerd():
+		#transitioned.emit(self, StateMachine.WALLCLINGV)
+	if not wall_cling_v_state_triggerd():
 		# Stopping with a smooth animation
 		var new_state: String = check_grounded_transitions()
 		if new_state == StateMachine.IDLE:
 			player.animated_sprite.play_backwards("walk_windup")
 		
-	basic_movement(_delta, player.SPEED)
+	
 
 func _on_animation_finished():
 	if player.state_machine.current_state.name.to_lower() == StateMachine.WALK and player.animated_sprite.animation == "walk_windup":

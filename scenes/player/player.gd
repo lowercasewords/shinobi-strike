@@ -8,6 +8,8 @@ const JUMP_VELOCITY_INITIAL_THURST = -300.0
 @onready var camera: Camera2D = $Camera2D
 @onready var wall_cast: ShapeCast2D = $ShapeCast2D
 
+# Direction overrides requested by external sources (such as the states) 
+var requested_direction: float = 0
 var direction: float = 0
 var just_changed_directions: bool = false
 var changing_direction: bool = false
@@ -23,7 +25,13 @@ func _ready():
 func _physics_process(delta):
 	# Get input direction (-1, 0, 1) and handle movement/deceleration
 	var last_direction = direction
-	direction = Input.get_axis("ui_left", "ui_right")
+	
+	if requested_direction == 0:
+		direction = Input.get_axis("ui_left", "ui_right")
+	else:
+		direction = requested_direction
+		
+	print("		direction: ", direction)
 	is_jumping = Input.is_action_pressed("ui_accept")
 	
 	# If wanting to go opposite to the current's velocity
@@ -44,5 +52,11 @@ func _physics_process(delta):
 	
 	# Calculate state physics
 	state_machine.physics_process(delta)
-	print(velocity.y)
+	
 	move_and_slide()
+	
+	requested_direction = 0
+
+func overriden_direction(direction: float):
+	print("requested to ",direction)
+	requested_direction = direction

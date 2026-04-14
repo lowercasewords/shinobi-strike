@@ -39,7 +39,14 @@ func sidewalls_collision_direction() -> float:
 	
 func wall_cling_v_state_triggerd() -> bool:
 	return not player.state_machine.current_state is WallState and sidewalls_collision_direction() == player.direction and player.direction != 0
-	
+
+func apply_gravity(_delta) -> float:
+	var gravity_applied = 0
+	if not player.is_on_floor():
+		gravity_applied = player.gravity * _delta
+		player.velocity.y += gravity_applied
+	return gravity_applied
+
 func _ready():
 	if not player.is_node_ready():
 		await player.ready

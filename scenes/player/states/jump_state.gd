@@ -1,4 +1,4 @@
-class_name JumpState extends AirboneState
+class_name JumpState extends AirborneState
 
 const JUMP_VELOCITY_INITIAL_THURST = -300.0
 const MARIO_JUMP_TIME: float = 1
@@ -36,7 +36,6 @@ func physics_update(_delta: float) -> void:
 		# Mario jump is applied
 		if not mario_jump_timer.is_stopped() and not player.is_on_floor():
 			player.velocity.y += MARIO_JUMP_STRENGTH
-	#print(player.velocity.y)
 
 func _on_animation_finished():
 	if player.animated_sprite.animation == 'jump_windup':

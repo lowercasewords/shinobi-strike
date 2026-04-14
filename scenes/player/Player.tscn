@@ -250,7 +250,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"wall_jump_v_windup",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -305,7 +305,7 @@ max_results = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"idle"
+animation = &"wall_jump_v_windup"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
@@ -365,7 +365,7 @@ script = ExtResource("48_q4eru")
 metadata/_custom_type_script = "uid://bycc8lffu2b80"
 
 [node name="Timer" type="Timer" parent="StateMachine/WallClingV" unique_id=737249304]
-wait_time = 0.5
+wait_time = 0.2
 one_shot = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/WallClingV" unique_id=201736303]
