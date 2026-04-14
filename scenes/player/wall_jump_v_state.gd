@@ -11,7 +11,7 @@ func enter():
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
-	basic_movement(_delta, player.SPEED)
+	basic_movement(_delta, abs(JUMP_SPEED_INITIAL.x))
 	var direction = sidewalls_collision_direction()
 	if player.is_on_floor():
 		transitioned.emit(self, StateMachine.LAND)

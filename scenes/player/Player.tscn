@@ -344,6 +344,8 @@ stream = ExtResource("42_4ntn1")
 script = ExtResource("14_ov1oi")
 metadata/_custom_type_script = "uid://bsyh8g21vunej"
 
+[node name="Timer" type="Timer" parent="StateMachine/Jump" unique_id=1529734553]
+
 [node name="Land" type="Node2D" parent="StateMachine" unique_id=127668468]
 script = ExtResource("20_ro0t8")
 metadata/_custom_type_script = "uid://bqf4onwxnfx6u"

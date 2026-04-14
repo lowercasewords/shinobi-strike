@@ -1,13 +1,13 @@
 class_name TurnState extends GroundedState
 
-const TURN_ACCELERATION = ACCELERATION
+const TURN_ACCELERATION = ACCELERATION*1.1
 
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func enter() -> void:
 	# Changing walking direction 
 	player.animated_sprite.play("turn")
-	player.velocity.x /= 2
+	player.velocity.x /= 3
 	
 func exit():
 	acceleration = ACCELERATION

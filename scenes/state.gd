@@ -4,7 +4,7 @@ class_name State extends Node2D
 
 # Base state class for entities that need complex states
 
-const ACCELERATION: float = 200.0
+const ACCELERATION: float = 300.0
 const FRICTION: float = 740.0
 const WALL_CLING_SPEED_THRESHOLD: float = 100.0
 var friction: float = FRICTION

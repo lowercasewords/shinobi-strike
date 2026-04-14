@@ -1,15 +1,10 @@
 class_name JumpState extends AirborneState
 
 const JUMP_VELOCITY_INITIAL_THURST = -300.0
-const MARIO_JUMP_TIME: float = 1
+#const MARIO_JUMP_TIME: float = 1
 const MARIO_JUMP_STRENGTH: float = -8
-var mario_jump_timer: Timer
+@onready var mario_jump_timer: Timer = $Timer
 
-func _init():
-	mario_jump_timer = Timer.new()
-	mario_jump_timer.one_shot = true
-	self.add_child(mario_jump_timer)
-	
 func enter() -> void:
 	if player.is_on_floor():
 		player.animated_sprite.play("jump_windup")
@@ -18,7 +13,7 @@ func enter() -> void:
 	
 func windup_finsh() -> void:
 	if player.is_on_floor():
-		mario_jump_timer.start(MARIO_JUMP_TIME)
+		mario_jump_timer.start()
 		player.animated_sprite.play('jump')
 		player.velocity.y += JUMP_VELOCITY_INITIAL_THURST
 	
