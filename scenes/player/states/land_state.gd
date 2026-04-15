@@ -3,6 +3,7 @@ class_name LandState extends GroundedState
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func enter() -> void:
+	super.enter()
 	player.animated_sprite.play("land")
 	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	audio_stream.play()

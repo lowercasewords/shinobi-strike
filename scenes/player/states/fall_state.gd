@@ -2,6 +2,10 @@ class_name FallState extends AirborneState
 
 const VERTICAL_FALL_SPEED_THRESHOLD: float = 5.0
 
+func enter():
+	super.enter()
+
+
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	basic_movement(_delta, player.SPEED)

@@ -1,6 +1,7 @@
 class_name IdleState extends GroundedState
 
 func enter() -> void:
+	super.enter()
 	# Play idle animation here if you have one
 	if not player.is_node_ready():
 		await player.ready

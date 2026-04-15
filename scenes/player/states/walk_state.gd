@@ -5,6 +5,7 @@ var windup_movement = 100.0
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func enter() -> void:
+	super.enter()
 	# Play walk animation here if you have one
 	if player.state_machine.current_state.name.to_lower() == StateMachine.IDLE:
 		player.animated_sprite.play("walk_windup")

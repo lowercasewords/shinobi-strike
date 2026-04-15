@@ -30,6 +30,7 @@ func _ready():
 	area2d_enter.connect(_on_wall_entered)
 	area2d_exit.connect(_on_wall_exited)
 	is_landed = is_on_floor()
+	state_machine.start_state_machine()
 	
 func _physics_process(delta):
 	# Get input direction (-1, 0, 1) and handle movement/deceleration

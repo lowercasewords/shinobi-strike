@@ -3,6 +3,7 @@ class_name WallJumpVState extends AirborneState
 const JUMP_SPEED_INITIAL: Vector2 = Vector2(-200, -400)
 
 func enter():
+	super.enter()
 	var direction = sidewalls_collision_direction()
 	if not player.state_machine.current_state is WallJumpVState:
 		player.animated_sprite.play("wall_jump_v_windup")

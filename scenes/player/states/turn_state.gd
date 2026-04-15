@@ -5,11 +5,13 @@ const TURN_ACCELERATION = ACCELERATION*1.1
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func enter() -> void:
+	super.enter()
 	# Changing walking direction 
 	player.animated_sprite.play("turn")
 	player.velocity.x /= 3
 	
 func exit():
+	super.exit()
 	acceleration = ACCELERATION
 	
 func physics_update(_delta: float) -> void:

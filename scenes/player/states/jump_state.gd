@@ -6,6 +6,7 @@ const MARIO_JUMP_STRENGTH: float = -8
 @onready var mario_jump_timer: Timer = $Timer
 
 func enter() -> void:
+	super.enter()
 	if check_grounded():
 		player.animated_sprite.play("jump_windup")
 	else:

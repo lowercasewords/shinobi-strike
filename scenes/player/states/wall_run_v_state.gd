@@ -5,6 +5,7 @@ const WALL_RUN_SPEED: float = -200
 const WALL_FRICTION: float = FRICTION/10
 
 func enter() -> void:
+	super.enter()
 	var wall_direction = sidewalls_collision_direction()
 	var sprites_shift_amount = SPRITE_SHIFT_AMOUNT
 	
@@ -16,6 +17,7 @@ func enter() -> void:
 	player.animated_sprite.position.x = sprites_shift_amount * wall_direction
 	
 func exit() -> void:
+	super.exit()
 	player.animated_sprite.position.x = 0.0
 
 func physics_update(_delta: float) -> void:

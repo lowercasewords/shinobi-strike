@@ -11,8 +11,11 @@ var friction: float = FRICTION
 var acceleration: float = ACCELERATION
 	
 signal transitioned(new_state_name: String)
-func enter(): pass
-func exit(): pass
+func enter(): 
+	player.animated_sprite.animation_finished.connect(_on_animation_finished)
+func exit():
+	if player.animated_sprite.animation_finished.is_connected(_on_animation_finished):
+		player.animated_sprite.animation_finished.disconnect(_on_animation_finished)
 func update(_delta: float): pass
 func physics_update(_delta: float) -> void:
 	player.animated_sprite.speed_scale = 1
@@ -50,10 +53,7 @@ func apply_gravity(_delta) -> float:
 		player.velocity.y += gravity_applied
 	return gravity_applied
 
-func _ready():
-	if not player.is_node_ready():
-		await player.ready
-		player.animated_sprite.animation_finished.connect(_on_animation_finished)
+#func _ready():
 
 func basic_movement(delta: float, max_speed: float):
 	

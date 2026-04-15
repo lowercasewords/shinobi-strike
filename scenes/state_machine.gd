@@ -19,7 +19,7 @@ const WALLSLIDEV = "wallslidev"
 # Mapping of state nodes to their string names
 var states: Dictionary = {}
 
-func _ready() -> void:
+func start_state_machine() -> void:
 	# Loop through all children and add them to the dictionary
 	for child in get_children():
 		if child is State:

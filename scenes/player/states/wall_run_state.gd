@@ -1,10 +1,12 @@
 class_name WallRunState extends WallState
 
 func enter():
+	super.enter()
 	player.animated_sprite.play("wall_run")
 	player.coyote_timer.stop()
 
 func exit():
+	super.exit()
 	player.coyote_timer.stop()
 
 func physics_update(_delta: float) -> void:

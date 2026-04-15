@@ -9,6 +9,7 @@ const CLING_FRICTION = 10000.0    # How aggressively the wall eats their momentu
 	#cling_timer.connect("timeout", _on_cling_cling_timeout)
 	
 func enter():
+	super.enter()
 	var wall_direction: float = sidewalls_collision_direction()
 	
 	player.animated_sprite.play("wall_cling_v_windup")

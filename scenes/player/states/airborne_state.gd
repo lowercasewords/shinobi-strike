@@ -35,6 +35,7 @@ func physics_update(_delta: float) -> void:
 	acceleration = AIRBONE_ACCELERATION
 
 func exit():
+	super.exit()
 	friction = FRICTION
 	acceleration = ACCELERATION
 	
