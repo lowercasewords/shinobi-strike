@@ -15,16 +15,16 @@ class_name AirborneState extends State
 
 var AIRBONE_ACCELERATION = ACCELERATION*3
 var AIRBONE_FRICTION = FRICTION/3
-
-func wall_run_state_triggered():
-	for i in player.get_slide_collision_count():
-		var collision: KinematicCollision2D = player.get_slide_collision(i)
-		var collider: Object = collision.get_collider()
-		print(collision)
+	
+#func wall_run_state_triggered():
+	#for i in player.get_slide_collision_count():
+		#var collision: KinematicCollision2D = player.get_slide_collision(i)
+		#var collider: Object = collision.get_collider()
+		#print(collision)
 		# Check collision layer of the other object (e.g., layer 2)
 		#if collider != null and collider.name == "TestWallBg" and collider.get_collision_layer_value(2):
 			#return true
-	return false
+	#return false
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -41,7 +41,7 @@ func exit():
 func check_airbone_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
 
-	if wall_run_state_triggered():
+	if player.inside_wallbg and player.just_jumped:
 		transitioned.emit(self, StateMachine.WALLRUN)
 		return StateMachine.WALLRUN
 		

@@ -1,10 +1,16 @@
 class_name WallRunState extends WallState
 
-func _ready():
-	player.area2d_enter.connect(_on_wall_entered)
-	player.area2d_exit.connect(_on_wall_exited)
-	
-func _on_wall_entered(area2d: Area2D):
-	pass
-func _on_wall_exited(area2d: Area2D):
-	pass
+func enter():
+	player.animated_sprite.play("wall_run")
+	player.coyote_timer.stop()
+
+func exit():
+	player.coyote_timer.stop()
+
+func physics_update(_delta: float) -> void:
+	super.physics_update(_delta)
+	player.velocity.y = 0
+
+	if not player.inside_wallbg or not player.is_jumping:
+		player.coyote_timer.start()
+		transitioned.emit(self, StateMachine.FALL)

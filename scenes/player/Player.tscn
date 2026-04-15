@@ -58,10 +58,13 @@
 [ext_resource type="AudioStream" uid="uid://b4mn3er3war7v" path="res://assets/sounds/land_1.wav" id="39_pysui"]
 [ext_resource type="Texture2D" uid="uid://b6021w8w2rvbw" path="res://assets/sprites/player/player_wall_jump_v_windup_1.png" id="40_duftu"]
 [ext_resource type="Texture2D" uid="uid://dwy6oacltehgy" path="res://assets/sprites/player/player_wall_slide_v_1.png" id="41_7r4bu"]
+[ext_resource type="Texture2D" uid="uid://dxtx51q7bhosj" path="res://assets/sprites/player/wall_run_1.png" id="41_80bwr"]
 [ext_resource type="AudioStream" uid="uid://difyipfkv5sxl" path="res://assets/sounds/turn_1.wav" id="42_4ntn1"]
+[ext_resource type="Texture2D" uid="uid://qcj25uh00dk4" path="res://assets/sprites/player/wall_run_2.png" id="42_5kfw2"]
 [ext_resource type="Texture2D" uid="uid://cb21wdauwbvgn" path="res://assets/sprites/player/player_wall_slide_v_2.png" id="42_use2k"]
 [ext_resource type="Texture2D" uid="uid://bkgfddrobsg21" path="res://assets/sprites/player/player_wall_slide_v_3.png" id="43_7647m"]
 [ext_resource type="Script" uid="uid://bt6o5ar4jplfo" path="res://scenes/player/states/wall_run_v_state.gd" id="43_gtkor"]
+[ext_resource type="Texture2D" uid="uid://byqk4xxyqjmsx" path="res://assets/sprites/player/wall_run_3.png" id="43_sydpy"]
 [ext_resource type="Script" uid="uid://bycc8lffu2b80" path="res://scenes/player/states/wall_cling_v_state.gd" id="48_q4eru"]
 [ext_resource type="Script" uid="uid://chkywte85wcv2" path="res://scenes/player/states/wall_slide_v.gd" id="64_ijqjm"]
 [ext_resource type="Script" uid="uid://sl3qbdibuelf" path="res://scenes/player/states/wall_run_state.gd" id="65_2357c"]
@@ -255,6 +258,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("41_80bwr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_5kfw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_sydpy")
+}],
+"loop": true,
+"name": &"wall_run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("7_20koh")
 }, {
 "duration": 1.0,
@@ -308,7 +325,7 @@ max_results = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"wall_run_v"
+animation = &"wall_run"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]

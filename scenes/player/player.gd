@@ -21,16 +21,20 @@ var changing_direction: bool = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_landed: bool = false
 var just_landed: bool = false
+var inside_wallbg: bool = false
 var is_jumping: bool = false
+var just_jumped: bool = false
 var was_on_ground: bool = false
 
 func _ready():
+	area2d_enter.connect(_on_wall_entered)
+	area2d_exit.connect(_on_wall_exited)
 	is_landed = is_on_floor()
-	just_landed = false
 	
 func _physics_process(delta):
 	# Get input direction (-1, 0, 1) and handle movement/deceleration
 	var last_direction = direction
+	var last_jumping: bool = is_jumping
 	
 	if requested_direction == 0:
 		direction = Input.get_axis("ui_left", "ui_right")
@@ -38,8 +42,12 @@ func _physics_process(delta):
 		direction = requested_direction
 	
 	direction_v = Input.get_axis("ui_down", "ui_up")
-		
+	
 	is_jumping = Input.is_action_pressed("ui_accept")
+	if not last_jumping and is_jumping:
+		just_jumped = true
+	else:
+		just_jumped = false
 	
 	if is_on_floor():
 		was_on_ground = true
@@ -74,3 +82,9 @@ func _physics_process(delta):
 func overriden_direction(direction: float):
 	print("requested to ",direction)
 	requested_direction = direction
+
+func _on_wall_entered(area2d: Area2D):
+	inside_wallbg = true
+	
+func _on_wall_exited(area2d: Area2D):
+	inside_wallbg = false
