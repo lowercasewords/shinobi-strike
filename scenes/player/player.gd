@@ -21,14 +21,14 @@ var changing_direction: bool = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_landed: bool = false
 var just_landed: bool = false
-var inside_wallbg: bool = false
+var just_entered_wallbg: bool = false
 var is_jumping: bool = false
 var just_jumped: bool = false
 var was_on_ground: bool = false
 
 func _ready():
-	area2d_enter.connect(_on_wall_entered)
-	area2d_exit.connect(_on_wall_exited)
+	#area2d_enter.connect(_on_wall_entered)
+	#area2d_exit.connect(_on_wall_exited)
 	is_landed = is_on_floor()
 	state_machine.start_state_machine()
 	
@@ -81,11 +81,10 @@ func _physics_process(delta):
 	requested_direction = 0
 
 func overriden_direction(direction: float):
-	print("requested to ",direction)
 	requested_direction = direction
 
-func _on_wall_entered(area2d: Area2D):
-	inside_wallbg = true
-	
-func _on_wall_exited(area2d: Area2D):
-	inside_wallbg = false
+func _on_sensor_body_entered(area):
+	just_entered_wallbg = true
+
+func _on_sensor_body_exited(body):
+	just_entered_wallbg = false

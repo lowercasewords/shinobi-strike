@@ -13,6 +13,6 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	player.velocity.y = 0
 
-	if not player.inside_wallbg or not player.is_jumping:
+	if not player.just_entered_wallbg or not player.is_jumping:
 		player.coyote_timer.start()
 		transitioned.emit(self, StateMachine.FALL)

@@ -16,7 +16,7 @@ class_name AirborneState extends State
 var AIRBONE_ACCELERATION = ACCELERATION*3
 var AIRBONE_FRICTION = FRICTION/3
 	
-#func wall_run_state_triggered():
+#func wall_run_state_triggered():s
 	#for i in player.get_slide_collision_count():
 		#var collision: KinematicCollision2D = player.get_slide_collision(i)
 		#var collider: Object = collision.get_collider()
@@ -26,6 +26,29 @@ var AIRBONE_FRICTION = FRICTION/3
 			#return true
 	#return false
 
+#func wall_jump_triggered():
+	#for i in player.get_slide_collision_count():
+		#var collision: KinematicCollision2D = player.get_slide_collision(i)
+		#var collider: Object = collision.get_collider()
+		#
+		## Check if we hit a TileMap or TileMapLayer
+		#if collider is TileMapLayer:
+			#var tile_rid = collision.get_collider_rid()
+			#var layer = PhysicsServer2D.body_get_collision_layer(tile_rid)
+			#if layer == 2:
+				#return true
+			#print("Collided with TileMap layer: ", layer)
+	#return false
+			#
+			## Convert collision position to tile coordinates
+			## Subtracting normal helps ensure we get the tile we actually hit
+			#var tile_pos = collider.local_to_map(collider.to_local(collision.get_position() - collision.get_normal()))
+			#
+			## Get data from that specific tile
+			#var data: TileData  = collider.get_cell_tile_data(0, tile_pos)
+			#if data:
+				#data.
+			
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
@@ -42,7 +65,7 @@ func exit():
 func check_airbone_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
 
-	if player.inside_wallbg and player.just_jumped:
+	if player.just_entered_wallbg and player.just_jumped:
 		transitioned.emit(self, StateMachine.WALLRUN)
 		return StateMachine.WALLRUN
 		
