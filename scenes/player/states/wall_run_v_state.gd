@@ -28,9 +28,9 @@ func physics_update(_delta: float) -> void:
 		if player.is_jumping:
 			#player.velocity.x = 15*wall_direction
 			transitioned.emit(self, StateMachine.WALLJUMPV)
-		elif player.direction == 0:
+		elif player.input_direction == 0:
 			transitioned.emit(self, StateMachine.WALLCLINGV)
-		elif player.direction == wall_direction:
+		elif player.input_direction == wall_direction:
 			player.velocity.y = move_toward(player.velocity.y, 0, WALL_FRICTION * _delta)
 			player.velocity.x = 0
 	#else:

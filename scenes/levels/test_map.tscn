@@ -20,7 +20,7 @@ tile_map_data = PackedByteArray("AAAPAAcAAQAAAAAAAAAOAAcAAQAAAAAAAAANAAcAAQAAAAA
 tile_set = SubResource("TileSet_ymjof")
 
 [node name="Player" parent="." unique_id=990773869 instance=ExtResource("1_d141s")]
-position = Vector2(-160, 200)
+position = Vector2(-240, -80)
 
 [node name="TestWallBg" parent="." unique_id=313138753 instance=ExtResource("3_rp362")]
 position = Vector2(0, 176)

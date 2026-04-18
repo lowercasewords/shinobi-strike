@@ -13,8 +13,8 @@ class_name AirborneState extends State
 	#if Input.is_action_just_pressed("ui_accept"):
 		#player.velocity.y = jump_velocity
 
-var AIRBONE_ACCELERATION = ACCELERATION*3
-var AIRBONE_FRICTION = FRICTION/3
+const AIRBONE_ACCELERATION = ACCELERATION*3
+const AIRBONE_FRICTION = FRICTION/3
 	
 #func wall_run_state_triggered():s
 	#for i in player.get_slide_collision_count():
@@ -52,8 +52,8 @@ var AIRBONE_FRICTION = FRICTION/3
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
+	direction_flip_horiz()
 	apply_gravity(_delta)
-	
 	friction = AIRBONE_FRICTION
 	acceleration = AIRBONE_ACCELERATION
 

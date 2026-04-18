@@ -47,22 +47,22 @@ func handle_zoom_input() -> void:
 #@onready var player: Player = owner
 #
 #func _process(delta: float) -> void:
-	#var direction = player.direction
+	#var input_direction = player.input_direction
 	#if player.is_on_wall():
-		#direction *= -1
+		#input_direction *= -1
 		#print("foo")
 		#
 	## 1. Did the player press a button?
-	#if direction != 0:
-		#var input_direction = sign(direction)
+	#if input_direction != 0:
+		#var input_direction = sign(input_direction)
 		#
-		## 2. Did they change direction?
+		## 2. Did they change input_direction?
 		#if input_direction != current_direction:
 			## They turned around! Reset the stopwatch, but DO NOT move the camera yet.
 			#current_direction = input_direction
 			#time_facing_direction = 0.0
 		#else:
-			## They are holding the same direction. Keep counting up.
+			## They are holding the same input_direction. Keep counting up.
 			#time_facing_direction += delta
 			#
 	## 3. THE COMMITMENT CHECK

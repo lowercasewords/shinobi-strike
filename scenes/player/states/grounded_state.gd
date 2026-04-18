@@ -6,6 +6,9 @@ class_name GroundedState extends State
 	#self.add_child(coyote_timer)
 const TURN_SPEED_THRESHOLD: float = 50
 
+func _physics_process(delta):
+	direction_flip_horiz()
+	
 func jump_state_triggered() -> bool:
 	"""
 	Is jump state triggered this tic?
@@ -33,11 +36,11 @@ func check_grounded_transitions() -> String:
 		transitioned.emit(self, StateMachine.TURN)
 		return StateMachine.TURN
 	
-	if player.direction != 0 and current_state_name != StateMachine.WALK:
+	if player.input_direction != 0 and current_state_name != StateMachine.WALK:
 		transitioned.emit(self, StateMachine.WALK)
 		return StateMachine.WALK
 	
-	if player.direction == 0 and player.velocity.x == 0 and current_state_name != StateMachine.IDLE:
+	if player.input_direction == 0 and player.velocity.x == 0 and current_state_name != StateMachine.IDLE:
 		transitioned.emit(self, StateMachine.IDLE)
 		return StateMachine.IDLE
 		

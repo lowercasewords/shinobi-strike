@@ -26,7 +26,6 @@ func physics_update(_delta: float) -> void:
 		
 	player.velocity.y = move_toward(player.velocity.y, max_slide_speed, slide_gravity * _delta)
 	
-	print(player.velocity.y)
 	var wall_direction: float = sidewalls_collision_direction()
 	if player.is_on_floor():
 		transitioned.emit(self, StateMachine.LAND)
@@ -34,7 +33,7 @@ func physics_update(_delta: float) -> void:
 		transitioned.emit(self, StateMachine.FALL)
 	elif player.is_jumping:
 		transitioned.emit(self, StateMachine.WALLJUMPV)
-	elif player.direction == wall_direction:
+	elif player.input_direction == wall_direction:
 		transitioned.emit(self, StateMachine.WALLCLINGV)
 	
 

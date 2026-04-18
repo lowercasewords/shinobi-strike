@@ -2,7 +2,7 @@ class_name WallState extends State
 	
 func check_default_exit(wall_direction: float):
 	if player.just_landed:
-		player.direction = -wall_direction
+		player.input_direction = -wall_direction
 		transitioned.emit(self, StateMachine.LAND)
 		return StateMachine.LAND
 	elif wall_direction == 0:

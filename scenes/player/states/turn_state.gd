@@ -6,7 +6,7 @@ const TURN_ACCELERATION = ACCELERATION*1.1
 
 func enter() -> void:
 	super.enter()
-	# Changing walking direction 
+	# Changing walking input_direction 
 	player.animated_sprite.play("turn")
 	player.velocity.x /= 3
 	

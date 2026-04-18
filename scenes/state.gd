@@ -39,12 +39,12 @@ func sidewalls_collision_direction() -> float:
 		var wall_normal = player.wall_cast.get_collision_normal(0)
 		wall_direction = -sign(wall_normal.x)
 		
-	#print("p: ", player.direction)
+	#print("p: ", player.input_direction)
 	#print("w: ", wall_direction)
 	return wall_direction
 	
 func wall_cling_v_state_triggerd() -> bool:
-	return not player.state_machine.current_state is WallState and sidewalls_collision_direction() == player.direction and player.direction != 0
+	return not player.state_machine.current_state is WallState and sidewalls_collision_direction() == player.input_direction and player.input_direction != 0
 
 func apply_gravity(_delta) -> float:
 	var gravity_applied = 0
@@ -55,18 +55,20 @@ func apply_gravity(_delta) -> float:
 
 #func _ready():
 
-func basic_movement(delta: float, max_speed: float):
+# Flips the sprite horizontally based on the player's input_direction
+# Returns: Whether the flip was made
+func direction_flip_horiz() -> bool:
+	var previous_flip: bool = player.animated_sprite.flip_h
+	# Flip the sprite if input_direction is negative (left)
+	if player.actual_direction != 0:
+		player.animated_sprite.flip_h = player.actual_direction != 1
+	return previous_flip != player.animated_sprite.flip_h
 	
-	# Flip the sprite left or right
-	if player.direction < 0:
-		player.animated_sprite.flip_h = true
-	elif player.direction > 0:
-		player.animated_sprite.flip_h = false
-			
+func basic_movement(delta: float, max_speed: float):
 	# Determine target velocity
-	var target_velocity = player.direction * max_speed
+	var target_velocity = player.input_direction * max_speed
 	# Player wants to move
-	if player.direction != 0:
+	if player.input_direction != 0:
 		player.velocity.x = move_toward(player.velocity.x, target_velocity, acceleration * delta)
 	else:
 		# Apply friction (slow down)

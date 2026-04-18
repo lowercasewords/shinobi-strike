@@ -12,9 +12,9 @@ signal area2d_exit(area2d: Area2D)
 @onready var wall_cast: ShapeCast2D = $ShapeCast2D
 @onready var coyote_timer: Timer = $CoyoteTimer
 
-# Direction overrides requested by external sources (such as the states) 
-var requested_direction: float = 0
-var direction: float = 0
+# input_direction overrides requested by external sources (such as the states) 
+var actual_direction: float = 0
+var input_direction: float = 0
 var direction_v: float = 0
 var just_changed_directions: bool = false
 var changing_direction: bool = false
@@ -33,18 +33,16 @@ func _ready():
 	state_machine.start_state_machine()
 	
 func _physics_process(delta):
-	# Get input direction (-1, 0, 1) and handle movement/deceleration
-	var last_direction = direction
+	# Get input input_direction (-1, 0, 1) and handle movement/deceleration
+	var last_direction = input_direction
 	var last_jumping: bool = is_jumping
-	
-	if requested_direction == 0:
-		direction = Input.get_axis("ui_left", "ui_right")
-	else:
-		direction = requested_direction
-	
+
+	input_direction = Input.get_axis("ui_left", "ui_right")
+	actual_direction = input_direction
 	direction_v = Input.get_axis("ui_down", "ui_up")
 	
 	is_jumping = Input.is_action_pressed("ui_accept")
+	
 	if not last_jumping and is_jumping:
 		just_jumped = true
 	else:
@@ -56,15 +54,6 @@ func _physics_process(delta):
 	elif not is_on_floor() and was_on_ground:
 		was_on_ground = false
 		coyote_timer.start()
-		
-	# If wanting to go opposite to the current's velocity
-	if velocity.normalized().x * direction < 0:
-		just_changed_directions = !changing_direction
-		changing_direction = true
-	# If wanting to go the same way to the current's velocity
-	else:
-		changing_direction = false
-		just_changed_directions = false
 	
 	just_landed = false
 	if not is_landed and is_on_floor():
@@ -76,12 +65,16 @@ func _physics_process(delta):
 	# Calculate state physics
 	state_machine.physics_process(delta)
 	
+	# If wanting to go opposite to the current's velocity
+	if velocity.normalized().x * actual_direction < 0 or actual_direction != input_direction:
+		just_changed_directions = !changing_direction
+		changing_direction = true
+	# If wanting to go the same way to the current's velocity
+	else:
+		changing_direction = false
+		just_changed_directions = false
+		
 	move_and_slide()
-	
-	requested_direction = 0
-
-func overriden_direction(direction: float):
-	requested_direction = direction
 
 func _on_sensor_body_entered(area):
 	just_entered_wallbg = true
