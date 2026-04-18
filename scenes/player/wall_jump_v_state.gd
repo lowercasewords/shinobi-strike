@@ -1,6 +1,8 @@
 class_name WallJumpVState extends WallState
 
 const JUMP_SPEED_INITIAL: Vector2 = Vector2(-200, -400)
+const JUMP_ACCELERATION: float = AirborneState.AIRBONE_ACCELERATION/2
+const JUMP_FRICTION: float = AirborneState.AIRBONE_FRICTION/3
 
 func enter():
 	super.enter()
@@ -15,10 +17,11 @@ func enter():
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
+	basic_movement(_delta, player.SPEED)
 	
 	apply_gravity(_delta)
-	friction = AirborneState.AIRBONE_FRICTION
-	acceleration = AirborneState.AIRBONE_ACCELERATION
+	friction = JUMP_FRICTION
+	acceleration = JUMP_ACCELERATION
 	
 	var input_direction = sidewalls_collision_direction()
 	if player.is_on_floor():
