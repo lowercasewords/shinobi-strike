@@ -4,6 +4,9 @@ const JUMP_SPEED_INITIAL: Vector2 = Vector2(-200, -400)
 const JUMP_ACCELERATION: float = AirborneState.AIRBONE_ACCELERATION/2
 const JUMP_FRICTION: float = AirborneState.AIRBONE_FRICTION/3
 
+const MARIO_JUMP_STRENGTH: float = -4
+@onready var mario_jump_timer: Timer = $Timer
+
 func enter():
 	super.enter()
 	var input_direction = sidewalls_collision_direction()
@@ -23,6 +26,8 @@ func physics_update(_delta: float) -> void:
 	friction = JUMP_FRICTION
 	acceleration = JUMP_ACCELERATION
 	
+	mario_jump_update(_delta, mario_jump_timer, MARIO_JUMP_STRENGTH)
+	
 	var input_direction = sidewalls_collision_direction()
 	if player.is_on_floor():
 		transitioned.emit(self, StateMachine.LAND)
@@ -33,6 +38,7 @@ func physics_update(_delta: float) -> void:
 			transitioned.emit(self, StateMachine.WALLCLINGV)
 
 func jump_off_the_wall(input_direction: float):
+	mario_jump_timer.start()
 	player.animated_sprite.play("wall_jump_v")
 	player.velocity.x = JUMP_SPEED_INITIAL.x * -input_direction
 	player.velocity.y = JUMP_SPEED_INITIAL.y

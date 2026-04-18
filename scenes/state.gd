@@ -53,7 +53,16 @@ func apply_gravity(_delta) -> float:
 		player.velocity.y += gravity_applied
 	return gravity_applied
 
-#func _ready():
+func mario_jump_update(_delta: float, mario_jump_timer: Timer, MARIO_JUMP_STRENGTH: float) -> void:
+		# Stop mario jump because player stopped holding jump button 
+	if not player.is_jumping and mario_jump_timer.time_left > 0:
+		mario_jump_timer.stop()
+		mario_jump_timer.timeout.emit()
+		
+	# Mario jump is applied
+	if not mario_jump_timer.is_stopped():
+		if not player.is_on_floor():
+			player.velocity.y += MARIO_JUMP_STRENGTH
 
 # Flips the sprite horizontally based on the player's input_direction
 # Returns: Whether the flip was made

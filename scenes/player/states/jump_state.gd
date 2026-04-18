@@ -17,21 +17,14 @@ func windup_finsh() -> void:
 		mario_jump_timer.start()
 		player.animated_sprite.play('jump')
 		player.velocity.y = JUMP_VELOCITY_INITIAL_THURST
-	
+
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	#player.velocity.y += player.gravity * _delta
 	if not check_airbone_transitions():
 		basic_movement(_delta, player.SPEED)
 		
-		# Stop mario jump because player stopped holding jump button 
-		if not player.is_jumping and mario_jump_timer.time_left > 0:
-			mario_jump_timer.stop()
-			mario_jump_timer.timeout.emit()
-			
-		# Mario jump is applied
-		if not mario_jump_timer.is_stopped() and not player.is_on_floor():
-			player.velocity.y += MARIO_JUMP_STRENGTH
+		mario_jump_update(_delta, mario_jump_timer, MARIO_JUMP_STRENGTH)
 
 func _on_animation_finished():
 	if player.animated_sprite.animation == 'jump_windup':
