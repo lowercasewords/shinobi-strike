@@ -44,7 +44,7 @@ func handle_zoom_input() -> void:
 #var current_direction: float = 1.0 # Keeps track of which way we are officially looking
 #var time_facing_direction: float = 0.0 # Our built-in stopwatch
 #
-#@onready var player: Player = owner
+#@onready var player: NinjaPlayer = owner
 #
 #func _process(delta: float) -> void:
 	#var input_direction = player.input_direction

@@ -1,8 +1,9 @@
 [gd_scene format=4 uid="uid://bj2u3rpy8wy7q"]
 
-[ext_resource type="PackedScene" uid="uid://c6g6agxbnf61l" path="res://scenes/player/Player.tscn" id="1_d141s"]
+[ext_resource type="PackedScene" uid="uid://c6g6agxbnf61l" path="res://scenes/entity/player/NinjaPlayer.tscn" id="1_d141s"]
 [ext_resource type="Texture2D" uid="uid://b3lh63j2chett" path="res://assets/sprites/level/test_tile.png" id="1_s11cq"]
 [ext_resource type="PackedScene" uid="uid://bxcoasukg5wwo" path="res://scenes/levels/test_wall_bg.tscn" id="3_rp362"]
+[ext_resource type="PackedScene" uid="uid://c41uiw0ucssp2" path="res://scenes/entity/enemies/NinjaEnemy.tscn" id="4_ymjof"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s11cq"]
 texture = ExtResource("1_s11cq")
@@ -27,3 +28,6 @@ position = Vector2(0, 176)
 
 [node name="InteractableWalls" parent="." unique_id=1619096664 instance=ExtResource("3_rp362")]
 tile_map_data = PackedByteArray("AAD7/wgAAQAAAAAAAAD7/wkAAQAAAAAAAAD7/woAAQAAAAAAAAD7/wsAAQAAAAAAAAD8/wgAAQAAAAAAAAD8/wkAAQAAAAAAAAD8/woAAQAAAAAAAAD8/wsAAQAAAAAAAAD9/wgAAQAAAAAAAAD9/wkAAQAAAAAAAAD9/woAAQAAAAAAAAD9/wsAAQAAAAAAAAD+/wgAAQAAAAAAAAD+/wkAAQAAAAAAAAD+/woAAQAAAAAAAAD+/wsAAQAAAAAAAAD//wgAAQAAAAAAAAD//wkAAQAAAAAAAAD//woAAQAAAAAAAAD//wsAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAkAAQAAAAAAAAAAAAoAAQAAAAAAAAAAAAsAAQAAAAAAAAABAAgAAQAAAAAAAAABAAkAAQAAAAAAAAABAAoAAQAAAAAAAAABAAsAAQAAAAAAAAACAAgAAQAAAAAAAAACAAkAAQAAAAAAAAACAAoAAQAAAAAAAAACAAsAAQAAAAAAAAADAAgAAQAAAAAAAAADAAkAAQAAAAAAAAADAAoAAQAAAAAAAAADAAsAAQAAAAAAAAA=")
+
+[node name="NinjaEnemy" parent="." unique_id=1948172761 instance=ExtResource("4_ymjof")]
+position = Vector2(-144, -80)

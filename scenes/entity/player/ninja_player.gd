@@ -1,4 +1,4 @@
-class_name Player extends CharacterBody2D
+class_name NinjaPlayer extends Ninja
 
 const SPEED = 200.0
 const JUMP_VELOCITY_INITIAL_THURST = -300.0

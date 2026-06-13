@@ -1,6 +1,6 @@
 class_name State extends Node2D
 
-@onready var player: Player = owner 
+@onready var player: NinjaPlayer = owner 
 
 # Base state class for entities that need complex states
 
@@ -76,7 +76,7 @@ func direction_flip_horiz() -> bool:
 func basic_movement(delta: float, max_speed: float):
 	# Determine target velocity
 	var target_velocity = player.input_direction * max_speed
-	# Player wants to move
+	# NinjaPlayer wants to move
 	if player.input_direction != 0:
 		player.velocity.x = move_toward(player.velocity.x, target_velocity, acceleration * delta)
 	else:

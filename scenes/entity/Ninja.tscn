@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dolch7e51x6yi"]
+
+[ext_resource type="Script" uid="uid://cks8ejc483gb2" path="res://scenes/entity/ninja.gd" id="1_3u08a"]
+
+[node name="Ninja" type="CharacterBody2D" unique_id=1706776719]
+script = ExtResource("1_3u08a")
+metadata/_custom_type_script = "uid://cks8ejc483gb2"

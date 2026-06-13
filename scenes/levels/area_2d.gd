@@ -6,11 +6,11 @@ func  _ready():
 	
 
 func _on_body_entered(body: Node2D):
-	if body is Player:
-		var player: Player = body as Player
+	if body is NinjaPlayer:
+		var player: NinjaPlayer = body as NinjaPlayer
 		player.area2d_enter.emit(self)
 	
 func _on_body_exited(body: Node2D):
-	if body is Player:
-		var player: Player = body as Player
+	if body is NinjaPlayer:
+		var player: NinjaPlayer = body as NinjaPlayer
 		player.area2d_exit.emit(self)

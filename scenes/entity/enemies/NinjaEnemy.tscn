@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c41uiw0ucssp2"]
+
+[ext_resource type="Script" uid="uid://cks8ejc483gb2" path="res://scenes/entity/ninja.gd" id="1_jvudk"]
+[ext_resource type="Texture2D" uid="uid://d066o6t5yxfp" path="res://assets/sprites/enemy/ninja_stand_1.png" id="2_b4tba"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jvudk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_b4tba")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4tba"]
+
+[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1948172761]
+script = ExtResource("1_jvudk")
+metadata/_custom_type_script = "uid://cks8ejc483gb2"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1235654335]
+sprite_frames = SubResource("SpriteFrames_jvudk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=243842588]
+shape = SubResource("RectangleShape2D_b4tba")

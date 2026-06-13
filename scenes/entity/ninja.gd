@@ -1,0 +1,1 @@
+class_name Ninja extends CharacterBody2D

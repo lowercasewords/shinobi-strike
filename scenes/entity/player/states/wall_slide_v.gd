@@ -11,11 +11,11 @@ var max_slide_speed: float = MAX_SLIDE_SPEED
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	# Player wants the player to go down
+	# NinjaPlayer wants the player to go down
 	if player.direction_v < 0:
 		slide_gravity = SLIDE_GAVITY_HASTE
 		max_slide_speed = MAX_SLIDE_SPEED_HASTE
-	# Player wants to stay in place
+	# NinjaPlayer wants to stay in place
 	else:
 		# Stabilize the player by reduce the falling speed
 		if player.velocity.y > MAX_SLIDE_SPEED:
