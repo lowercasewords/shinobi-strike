@@ -12,7 +12,8 @@ var acceleration: float = ACCELERATION
 	
 signal transitioned(new_state_name: String)
 func enter(): 
-	player.animated_sprite.animation_finished.connect(_on_animation_finished)
+	if not player.animated_sprite.animation_finished.is_connected(_on_animation_finished):
+		player.animated_sprite.animation_finished.connect(_on_animation_finished)
 func exit():
 	if player.animated_sprite.animation_finished.is_connected(_on_animation_finished):
 		player.animated_sprite.animation_finished.disconnect(_on_animation_finished)
