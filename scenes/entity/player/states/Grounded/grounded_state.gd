@@ -9,6 +9,9 @@ const TURN_SPEED_THRESHOLD: float = 5
 func _physics_process(delta):
 	direction_flip_horiz()
 	
+func combo_A_triggered() -> bool:
+	return player.is_pressed_heavy_attack
+	
 func jump_state_triggered() -> bool:
 	"""
 	Is jump state triggered this tic?
@@ -24,6 +27,10 @@ func turn_state_triggered() -> bool:
 func check_grounded_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()
 	
+	if combo_A_triggered():
+		transitioned.emit(self, StateMachine.GROUNDCOMBOA)
+		return StateMachine.GROUNDCOMBOA
+		
 	if fall_state_triggered():
 		transitioned.emit(self, StateMachine.FALL)
 		return StateMachine.FALL

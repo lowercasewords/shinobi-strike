@@ -15,6 +15,7 @@ const WALLRUNV = "wallrunv"
 const WALLJUMPV = "walljumpv"
 const WALLCLINGV = "wallclingv"
 const WALLSLIDEV = "wallslidev"
+const GROUNDCOMBOA = "groundcomboa"
 
 # Mapping of state nodes to their string names
 var states: Dictionary = {}

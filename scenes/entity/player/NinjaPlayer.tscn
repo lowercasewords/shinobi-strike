@@ -2,12 +2,15 @@
 
 [ext_resource type="Script" uid="uid://c2wdufkqurqwi" path="res://scenes/entity/player/ninja_player.gd" id="1_c3xxp"]
 [ext_resource type="Texture2D" uid="uid://crvyh6rngs165" path="res://assets/sprites/player/player_stand_1.png" id="1_p0vlq"]
+[ext_resource type="Texture2D" uid="uid://bs65m68ki2dxk" path="res://assets/sprites/player/player_combo_A_1i.png" id="2_5vp28"]
 [ext_resource type="Texture2D" uid="uid://bnj8pgapekeag" path="res://assets/sprites/player/player_fall_1.png" id="2_qsmrd"]
 [ext_resource type="Texture2D" uid="uid://df1n4onmri7yu" path="res://assets/sprites/player/player_stand_2.png" id="2_tpg5x"]
 [ext_resource type="Texture2D" uid="uid://clnmcfyounb31" path="res://assets/sprites/player/player_stand_3.png" id="3_c3xxp"]
+[ext_resource type="Texture2D" uid="uid://dhwtj5bijdbnx" path="res://assets/sprites/player/player_combo_A_2i.png" id="3_qfoes"]
 [ext_resource type="Texture2D" uid="uid://dttnn0ar6ir6e" path="res://assets/sprites/player/player_fall_2.png" id="3_ye1dr"]
 [ext_resource type="Texture2D" uid="uid://dhmjd1x5hyivp" path="res://assets/sprites/player/player_fall_3.png" id="4_bvphr"]
 [ext_resource type="Texture2D" uid="uid://csnowq2mpbgja" path="res://assets/sprites/player/player_stand_4.png" id="4_npwbq"]
+[ext_resource type="Texture2D" uid="uid://fff3j2fk5c0e" path="res://assets/sprites/player/player_combo_A_3i.png" id="4_wu60g"]
 [ext_resource type="Texture2D" uid="uid://iq1hcwxslmt3" path="res://assets/sprites/player/player_fall_vertical_1.png" id="5_05p8n"]
 [ext_resource type="Texture2D" uid="uid://df707f7n24d1o" path="res://assets/sprites/player/player_stand_5.png" id="5_v42im"]
 [ext_resource type="Texture2D" uid="uid://brvaqicygc6f0" path="res://assets/sprites/player/player_fall_vertical_2.png" id="6_eac1a"]
@@ -68,6 +71,7 @@
 [ext_resource type="Script" uid="uid://chkywte85wcv2" path="res://scenes/entity/player/states/Wall/wall_slide_v.gd" id="64_ijqjm"]
 [ext_resource type="Script" uid="uid://sl3qbdibuelf" path="res://scenes/entity/player/states/Wall/wall_run_state.gd" id="65_2357c"]
 [ext_resource type="Script" uid="uid://c12fdx6vajhxa" path="res://scenes/entity/player/states/Wall/wall_jump_v_state.gd" id="66_ih1r2"]
+[ext_resource type="Script" uid="uid://pgi23ubamnbk" path="res://scenes/entity/player/states/Combat/ground_combo_A.gd" id="72_qfoes"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ktadw"]
 size = Vector2(12.87, 9.38)
@@ -101,6 +105,20 @@ animations = [{
 "loop": true,
 "name": &"fall_vertical",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5vp28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qfoes")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wu60g")
+}],
+"loop": true,
+"name": &"ground_combo_A",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -331,7 +349,7 @@ max_results = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"walk"
+animation = &"ground_combo_A"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
@@ -403,6 +421,11 @@ script = ExtResource("64_ijqjm")
 
 [node name="WallRun" type="Node2D" parent="StateMachine" unique_id=67663672]
 script = ExtResource("65_2357c")
+
+[node name="GroundComboA" type="Node2D" parent="StateMachine" unique_id=1288862176]
+script = ExtResource("72_qfoes")
+
+[node name="Timer" type="Timer" parent="StateMachine/GroundComboA" unique_id=1903270818]
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=927083260]
 wait_time = 0.2

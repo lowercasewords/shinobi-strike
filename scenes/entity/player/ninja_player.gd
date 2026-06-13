@@ -26,6 +26,9 @@ var is_jumping: bool = false
 var just_jumped: bool = false
 var was_on_ground: bool = false
 
+var is_pressed_light_attack: bool = false
+var is_pressed_heavy_attack: bool = false
+
 func _ready():
 	#area2d_enter.connect(_on_wall_entered)
 	#area2d_exit.connect(_on_wall_exited)
@@ -42,6 +45,9 @@ func _physics_process(delta):
 	direction_v = Input.get_axis("ui_down", "ui_up")
 	
 	is_jumping = Input.is_action_pressed("ui_accept")
+	
+	is_pressed_light_attack = Input.is_action_just_pressed("light_attack")
+	is_pressed_heavy_attack = Input.is_action_just_pressed("heavy_attack")
 	
 	if not last_jumping and is_jumping:
 		just_jumped = true
@@ -61,6 +67,7 @@ func _physics_process(delta):
 		is_landed = true
 	elif is_landed and not is_on_floor():
 		is_landed = false
+		
 	
 	# Calculate state physics
 	state_machine.physics_process(delta)
