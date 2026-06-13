@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dcp5omecschbm"]
+[gd_scene format=3 uid="uid://dcf502m64laka"]
 
 [ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/entity/player/states/idle_state.gd" id="1_41xhr"]
 
