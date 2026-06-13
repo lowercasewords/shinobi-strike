@@ -15,8 +15,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4tba"]
+size = Vector2(16, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqx36"]
+size = Vector2(32, 24)
 
 [node name="NinjaEnemy" type="CharacterBody2D" unique_id=1948172761]
+collision_layer = 0
 script = ExtResource("1_jvudk")
 metadata/_custom_type_script = "uid://cks8ejc483gb2"
 
@@ -24,4 +29,12 @@ metadata/_custom_type_script = "uid://cks8ejc483gb2"
 sprite_frames = SubResource("SpriteFrames_jvudk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=243842588]
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_b4tba")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1393539817]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1064405355]
+position = Vector2(0, 4)
+scale = Vector2(0.75, 1)
+shape = SubResource("RectangleShape2D_bqx36")

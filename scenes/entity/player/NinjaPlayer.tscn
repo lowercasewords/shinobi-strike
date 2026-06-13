@@ -315,6 +315,9 @@ stream_2/stream = ExtResource("36_4ntn1")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80bwr"]
 size = Vector2(5, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ih1r2"]
+size = Vector2(32, 24)
+
 [node name="NinjaPlayer" type="CharacterBody2D" unique_id=880884900]
 script = ExtResource("1_c3xxp")
 metadata/_custom_type_script = "uid://cks8ejc483gb2"
@@ -328,7 +331,7 @@ max_results = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
 sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"wall_run"
+animation = &"walk"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
@@ -411,6 +414,13 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor" unique_id=487473812]
 shape = SubResource("RectangleShape2D_80bwr")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1866892305]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=478387134]
+position = Vector2(0, 4)
+scale = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_ih1r2")
 
 [connection signal="body_entered" from="Sensor" to="." method="_on_sensor_body_entered"]
 [connection signal="body_exited" from="Sensor" to="." method="_on_sensor_body_exited"]
