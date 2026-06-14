@@ -21,7 +21,6 @@ func continue_combo() -> bool:
 	var dequeued_attack: bool = combo_next_attack(current_attack)
 
 	return dequeued_attack
-		
 	
 func combo_next_attack(current_attack: ATTACK_TYPE) -> bool:
 	"""
@@ -44,6 +43,7 @@ func combo_next_attack(current_attack: ATTACK_TYPE) -> bool:
 	
 func start_attack_A() -> bool:
 	player.animated_sprite.play("ground_combo_A_A")
+	player.velocity.x += player.forward_direction * 5.0
 	return true
 
 func start_attack_B() -> bool:
@@ -62,6 +62,7 @@ func _on_input_window_timeout():
 	
 	if not was_combo_continued:
 		change_state()
+		print("now")
 	
 func change_state() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()

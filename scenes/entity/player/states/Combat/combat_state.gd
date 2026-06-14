@@ -14,6 +14,8 @@ var attack_input_buffer: Array[ATTACK_TYPE] = []
 
 func enter() -> void:
 	super.enter()
+	input_window.one_shot = true
+	input_window.wait_time = DEFAULT_INPUT_WINDOW_TIME
 	if not input_window.timeout.is_connected(_on_input_window_timeout):
 		input_window.timeout.connect(_on_input_window_timeout)
 	

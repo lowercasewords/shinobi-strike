@@ -70,8 +70,8 @@ func mario_jump_update(_delta: float, mario_jump_timer: Timer, MARIO_JUMP_STRENG
 func direction_flip_horiz() -> bool:
 	var previous_flip: bool = player.animated_sprite.flip_h
 	# Flip the sprite if input_direction is negative (left)
-	if player.actual_direction != 0:
-		player.animated_sprite.flip_h = player.actual_direction != 1
+	if player.input_direction != 0:
+		player.animated_sprite.flip_h = player.input_direction != 1
 	return previous_flip != player.animated_sprite.flip_h
 	
 func basic_movement(delta: float, max_speed: float):

@@ -14,7 +14,7 @@ signal area2d_exit(area2d: Area2D)
 @onready var coyote_timer: Timer = $CoyoteTimer
 
 # input_direction overrides requested by external sources (such as the states) 
-var actual_direction: float = 0
+var forward_direction: float = 1
 var input_direction: float = 0
 var direction_v: float = 0
 var just_changed_directions: bool = false
@@ -31,7 +31,7 @@ var is_pressed_light_attack: bool = false
 var is_pressed_heavy_attack: bool = false
 
 # Push/Pop Queue for Combo Inputs
-var attack_input_buffer: Array[ComboState.ATTACK_TYPE]
+var attack_input_buffer: Array
 
 func _ready():
 	#area2d_enter.connect(_on_wall_entered)
@@ -45,7 +45,8 @@ func _physics_process(delta):
 	var last_jumping: bool = is_jumping
 
 	input_direction = Input.get_axis("ui_left", "ui_right")
-	actual_direction = input_direction
+	if input_direction != 0:
+		forward_direction = input_direction
 	direction_v = Input.get_axis("ui_down", "ui_up")
 	
 	is_jumping = Input.is_action_pressed("ui_accept")
@@ -63,7 +64,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("heavy_attack"):
 		attack_input_buffer.push_front(ComboState.ATTACK_TYPE.HEAVY)
 		is_pressed_heavy_attack = false
-	
 	
 	if not last_jumping and is_jumping:
 		just_jumped = true
@@ -89,7 +89,7 @@ func _physics_process(delta):
 	state_machine.physics_process(delta)
 	
 	# If wanting to go opposite to the current's velocity
-	if velocity.normalized().x * actual_direction < 0 or actual_direction != input_direction:
+	if velocity.normalized().x * forward_direction < 0:
 		just_changed_directions = !changing_direction
 		changing_direction = true
 	# If wanting to go the same way to the current's velocity

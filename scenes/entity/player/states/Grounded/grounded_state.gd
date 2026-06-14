@@ -22,7 +22,7 @@ func turn_state_triggered() -> bool:
 	"""
 	Is turn state triggered this tic?
 	"""
-	return (player.velocity.normalized().x*player.actual_direction < 0 or player.just_changed_directions) and abs(player.velocity.x) > TURN_SPEED_THRESHOLD and player.state_machine.current_state.name.to_lower() != StateMachine.TURN
+	return (player.velocity.normalized().x*player.input_direction < 0 or player.just_changed_directions) and abs(player.velocity.x) > TURN_SPEED_THRESHOLD and player.state_machine.current_state.name.to_lower() != StateMachine.TURN
 
 func check_grounded_transitions() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()

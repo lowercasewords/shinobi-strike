@@ -17,13 +17,13 @@ func enter():
 	cling_timer.start()
 	audio_stream.play()
 	#player.overriden_direction(wall_direction)
-	player.actual_direction = wall_direction
+	player.forward_direction = wall_direction
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	#var overriden_state: String = check_wall_transitions()
 	var wall_direction: float = sidewalls_collision_direction()
-	player.actual_direction = wall_direction
+	player.forward_direction = wall_direction
 	
 	player.velocity.y = move_toward(player.velocity.y, 0.0, CLING_FRICTION * _delta)
 	
