@@ -26,12 +26,16 @@
 [ext_resource type="Texture2D" uid="uid://6ssnw87rl0xq" path="res://assets/sprites/player/player_jump_windup_1.png" id="11_8nn5r"]
 [ext_resource type="Texture2D" uid="uid://dhwtj5bijdbnx" path="res://assets/sprites/player/player_combo_A_B1.png" id="11_dc3eh"]
 [ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/entity/player/states/Grounded/idle_state.gd" id="12_20koh"]
+[ext_resource type="Texture2D" uid="uid://svnfc5civpu7" path="res://assets/sprites/player/player_combo_A_B2.png" id="12_l5qne"]
 [ext_resource type="Texture2D" uid="uid://fff3j2fk5c0e" path="res://assets/sprites/player/player_combo_A_C1.png" id="12_o3wtp"]
 [ext_resource type="Script" uid="uid://bt4sxdqgb50lo" path="res://scenes/entity/player/states/Grounded/walk_state.gd" id="13_ov1oi"]
+[ext_resource type="Texture2D" uid="uid://d250evuquhv00" path="res://assets/sprites/player/player_combo_A_B3.png" id="13_p0ety"]
 [ext_resource type="Texture2D" uid="uid://buswhidteaars" path="res://assets/sprites/player/player_land_1.png" id="13_ro0t8"]
 [ext_resource type="Texture2D" uid="uid://chw05i2p6bd6n" path="res://assets/sprites/player/player_land_2.png" id="14_8nn5r"]
 [ext_resource type="Script" uid="uid://bsyh8g21vunej" path="res://scenes/entity/player/states/Airborne/jump_state.gd" id="14_ov1oi"]
 [ext_resource type="Texture2D" uid="uid://bc7meijdhk13f" path="res://assets/sprites/player/player_land_3.png" id="15_kvwax"]
+[ext_resource type="Texture2D" uid="uid://0fs3j3o32q0m" path="res://assets/sprites/player/player_combo_A_C2.png" id="15_pfb2t"]
+[ext_resource type="Texture2D" uid="uid://bu0nt22p48bxx" path="res://assets/sprites/player/player_combo_A_C3.png" id="16_we34s"]
 [ext_resource type="Texture2D" uid="uid://bqx70q7sn8mli" path="res://assets/sprites/player/player_turn_1.png" id="20_5ttev"]
 [ext_resource type="Script" uid="uid://bqf4onwxnfx6u" path="res://scenes/entity/player/states/Grounded/land_state.gd" id="20_ro0t8"]
 [ext_resource type="Texture2D" uid="uid://bmabm4vpstt6f" path="res://assets/sprites/player/player_walk_windup_1.png" id="20_x3qp0"]
@@ -125,18 +129,30 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("11_dc3eh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_l5qne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_p0ety")
 }],
 "loop": false,
 "name": &"ground_combo_A_B",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("12_o3wtp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_pfb2t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_we34s")
 }],
 "loop": false,
 "name": &"ground_combo_A_C",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,

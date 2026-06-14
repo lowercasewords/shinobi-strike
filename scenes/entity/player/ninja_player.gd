@@ -2,6 +2,7 @@ class_name NinjaPlayer extends Ninja
 
 const SPEED = 200.0
 const JUMP_VELOCITY_INITIAL_THURST = -300.0
+const MAX_ATTACK_INPUT_BUFFER_SIZE: int = 10
 
 signal area2d_enter(area2d: Area2D)
 signal area2d_exit(area2d: Area2D)
@@ -29,6 +30,9 @@ var was_on_ground: bool = false
 var is_pressed_light_attack: bool = false
 var is_pressed_heavy_attack: bool = false
 
+# Push/Pop Queue for Combo Inputs
+var attack_input_buffer: Array[ComboState.ATTACK_TYPE]
+
 func _ready():
 	#area2d_enter.connect(_on_wall_entered)
 	#area2d_exit.connect(_on_wall_exited)
@@ -46,8 +50,20 @@ func _physics_process(delta):
 	
 	is_jumping = Input.is_action_pressed("ui_accept")
 	
-	is_pressed_light_attack = Input.is_action_just_pressed("light_attack")
-	is_pressed_heavy_attack = Input.is_action_just_pressed("heavy_attack")
+	is_pressed_light_attack = false
+	is_pressed_heavy_attack = false
+	# Enforce buffer size limit
+	if attack_input_buffer.size() > MAX_ATTACK_INPUT_BUFFER_SIZE:
+		attack_input_buffer.resize(MAX_ATTACK_INPUT_BUFFER_SIZE)
+	# Buffer a light attack
+	if Input.is_action_just_pressed("light_attack"):
+		attack_input_buffer.push_front(ComboState.ATTACK_TYPE.LIGHT)
+		is_pressed_light_attack = true
+	# Buffer a heavy attack
+	if Input.is_action_just_pressed("heavy_attack"):
+		attack_input_buffer.push_front(ComboState.ATTACK_TYPE.HEAVY)
+		is_pressed_heavy_attack = false
+	
 	
 	if not last_jumping and is_jumping:
 		just_jumped = true

@@ -10,7 +10,7 @@ func _physics_process(delta):
 	direction_flip_horiz()
 	
 func combo_A_triggered() -> bool:
-	return player.is_pressed_heavy_attack
+	return player.attack_input_buffer.size() > 0 and player.attack_input_buffer[0] == ComboState.ATTACK_TYPE.LIGHT
 	
 func jump_state_triggered() -> bool:
 	"""
