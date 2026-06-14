@@ -5,38 +5,42 @@ LIGHT ATTACK -> LIGHT ATTACK -> HEAVY ATTACK
 
 func enter() -> void:
 	super.enter()
-	decide_upon_attack_finish()
+	continue_combo()
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 
-func decide_upon_attack_finish() -> bool:
+func continue_combo() -> bool:
 	"""
-	Either continue 
-	"""
-	if player.attack_input_buffer.size() > 0:
-		var current_attack: ATTACK_TYPE = pop_attack()
-		return try_dequeue_attack(current_attack)
-	else:
-		change_state()
-		return false
+	Dequeues the current combo input buffer to attempt to continue the combo with the next attack
 	
+	Returns:
+		 Whether the combo was continued or not
+	"""
+	var current_attack: ATTACK_TYPE = pop_attack()
+	var dequeued_attack: bool = combo_next_attack(current_attack)
 
-func try_dequeue_attack(current_attack: ATTACK_TYPE) -> bool:
-	var attack_activated: bool = false
+	return dequeued_attack
+		
+	
+func combo_next_attack(current_attack: ATTACK_TYPE) -> bool:
+	"""
+	Attemps to continue combo based on the move provided as an argument
+	"""
+	var combo_continued: bool = false
 	
 	match attack_input_buffer.size():
 		1:
 			if current_attack == ATTACK_TYPE.LIGHT:
-				attack_activated = start_attack_A()
+				combo_continued = start_attack_A()
 		2: 
 			if current_attack == ATTACK_TYPE.LIGHT:
-				attack_activated = start_attack_B()
+				combo_continued = start_attack_B()
 		3:
 			if current_attack == ATTACK_TYPE.HEAVY:
-				attack_activated = start_attack_C()
+				combo_continued = start_attack_C()
 	
-	return attack_activated
+	return combo_continued
 	
 func start_attack_A() -> bool:
 	player.animated_sprite.play("ground_combo_A_A")
@@ -54,7 +58,10 @@ func _on_animation_finished():
 	input_window.start(DEFAULT_INPUT_WINDOW_TIME)
 	
 func _on_input_window_timeout():
-	decide_upon_attack_finish()
+	var was_combo_continued: bool = continue_combo()
+	
+	if not was_combo_continued:
+		change_state()
 	
 func change_state() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()

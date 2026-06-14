@@ -2,7 +2,10 @@ class_name ComboState extends State
 
 enum ATTACK_TYPE { LIGHT, HEAVY, UNKNOWN }
 
-const DEFAULT_INPUT_WINDOW_TIME: float = 0.2
+const DEFAULT_INPUT_WINDOW_TIME: float = 0.5
+
+const DEFAULT_H_THURST: float = 0.5
+const DEFAULT_V_THURST: float = 1.0
 
 # While input window timer is playing, the current combo can be extended with an attack
 @onready var input_window: Timer = $Timer
@@ -21,7 +24,14 @@ func exit() -> void:
 	attack_input_buffer.clear()
 		
 func pop_attack() -> ATTACK_TYPE:
-	var popped_attack: ATTACK_TYPE = player.attack_input_buffer.pop_back()
+	"""
+	Pop the Attack Input (Light/Heavy) from the player input buffer 
+	and
+	Push said Attack Input to the combo specific buffer
+	"""
+	var popped_attack: ATTACK_TYPE = ATTACK_TYPE.UNKNOWN
+	if player.attack_input_buffer.size() > 0:
+		popped_attack = player.attack_input_buffer.pop_back()
 	if popped_attack == null:
 		popped_attack = ATTACK_TYPE.UNKNOWN
 	
