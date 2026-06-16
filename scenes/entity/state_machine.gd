@@ -17,6 +17,13 @@ const WALLCLINGV = "wallclingv"
 const WALLSLIDEV = "wallslidev"
 const GROUNDCOMBOA = "groundcomboa"
 
+######
+#public state current_state;
+# on update
+#-> input ->
+#switch state.run -> run()
+######
+
 # Mapping of state nodes to their string names
 var states: Dictionary = {}
 

@@ -2,15 +2,23 @@
 
 [ext_resource type="Script" uid="uid://cks8ejc483gb2" path="res://scenes/entity/ninja.gd" id="1_jvudk"]
 [ext_resource type="Texture2D" uid="uid://d066o6t5yxfp" path="res://assets/sprites/enemy/ninja_stand_1.png" id="2_b4tba"]
+[ext_resource type="Texture2D" uid="uid://4t3agh8kibjf" path="res://assets/sprites/enemy/ninja_stand_2.png" id="3_5meks"]
+[ext_resource type="Texture2D" uid="uid://dlydujspg8qvw" path="res://assets/sprites/enemy/ninja_stand_3.png" id="4_u7cqt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jvudk"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_b4tba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5meks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_u7cqt")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -20,6 +28,9 @@ size = Vector2(16, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqx36"]
 size = Vector2(32, 24)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5meks"]
+size = Vector2(100, 20)
+
 [node name="NinjaEnemy" type="CharacterBody2D" unique_id=1948172761]
 collision_layer = 0
 script = ExtResource("1_jvudk")
@@ -27,6 +38,9 @@ metadata/_custom_type_script = "uid://cks8ejc483gb2"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1235654335]
 sprite_frames = SubResource("SpriteFrames_jvudk")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.9680583
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=243842588]
 position = Vector2(0, 4)
@@ -38,3 +52,8 @@ shape = SubResource("RectangleShape2D_b4tba")
 position = Vector2(0, 4)
 scale = Vector2(0.75, 1)
 shape = SubResource("RectangleShape2D_bqx36")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=945928435]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1127351311]
+shape = SubResource("RectangleShape2D_5meks")

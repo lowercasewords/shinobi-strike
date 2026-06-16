@@ -5,12 +5,12 @@ LIGHT ATTACK -> LIGHT ATTACK -> HEAVY ATTACK
 
 func enter() -> void:
 	super.enter()
-	continue_combo()
+	try_continue_combo()
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 
-func continue_combo() -> bool:
+func try_continue_combo() -> bool:
 	"""
 	Dequeues the current combo input buffer to attempt to continue the combo with the next attack
 	
@@ -43,26 +43,31 @@ func combo_next_attack(current_attack: ATTACK_TYPE) -> bool:
 	
 func start_attack_A() -> bool:
 	player.animated_sprite.play("ground_combo_A_A")
-	player.velocity.x += player.forward_direction * 5.0
+	player.velocity.x += player.forward_direction * DEFAULT_H_THURST*2
 	return true
 
 func start_attack_B() -> bool:
 	player.animated_sprite.play("ground_combo_A_B")
+	player.velocity.x += player.forward_direction * DEFAULT_H_THURST
 	return true
 	
 func start_attack_C() -> bool:
 	player.animated_sprite.play("ground_combo_A_C")
+	player.velocity.x += player.forward_direction * DEFAULT_H_THURST/10
 	return true
 
 func _on_animation_finished():
-	input_window.start(DEFAULT_INPUT_WINDOW_TIME)
-	
-func _on_input_window_timeout():
-	var was_combo_continued: bool = continue_combo()
-	
+	var was_combo_continued: bool = try_continue_combo()
+		
 	if not was_combo_continued:
-		change_state()
-		print("now")
+		last_attack_lag.start(LAST_ATTACK_LAG_TIME)
+	
+func _on_last_attack_lag_timeout():
+	change_state()
+	
+func _on_last_frame(animation: String):
+	super._on_last_frame(animation)
+	player.velocity.x = 0
 	
 func change_state() -> String:
 	var current_state_name: String = player.state_machine.current_state.name.to_lower()

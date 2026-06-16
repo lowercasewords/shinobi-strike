@@ -34,7 +34,6 @@
 [ext_resource type="Texture2D" uid="uid://chw05i2p6bd6n" path="res://assets/sprites/player/player_land_2.png" id="14_8nn5r"]
 [ext_resource type="Script" uid="uid://bsyh8g21vunej" path="res://scenes/entity/player/states/Airborne/jump_state.gd" id="14_ov1oi"]
 [ext_resource type="Texture2D" uid="uid://bc7meijdhk13f" path="res://assets/sprites/player/player_land_3.png" id="15_kvwax"]
-[ext_resource type="Texture2D" uid="uid://0fs3j3o32q0m" path="res://assets/sprites/player/player_combo_A_C2.png" id="15_pfb2t"]
 [ext_resource type="Texture2D" uid="uid://bu0nt22p48bxx" path="res://assets/sprites/player/player_combo_A_C3.png" id="16_we34s"]
 [ext_resource type="Texture2D" uid="uid://bqx70q7sn8mli" path="res://assets/sprites/player/player_turn_1.png" id="20_5ttev"]
 [ext_resource type="Script" uid="uid://bqf4onwxnfx6u" path="res://scenes/entity/player/states/Grounded/land_state.gd" id="20_ro0t8"]
@@ -113,13 +112,13 @@ animations = [{
 "speed": 10.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 1.5,
 "texture": ExtResource("2_5vp28")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("3_qfoes")
 }, {
-"duration": 1.0,
+"duration": 5.0,
 "texture": ExtResource("4_wu60g")
 }],
 "loop": false,
@@ -138,21 +137,21 @@ animations = [{
 }],
 "loop": false,
 "name": &"ground_combo_A_B",
-"speed": 15.0
+"speed": 25.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 5.0,
 "texture": ExtResource("12_o3wtp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_pfb2t")
+"texture": ExtResource("12_o3wtp")
 }, {
-"duration": 1.0,
+"duration": 3.0,
 "texture": ExtResource("16_we34s")
 }],
 "loop": false,
 "name": &"ground_combo_A_C",
-"speed": 15.0
+"speed": 35.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -370,6 +369,9 @@ size = Vector2(5, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ih1r2"]
 size = Vector2(32, 24)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pfb2t"]
+size = Vector2(100, 20)
+
 [node name="NinjaPlayer" type="CharacterBody2D" unique_id=880884900]
 script = ExtResource("1_c3xxp")
 metadata/_custom_type_script = "uid://cks8ejc483gb2"
@@ -465,11 +467,11 @@ script = ExtResource("72_qfoes")
 wait_time = 0.2
 one_shot = true
 
-[node name="Sensor" type="Area2D" parent="." unique_id=446667923]
+[node name="WallSensor" type="Area2D" parent="." unique_id=446667923]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor" unique_id=487473812]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSensor" unique_id=487473812]
 shape = SubResource("RectangleShape2D_80bwr")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1866892305]
@@ -479,5 +481,10 @@ position = Vector2(0, 4)
 scale = Vector2(0.5, 1)
 shape = SubResource("RectangleShape2D_ih1r2")
 
-[connection signal="body_entered" from="Sensor" to="." method="_on_sensor_body_entered"]
-[connection signal="body_exited" from="Sensor" to="." method="_on_sensor_body_exited"]
+[node name="AttackArea" type="Area2D" parent="." unique_id=2141497931]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1398667613]
+shape = SubResource("RectangleShape2D_pfb2t")
+
+[connection signal="body_entered" from="WallSensor" to="." method="_on_sensor_body_entered"]
+[connection signal="body_exited" from="WallSensor" to="." method="_on_sensor_body_exited"]
