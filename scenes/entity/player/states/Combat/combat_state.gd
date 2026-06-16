@@ -2,7 +2,7 @@ class_name ComboState extends State
 
 enum ATTACK_TYPE { LIGHT, HEAVY, UNKNOWN }
 
-const LAST_ATTACK_LAG_TIME: float = 0.2
+const LAST_ATTACK_LAG_TIME: float = 1
 
 const DEFAULT_H_THURST: float = 50
 const DEFAULT_V_THURST: float = 1.0
@@ -40,12 +40,17 @@ func pop_attack() -> ATTACK_TYPE:
 	Push said Attack Input to the combo specific buffer
 	"""
 	var popped_attack: ATTACK_TYPE = ATTACK_TYPE.UNKNOWN
-	if player.attack_input_buffer.size() > 0:
-		popped_attack = player.attack_input_buffer.pop_back()
-	if popped_attack == null:
-		popped_attack = ATTACK_TYPE.UNKNOWN
+	var foo = player.attack_input_buffer
 	
-	attack_input_buffer.push_front(popped_attack)
+	if not player.attack_input_buffer.is_empty():
+		popped_attack = player.attack_input_buffer.pop_back()
+		
+		if popped_attack == null:
+			popped_attack = ATTACK_TYPE.UNKNOWN
+		
+		if popped_attack != ATTACK_TYPE.UNKNOWN:
+			attack_input_buffer.push_front(popped_attack)
+			
 	return popped_attack
 
 func _on_last_attack_lag_timeout(): pass
@@ -54,13 +59,13 @@ func _on_frame_changed():
 	var total_frames: int = player.animated_sprite.sprite_frames.get_frame_count(player.animated_sprite.animation)
 	
 	if current_frame_index == total_frames - 1:
-		_on_last_frame(player.animated_sprite.animation)
+		_on_last_frame(player.animated_sprite)
 	
 	
-func _on_last_frame(animation: String): 
+func _on_last_frame(animation: AnimatedSprite2D): 
 	"""
 	Called when the player reaches the last frame of the animation
 	Args:
-		animation (String): the name of the current animation
+		animated_sprite (AnimatedSprite2D): the animation sprite for which the last frame is tracked
 	"""
 	pass

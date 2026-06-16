@@ -78,6 +78,7 @@
 [ext_resource type="Script" uid="uid://sl3qbdibuelf" path="res://scenes/entity/player/states/Wall/wall_run_state.gd" id="65_2357c"]
 [ext_resource type="Script" uid="uid://c12fdx6vajhxa" path="res://scenes/entity/player/states/Wall/wall_jump_v_state.gd" id="66_ih1r2"]
 [ext_resource type="Script" uid="uid://pgi23ubamnbk" path="res://scenes/entity/player/states/Combat/ground_combo_A.gd" id="72_qfoes"]
+[ext_resource type="AudioStream" uid="uid://d3yvlq5omvitt" path="res://assets/sounds/sword_wind_whoosh.wav" id="79_we34s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ktadw"]
 size = Vector2(12.87, 9.38)
@@ -463,6 +464,9 @@ script = ExtResource("65_2357c")
 script = ExtResource("72_qfoes")
 
 [node name="Timer" type="Timer" parent="StateMachine/GroundComboA" unique_id=1903270818]
+
+[node name="SwordWindWhoosh" type="AudioStreamPlayer2D" parent="StateMachine/GroundComboA" unique_id=396529066]
+stream = ExtResource("79_we34s")
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=927083260]
 wait_time = 0.2

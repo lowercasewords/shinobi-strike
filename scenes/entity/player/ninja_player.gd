@@ -63,7 +63,7 @@ func _physics_process(delta):
 	# Buffer a heavy attack
 	if Input.is_action_just_pressed("heavy_attack"):
 		attack_input_buffer.push_front(ComboState.ATTACK_TYPE.HEAVY)
-		is_pressed_heavy_attack = false
+		is_pressed_heavy_attack = true
 	
 	if not last_jumping and is_jumping:
 		just_jumped = true
