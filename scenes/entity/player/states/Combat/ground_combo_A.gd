@@ -34,6 +34,8 @@ func try_continue_combo() -> bool:
 	"""
 	var current_attack: ATTACK_TYPE = pop_attack()
 	var dequeued_attack: bool = combo_next_attack(current_attack)
+	if dequeued_attack:
+		player.deactivate_attack_area()
 
 	return dequeued_attack
 	
@@ -76,10 +78,12 @@ func start_attack_C() -> bool:
 
 func _on_animation_finished():
 	super._on_animation_finished()
+	player.deactivate_attack_area()
 	change_state()
 	
-func _on_last_attack_lag_timeout():
-	super._on_last_attack_lag_timeout()
+#func _on_last_attack_lag_timeout():
+	#super._on_last_attack_lag_timeout()
+	#
 	#var was_combo_continued: bool = try_continue_combo()
 	#if not was_combo_continued:
 	

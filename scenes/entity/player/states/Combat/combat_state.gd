@@ -32,6 +32,8 @@ func exit() -> void:
 		player.animated_sprite.frame_changed.disconnect(_on_frame_changed)
 	
 	attack_input_buffer.clear()
+	
+	player.deactivate_attack_area()
 		
 func pop_attack() -> ATTACK_TYPE:
 	"""
