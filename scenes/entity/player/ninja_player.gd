@@ -32,10 +32,7 @@ var is_pressed_heavy_attack: bool = false
 
 # Push/Pop Queue for Combo Inputs
 var attack_input_buffer: Array
-
-func get_attack_active_mask() -> int:
-	return 1
-
+	
 func _ready():
 	super._ready()
 	#area2d_enter.connect(_on_wall_entered)
@@ -102,6 +99,11 @@ func _physics_process(delta):
 		just_changed_directions = false
 		
 	move_and_slide()
+	
+func _on_hitbox_body_entered(body: Node2D): 
+	if body is Ninja:
+		var ninja: Ninja = (body as Ninja)
+		ninja.take_damage(0)
 
 func _on_sensor_body_entered(area):
 	just_entered_wallbg = true

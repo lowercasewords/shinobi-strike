@@ -1,7 +1,22 @@
 [gd_scene format=3 uid="uid://c41uiw0ucssp2"]
 
-[ext_resource type="Script" uid="uid://cks8ejc483gb2" path="res://scenes/entity/ninja.gd" id="1_jvudk"]
+[ext_resource type="Script" uid="uid://oass0hd4ju5b" path="res://scenes/entity/enemies/ninja_enemy.gd" id="1_bqx36"]
+[ext_resource type="Texture2D" uid="uid://thwxp03rte75" path="res://assets/sprites/enemy/ninja_hurt_still_.png" id="2_bqx36"]
+[ext_resource type="Script" uid="uid://33136d856app" path="res://scenes/entity/state_machine.gd" id="4_u7cqt"]
+[ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/entity/player/states/Grounded/idle_state.gd" id="5_67vnk"]
 [ext_resource type="Texture2D" uid="uid://dfurtvsdi0dac" path="res://assets/sprites/enemy/ninja_stand_.png" id="5_u7cqt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5meks"]
+atlas = ExtResource("2_bqx36")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7cqt"]
+atlas = ExtResource("2_bqx36")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ii643"]
+atlas = ExtResource("2_bqx36")
+region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c85yp"]
 atlas = ExtResource("5_u7cqt")
@@ -17,6 +32,20 @@ region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jvudk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5meks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7cqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ii643")
+}],
+"loop": false,
+"name": &"hurt_still",
+"speed": 15.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_c85yp")
@@ -38,16 +67,15 @@ size = Vector2(16, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5meks"]
 size = Vector2(100, 20)
 
-[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1948172761]
+[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1545838256]
 collision_layer = 2
-script = ExtResource("1_jvudk")
-metadata/_custom_type_script = "uid://cks8ejc483gb2"
+collision_mask = 3
+script = ExtResource("1_bqx36")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1235654335]
 sprite_frames = SubResource("SpriteFrames_jvudk")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.9680583
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=243842588]
 position = Vector2(0, 4)
@@ -58,3 +86,11 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1127351311]
 shape = SubResource("RectangleShape2D_5meks")
+
+[node name="StateMachine" type="Node2D" parent="." unique_id=1843389203]
+script = ExtResource("4_u7cqt")
+metadata/_custom_type_script = "uid://33136d856app"
+
+[node name="Idle" type="Node2D" parent="StateMachine" unique_id=274454400]
+script = ExtResource("5_67vnk")
+metadata/_custom_type_script = "uid://bedamvreg4ic1"
