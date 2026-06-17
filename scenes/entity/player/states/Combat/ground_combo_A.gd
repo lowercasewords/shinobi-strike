@@ -87,6 +87,8 @@ func _on_last_frame(animated_sprite: AnimatedSprite2D):
 	super._on_last_frame(animated_sprite)
 	player.velocity.x = 0
 	
+	player.activate_attack_area()
+	
 	#var is_animated_backward: bool = animated_sprite.(animated_sprite.animation)
 	#last_attack_lag.start(animated_sprite.frame_progress < 0.5)
 		
