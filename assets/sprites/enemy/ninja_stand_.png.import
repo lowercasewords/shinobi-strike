@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlydujspg8qvw"
-path="res://.godot/imported/ninja_stand_3.png-358afcb0162a3cebee0aac6c09c95eb5.ctex"
+uid="uid://dfurtvsdi0dac"
+path="res://.godot/imported/ninja_stand_.png-78342ecee3cf7df24e950c4aba37a3bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/ninja_stand_3.png"
-dest_files=["res://.godot/imported/ninja_stand_3.png-358afcb0162a3cebee0aac6c09c95eb5.ctex"]
+source_file="res://assets/sprites/enemy/ninja_stand_.png"
+dest_files=["res://.godot/imported/ninja_stand_.png-78342ecee3cf7df24e950c4aba37a3bc.ctex"]
 
 [params]
 

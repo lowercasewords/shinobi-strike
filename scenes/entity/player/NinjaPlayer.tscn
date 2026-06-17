@@ -125,10 +125,8 @@ atlas = ExtResource("17_o3wtp")
 region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qfoes"]
-load_path = "res://.godot/imported/player_jump_windup_1.png-cfb66504fb73ef57639755b179f33a06.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wu60g"]
-load_path = "res://.godot/imported/player_jump_windup_2.png-150e7982a4da89729803b5b449880d7c.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o3wtp"]
 atlas = ExtResource("34_dc3eh")
@@ -423,9 +421,6 @@ stream_2/stream = ExtResource("36_4ntn1")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80bwr"]
 size = Vector2(5, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ih1r2"]
-size = Vector2(32, 24)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfb2t"]
 size = Vector2(100, 20)
 
@@ -534,14 +529,10 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSensor" unique_id=487473812]
 shape = SubResource("RectangleShape2D_80bwr")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1866892305]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=478387134]
-position = Vector2(0, 4)
-scale = Vector2(0.5, 1)
-shape = SubResource("RectangleShape2D_ih1r2")
-
 [node name="AttackArea" type="Area2D" parent="." unique_id=2141497931]
+visible = false
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1398667613]
 shape = SubResource("RectangleShape2D_pfb2t")

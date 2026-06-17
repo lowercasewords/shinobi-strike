@@ -1,21 +1,31 @@
 [gd_scene format=3 uid="uid://c41uiw0ucssp2"]
 
 [ext_resource type="Script" uid="uid://cks8ejc483gb2" path="res://scenes/entity/ninja.gd" id="1_jvudk"]
-[ext_resource type="Texture2D" uid="uid://d066o6t5yxfp" path="res://assets/sprites/enemy/ninja_stand_1.png" id="2_b4tba"]
-[ext_resource type="Texture2D" uid="uid://4t3agh8kibjf" path="res://assets/sprites/enemy/ninja_stand_2.png" id="3_5meks"]
-[ext_resource type="Texture2D" uid="uid://dlydujspg8qvw" path="res://assets/sprites/enemy/ninja_stand_3.png" id="4_u7cqt"]
+[ext_resource type="Texture2D" uid="uid://dfurtvsdi0dac" path="res://assets/sprites/enemy/ninja_stand_.png" id="5_u7cqt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c85yp"]
+atlas = ExtResource("5_u7cqt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gvwv"]
+atlas = ExtResource("5_u7cqt")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67vnk"]
+atlas = ExtResource("5_u7cqt")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jvudk"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_b4tba")
+"texture": SubResource("AtlasTexture_c85yp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_5meks")
+"texture": SubResource("AtlasTexture_0gvwv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_u7cqt")
+"texture": SubResource("AtlasTexture_67vnk")
 }],
 "loop": true,
 "name": &"idle",
@@ -25,14 +35,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4tba"]
 size = Vector2(16, 24)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqx36"]
-size = Vector2(32, 24)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5meks"]
 size = Vector2(100, 20)
 
 [node name="NinjaEnemy" type="CharacterBody2D" unique_id=1948172761]
-collision_layer = 0
+collision_layer = 2
 script = ExtResource("1_jvudk")
 metadata/_custom_type_script = "uid://cks8ejc483gb2"
 
@@ -46,14 +53,8 @@ frame_progress = 0.9680583
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_b4tba")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1393539817]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1064405355]
-position = Vector2(0, 4)
-scale = Vector2(0.75, 1)
-shape = SubResource("RectangleShape2D_bqx36")
-
 [node name="AttackArea" type="Area2D" parent="." unique_id=945928435]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1127351311]
 shape = SubResource("RectangleShape2D_5meks")

@@ -87,6 +87,7 @@ sensors/enable_gravity=true
 
 [layer_names]
 
+2d_physics/layer_1="Physical Interaction Between Entities"
 2d_physics/layer_2="Interactable Background"
 
 [physics]

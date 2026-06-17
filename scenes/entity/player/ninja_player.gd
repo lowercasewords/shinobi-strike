@@ -33,7 +33,11 @@ var is_pressed_heavy_attack: bool = false
 # Push/Pop Queue for Combo Inputs
 var attack_input_buffer: Array
 
+func get_attack_active_mask() -> int:
+	return 1
+
 func _ready():
+	super._ready()
 	#area2d_enter.connect(_on_wall_entered)
 	#area2d_exit.connect(_on_wall_exited)
 	is_landed = is_on_floor()
