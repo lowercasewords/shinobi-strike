@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://dcf502m64laka"]
-
-[ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/entity/player/states/Grounded/idle_state.gd" id="1_74yfp"]
-
-[node name="IdleState" type="Node2D" unique_id=1309792451]
-script = ExtResource("1_74yfp")

@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://c41uiw0ucssp2"]
 
-[ext_resource type="Script" uid="uid://oass0hd4ju5b" path="res://scenes/entity/enemies/ninja_enemy.gd" id="1_bqx36"]
+[ext_resource type="Script" uid="uid://cks8ejc483gb2" path="res://scenes/entity/ninja.gd" id="1_jvudk"]
 [ext_resource type="Texture2D" uid="uid://thwxp03rte75" path="res://assets/sprites/enemy/ninja_hurt_still_.png" id="2_bqx36"]
 [ext_resource type="Script" uid="uid://33136d856app" path="res://scenes/entity/state_machine.gd" id="4_u7cqt"]
 [ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/entity/player/states/Grounded/idle_state.gd" id="5_67vnk"]
+[ext_resource type="Script" uid="uid://db7uxw1awmy6m" path="res://scenes/entity/ninja_enemy_controller.gd" id="5_c85yp"]
 [ext_resource type="Texture2D" uid="uid://dfurtvsdi0dac" path="res://assets/sprites/enemy/ninja_stand_.png" id="5_u7cqt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5meks"]
@@ -67,10 +68,14 @@ size = Vector2(16, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5meks"]
 size = Vector2(100, 20)
 
-[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1545838256]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67vnk"]
+size = Vector2(5, 20)
+
+[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1496748218]
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_bqx36")
+script = ExtResource("1_jvudk")
+metadata/_custom_type_script = "uid://cks8ejc483gb2"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1235654335]
 sprite_frames = SubResource("SpriteFrames_jvudk")
@@ -91,6 +96,17 @@ shape = SubResource("RectangleShape2D_5meks")
 script = ExtResource("4_u7cqt")
 metadata/_custom_type_script = "uid://33136d856app"
 
-[node name="Idle" type="Node2D" parent="StateMachine" unique_id=274454400]
+[node name="IdleState" type="Node2D" parent="StateMachine" unique_id=274454400]
 script = ExtResource("5_67vnk")
 metadata/_custom_type_script = "uid://bedamvreg4ic1"
+
+[node name="NinjaController" type="Node2D" parent="." unique_id=358939884]
+script = ExtResource("5_c85yp")
+metadata/_custom_type_script = "uid://db7uxw1awmy6m"
+
+[node name="WallSensor" type="Area2D" parent="." unique_id=1099084262]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSensor" unique_id=86567240]
+shape = SubResource("RectangleShape2D_67vnk")

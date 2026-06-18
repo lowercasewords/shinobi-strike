@@ -4,18 +4,18 @@ class_name StateMachine extends Node2D
 
 var current_state: State
 
-const IDLE = "idle"
-const WALK = "walk"
-const JUMP = "jump"
-const LAND = "land"
-const FALL = "fall"
-const TURN = "turn"
-const WALLRUN = "wallrun"
-const WALLRUNV = "wallrunv"
-const WALLJUMPV = "walljumpv"
-const WALLCLINGV = "wallclingv"
-const WALLSLIDEV = "wallslidev"
-const GROUNDCOMBOA = "groundcomboa"
+const IDLE = "idlestate"
+const WALK = "walkstate"
+const JUMP = "jumpstate"
+const LAND = "landstate"
+const FALL = "fallstate"
+const TURN = "turnstate"
+const WALLRUN = "wallrunstate"
+const WALLRUNV = "wallrunvstate"
+const WALLJUMPV = "walljumpvstate"
+const WALLCLINGV = "wallclingvstate"
+const WALLSLIDEV = "wallslidevstate"
+const GROUNDCOMBOA = "groundcomboastate"
 
 ######
 #public state current_state;

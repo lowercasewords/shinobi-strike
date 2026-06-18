@@ -6,9 +6,9 @@ const TURN_ACCELERATION = ACCELERATION*1.1
 
 func enter() -> void:
 	super.enter()
-	# Changing walking input_direction 
-	player.animated_sprite.play("turn")
-	player.velocity.x /= 3
+	# Changing walking get_input_direction_h() 
+	state_entity_owner.animated_sprite.play("turn")
+	state_entity_owner.velocity.x /= 3
 	
 func exit():
 	super.exit()
@@ -17,14 +17,14 @@ func exit():
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	basic_movement(_delta, player.SPEED)
+	basic_movement(_delta, state_entity_owner.DEFAULT_SPEED)
 	# Turn sound
-	if player.animated_sprite.frame == 0 and not audio_stream.playing:
+	if state_entity_owner.animated_sprite.frame == 0 and not audio_stream.playing:
 		audio_stream.volume_db = randf_range(5.0, 10.0)
 		audio_stream.play()
 		
 	# While turning
-	if player.animated_sprite.animation == "turn" and player.animated_sprite.is_playing():
+	if state_entity_owner.animated_sprite.animation == "turn" and state_entity_owner.animated_sprite.is_playing():
 		# Friction is adjusted during turning
 		acceleration = TURN_ACCELERATION
 		

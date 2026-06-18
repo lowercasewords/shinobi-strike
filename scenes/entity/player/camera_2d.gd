@@ -44,25 +44,25 @@ func handle_zoom_input() -> void:
 #var current_direction: float = 1.0 # Keeps track of which way we are officially looking
 #var time_facing_direction: float = 0.0 # Our built-in stopwatch
 #
-#@onready var player: NinjaPlayer = owner
+#@onready var state_entity_owner: NinjaPlayer = owner
 #
 #func _process(delta: float) -> void:
-	#var input_direction = player.input_direction
-	#if player.is_on_wall():
-		#input_direction *= -1
+	#var get_input_direction_h() = state_entity_owner.ninja_controller.get_input_direction_h()
+	#if state_entity_owner.is_on_wall():
+		#get_input_direction_h() *= -1
 		#print("foo")
 		#
-	## 1. Did the player press a button?
-	#if input_direction != 0:
-		#var input_direction = sign(input_direction)
+	## 1. Did the state_entity_owner press a button?
+	#if get_input_direction_h() != 0:
+		#var get_input_direction_h() = sign(get_input_direction_h())
 		#
-		## 2. Did they change input_direction?
-		#if input_direction != current_direction:
+		## 2. Did they change get_input_direction_h()?
+		#if get_input_direction_h() != current_direction:
 			## They turned around! Reset the stopwatch, but DO NOT move the camera yet.
-			#current_direction = input_direction
+			#current_direction = get_input_direction_h()
 			#time_facing_direction = 0.0
 		#else:
-			## They are holding the same input_direction. Keep counting up.
+			## They are holding the same get_input_direction_h(). Keep counting up.
 			#time_facing_direction += delta
 			#
 	## 3. THE COMMITMENT CHECK

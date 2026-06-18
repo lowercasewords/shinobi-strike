@@ -4,7 +4,7 @@ class_name LandState extends GroundedState
 
 func enter() -> void:
 	super.enter()
-	player.animated_sprite.play("land")
+	state_entity_owner.animated_sprite.play("land")
 	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	audio_stream.play()
 	
@@ -16,10 +16,10 @@ func physics_update(_delta: float) -> void:
 	elif jump_state_triggered():
 		transitioned.emit(self, StateMachine.JUMP)
 		
-	basic_movement(_delta, player.SPEED)
+	basic_movement(_delta, state_entity_owner.DEFAULT_SPEED)
 
 func _on_animation_finished():
-	if player.state_machine.current_state.name.to_lower() == StateMachine.LAND:
+	if state_entity_owner.state_machine.current_state.name.to_lower() == StateMachine.LAND:
 		if check_grounded_transitions() == "":
 			# Just in case to not get stuck in this land state
 			transitioned.emit(self, StateMachine.IDLE)

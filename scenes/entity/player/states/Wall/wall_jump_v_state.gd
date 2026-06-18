@@ -9,18 +9,18 @@ const MARIO_JUMP_STRENGTH: float = -4
 
 func enter():
 	super.enter()
-	var input_direction = sidewalls_collision_direction()
-	if not player.state_machine.current_state is WallJumpVState:
-		player.animated_sprite.play("wall_jump_v_windup")
-	elif abs(input_direction) == 1:
-		jump_off_the_wall(-input_direction)
+	var input_direction_h = sidewalls_collision_direction()
+	if not state_entity_owner.state_machine.current_state is WallJumpVState:
+		state_entity_owner.animated_sprite.play("wall_jump_v_windup")
+	elif abs(input_direction_h) == 1:
+		jump_off_the_wall(-input_direction_h)
 
 #func exit():
-	#jump_off_the_wall(-player.input_direction)
+	#jump_off_the_wall(-state_entity_owner.ninja_controller.get_input_direction_h())
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
-	basic_movement(_delta, player.SPEED)
+	basic_movement(_delta, state_entity_owner.DEFAULT_SPEED)
 	
 	apply_gravity(_delta)
 	friction = JUMP_FRICTION
@@ -28,22 +28,22 @@ func physics_update(_delta: float) -> void:
 	
 	mario_jump_update(_delta, mario_jump_timer, MARIO_JUMP_STRENGTH)
 	
-	var input_direction = sidewalls_collision_direction()
-	if player.is_on_floor():
+	var input_direction_h = sidewalls_collision_direction()
+	if state_entity_owner.is_on_floor():
 		transitioned.emit(self, StateMachine.LAND)
-	if abs(input_direction) == 1:
-		if player.is_jumping:
-			jump_off_the_wall(-input_direction)
+	if abs(input_direction_h) == 1:
+		if state_entity_owner.ninja_controller.get_input_pressing_jump():
+			jump_off_the_wall(-input_direction_h)
 		else:
 			transitioned.emit(self, StateMachine.WALLCLINGV)
 
-func jump_off_the_wall(input_direction: float):
+func jump_off_the_wall(input_direction_h: float):
 	mario_jump_timer.start()
-	player.animated_sprite.play("wall_jump_v")
-	player.velocity.x = JUMP_SPEED_INITIAL.x * -input_direction
-	player.velocity.y = JUMP_SPEED_INITIAL.y
+	state_entity_owner.animated_sprite.play("wall_jump_v")
+	state_entity_owner.velocity.x = JUMP_SPEED_INITIAL.x * -input_direction_h
+	state_entity_owner.velocity.y = JUMP_SPEED_INITIAL.y
 
 func _on_animation_finished():
-	var input_direction = sidewalls_collision_direction()
-	if player.animated_sprite.animation == "wall_jump_v_windup" and abs(input_direction) == 1:
-		jump_off_the_wall(-input_direction)
+	var input_direction_h = sidewalls_collision_direction()
+	if state_entity_owner.animated_sprite.animation == "wall_jump_v_windup" and abs(input_direction_h) == 1:
+		jump_off_the_wall(-input_direction_h)

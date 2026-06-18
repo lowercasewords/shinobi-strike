@@ -8,11 +8,11 @@ func enter():
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
-	basic_movement(_delta, player.SPEED)
+	basic_movement(_delta, state_entity_owner.DEFAULT_SPEED)
 	if check_airbone_transitions() == "":
-		if abs(player.velocity.x) > VERTICAL_FALL_SPEED_THRESHOLD:
-			if player.animated_sprite.animation != "fall":  
-				player.animated_sprite.play("fall")
-		elif player.animated_sprite.animation != "fall_vertical":
-			player.animated_sprite.play("fall_vertical")
+		if abs(state_entity_owner.velocity.x) > VERTICAL_FALL_SPEED_THRESHOLD:
+			if state_entity_owner.animated_sprite.animation != "fall":  
+				state_entity_owner.animated_sprite.play("fall")
+		elif state_entity_owner.animated_sprite.animation != "fall_vertical":
+			state_entity_owner.animated_sprite.play("fall_vertical")
 		

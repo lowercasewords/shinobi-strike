@@ -1,7 +1,6 @@
-class_name GroundComboA extends ComboState
-"""
-LIGHT ATTACK -> LIGHT ATTACK -> HEAVY ATTACK
-"""
+## LIGHT ATTACK -> LIGHT ATTACK -> HEAVY ATTACK
+class_name GroundComboAState extends ComboState
+
 @onready var sword_whoosh: AudioStreamPlayer2D = $SwordWindWhoosh
 
 func enter() -> void:
@@ -11,12 +10,12 @@ func enter() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	var animated_sprite = player.animated_sprite
+	var animated_sprite = state_entity_owner.animated_sprite
 	var animation: String = animated_sprite.animation
 	var frame_index: int = animated_sprite.frame 
 	var total_frames: int = animated_sprite.sprite_frames.get_frame_count(animation)
 	# Make sure that the attack that continues the combo doesn't start immediately after the last attack ended,
-	# othrewise it is too fast for the player to register their combo flow
+	# othrewise it is too fast for the state_entity_owner to register their combo flow
 	var frame_progress_threshold: float = 0.2
 	
 	# During last frame
@@ -35,7 +34,7 @@ func try_continue_combo() -> bool:
 	var current_attack: ATTACK_TYPE = pop_attack()
 	var dequeued_attack: bool = combo_next_attack(current_attack)
 	if dequeued_attack:
-		player.deactivate_attack_area()
+		state_entity_owner.deactivate_attack_area()
 
 	return dequeued_attack
 	
@@ -59,26 +58,26 @@ func combo_next_attack(current_attack: ATTACK_TYPE) -> bool:
 	return combo_continued
 	
 func start_attack_A() -> bool:
-	player.animated_sprite.play("ground_combo_A_A")
-	player.velocity.x = player.forward_direction * DEFAULT_H_THURST*2
+	state_entity_owner.animated_sprite.play("ground_combo_A_A")
+	state_entity_owner.velocity.x = state_entity_owner.forward_direction_h * DEFAULT_H_THURST*2
 	sword_whoosh.play()
 	return true
 
 func start_attack_B() -> bool:
-	player.animated_sprite.play("ground_combo_A_B")
-	player.velocity.x = player.forward_direction * DEFAULT_H_THURST
+	state_entity_owner.animated_sprite.play("ground_combo_A_B")
+	state_entity_owner.velocity.x = state_entity_owner.forward_direction_h * DEFAULT_H_THURST
 	sword_whoosh.play()
 	return true
 	
 func start_attack_C() -> bool:
-	player.animated_sprite.play("ground_combo_A_C")
-	player.velocity.x = -player.forward_direction * DEFAULT_H_THURST/10
+	state_entity_owner.animated_sprite.play("ground_combo_A_C")
+	state_entity_owner.velocity.x = -state_entity_owner.forward_direction_h * DEFAULT_H_THURST/10
 	sword_whoosh.play()
 	return true
 
 func _on_animation_finished():
 	super._on_animation_finished()
-	player.deactivate_attack_area()
+	state_entity_owner.deactivate_attack_area()
 	change_state()
 	
 #func _on_last_attack_lag_timeout():
@@ -89,16 +88,16 @@ func _on_animation_finished():
 	
 func _on_last_frame(animated_sprite: AnimatedSprite2D):
 	super._on_last_frame(animated_sprite)
-	player.velocity.x = 0
+	state_entity_owner.velocity.x = 0
 	
-	player.activate_attack_area()
+	state_entity_owner.activate_attack_area()
 	
 	#var is_animated_backward: bool = animated_sprite.(animated_sprite.animation)
 	#last_attack_lag.start(animated_sprite.frame_progress < 0.5)
 		
 	
 func change_state() -> String:
-	var current_state_name: String = player.state_machine.current_state.name.to_lower()
+	var current_state_name: String = state_entity_owner.state_machine.current_state.name.to_lower()
 	
 	if fall_state_triggered():
 		transitioned.emit(self, StateMachine.FALL)
@@ -108,7 +107,7 @@ func change_state() -> String:
 		transitioned.emit(self, StateMachine.WALK)
 		return StateMachine.WALK
 	
-	if player.input_direction == 0 and player.velocity.x == 0 and current_state_name != StateMachine.IDLE:
+	if state_entity_owner.ninja_controller.get_input_direction_h() == 0 and state_entity_owner.velocity.x == 0 and current_state_name != StateMachine.IDLE:
 		transitioned.emit(self, StateMachine.IDLE)
 		return StateMachine.IDLE
 	

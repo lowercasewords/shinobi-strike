@@ -11,14 +11,14 @@ class_name AirborneState extends State
 #func enter() -> void:
 	## If we transitioned here because we pressed Jump in the Ground state:
 	#if Input.is_action_just_pressed("ui_accept"):
-		#player.velocity.y = jump_velocity
+		#state_entity_owner.velocity.y = jump_velocity
 
 const AIRBONE_ACCELERATION = ACCELERATION*3
 const AIRBONE_FRICTION = FRICTION/3
 	
 #func wall_run_state_triggered():s
-	#for i in player.get_slide_collision_count():
-		#var collision: KinematicCollision2D = player.get_slide_collision(i)
+	#for i in state_entity_owner.get_slide_collision_count():
+		#var collision: KinematicCollision2D = state_entity_owner.get_slide_collision(i)
 		#var collider: Object = collision.get_collider()
 		#print(collision)
 		# Check collision layer of the other object (e.g., layer 2)
@@ -27,8 +27,8 @@ const AIRBONE_FRICTION = FRICTION/3
 	#return false
 
 #func wall_jump_triggered():
-	#for i in player.get_slide_collision_count():
-		#var collision: KinematicCollision2D = player.get_slide_collision(i)
+	#for i in state_entity_owner.get_slide_collision_count():
+		#var collision: KinematicCollision2D = state_entity_owner.get_slide_collision(i)
 		#var collider: Object = collision.get_collider()
 		#
 		## Check if we hit a TileMap or TileMapLayer
@@ -63,9 +63,10 @@ func exit():
 	acceleration = ACCELERATION
 	
 func check_airbone_transitions() -> String:
-	var current_state_name: String = player.state_machine.current_state.name.to_lower()
-
-	if player.just_entered_wallbg and player.just_jumped:
+	var current_state_name: String = state_entity_owner.state_machine.current_state.name.to_lower()
+	var input_pressed_jump: bool = state_entity_owner.ninja_controller.get_input_pressed_jump()
+	
+	if state_entity_owner.just_entered_wallbg and input_pressed_jump:
 		transitioned.emit(self, StateMachine.WALLRUN)
 		return StateMachine.WALLRUN
 		
@@ -73,7 +74,7 @@ func check_airbone_transitions() -> String:
 		transitioned.emit(self, StateMachine.WALLCLINGV)
 		return StateMachine.WALLCLINGV
 		
-	if player.just_landed and current_state_name != StateMachine.LAND:
+	if state_entity_owner.just_grounded and current_state_name != StateMachine.LAND:
 		transitioned.emit(self, StateMachine.LAND)
 		return StateMachine.LAND
 	
