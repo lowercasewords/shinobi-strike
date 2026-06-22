@@ -57,8 +57,9 @@
 [ext_resource type="Texture2D" uid="uid://bkgfddrobsg21" path="res://assets/sprites/player/player_wall_slide_v_3.png" id="43_7647m"]
 [ext_resource type="Script" uid="uid://bt6o5ar4jplfo" path="res://scenes/entity/player/states/Wall/wall_run_v_state.gd" id="43_gtkor"]
 [ext_resource type="Texture2D" uid="uid://byqk4xxyqjmsx" path="res://assets/sprites/player/wall_run_3.png" id="43_sydpy"]
+[ext_resource type="Script" uid="uid://bt4sxdqgb50lo" path="res://scenes/entity/player/states/Grounded/walk_state.gd" id="48_jlnkn"]
 [ext_resource type="Script" uid="uid://bycc8lffu2b80" path="res://scenes/entity/player/states/Wall/wall_cling_v_state.gd" id="48_q4eru"]
-[ext_resource type="Script" uid="uid://chkywte85wcv2" path="res://scenes/entity/player/states/Wall/wall_slide_v.gd" id="64_ijqjm"]
+[ext_resource type="Script" uid="uid://chkywte85wcv2" path="res://scenes/entity/player/states/Wall/wall_slide_v_state.gd" id="64_ijqjm"]
 [ext_resource type="Script" uid="uid://sl3qbdibuelf" path="res://scenes/entity/player/states/Wall/wall_run_state.gd" id="65_2357c"]
 [ext_resource type="Script" uid="uid://c5qiqtavmo8qg" path="res://scenes/entity/ninja_player_controller.gd" id="65_jlnkn"]
 [ext_resource type="Script" uid="uid://c12fdx6vajhxa" path="res://scenes/entity/player/states/Wall/wall_jump_v_state.gd" id="66_ih1r2"]
@@ -458,9 +459,9 @@ metadata/_custom_type_script = "uid://33136d856app"
 script = ExtResource("12_20koh")
 metadata/_custom_type_script = "uid://bedamvreg4ic1"
 
-[node name="WalkState" type="Node2D" parent="StateMachine" unique_id=1213250094]
-script = ExtResource("37_eac1a")
-metadata/_custom_type_script = "uid://bplkgw5hlnp7w"
+[node name="WalkState" type="Node2D" parent="StateMachine" unique_id=1458471097]
+script = ExtResource("48_jlnkn")
+metadata/_custom_type_script = "uid://bt4sxdqgb50lo"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/WalkState" unique_id=1454386527]
 stream = SubResource("AudioStreamRandomizer_gtkor")
@@ -478,8 +479,9 @@ metadata/_custom_type_script = "uid://bsyh8g21vunej"
 
 [node name="Timer" type="Timer" parent="StateMachine/JumpState" unique_id=1529734553]
 
-[node name="LandState" type="Node2D" parent="StateMachine" unique_id=759564257]
+[node name="LandState" type="Node2D" parent="StateMachine" unique_id=759564257 node_paths=PackedStringArray("audio_stream")]
 script = ExtResource("20_ro0t8")
+audio_stream = NodePath("AudioStreamPlayer2D")
 metadata/_custom_type_script = "uid://bqf4onwxnfx6u"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StateMachine/LandState" unique_id=2126612517]
@@ -521,8 +523,9 @@ metadata/_custom_type_script = "uid://chkywte85wcv2"
 script = ExtResource("65_2357c")
 metadata/_custom_type_script = "uid://sl3qbdibuelf"
 
-[node name="GroundComboAState" type="Node2D" parent="StateMachine" unique_id=130266512]
+[node name="GroundComboAState" type="Node2D" parent="StateMachine" unique_id=130266512 node_paths=PackedStringArray("sword_whoosh")]
 script = ExtResource("72_qfoes")
+sword_whoosh = NodePath("SwordWindWhoosh")
 metadata/_custom_type_script = "uid://pgi23ubamnbk"
 
 [node name="Timer" type="Timer" parent="StateMachine/GroundComboAState" unique_id=1903270818]

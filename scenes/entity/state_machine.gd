@@ -2,7 +2,9 @@ class_name StateMachine extends Node2D
 
 @export var initial_state: State
 
-var current_state: State
+var current_state: State = null
+## The name of the previous state
+var psnameprev: String
 
 const IDLE = "idlestate"
 const WALK = "walkstate"
@@ -32,7 +34,6 @@ func start_state_machine() -> void:
 	for child in get_children():
 		if child is State:
 			states[child.name.to_lower()] = child
-			child.transitioned.connect(on_child_transitioned)
 	
 	# Get the first state
 	if not initial_state:
@@ -41,8 +42,9 @@ func start_state_machine() -> void:
 	if initial_state:
 		initial_state.enter()
 		current_state = initial_state
+		set_current_state(current_state)
 
-func _process(delta: float) -> void:
+func process(delta: float) -> void:
 	if current_state:
 		current_state.update(delta)
 
@@ -50,7 +52,7 @@ func physics_process(delta: float) -> void:
 	if current_state:
 		current_state.physics_update(delta)
 
-func on_child_transitioned(state: State, new_state_name: String) -> void:
+func transition_state(state: State, new_state_name: String) -> void:
 	# Ignore if a state that isn't currently active tries to transition
 	if state != current_state:
 		return
@@ -64,5 +66,13 @@ func on_child_transitioned(state: State, new_state_name: String) -> void:
 	if current_state:
 		current_state.exit()
 		
+	set_current_state(new_state)
 	new_state.enter()
+
+func set_current_state(new_state: State) -> void:
+	var current_state_name: String = current_state.name.to_lower()
+	var new_state_name: String = new_state.name.to_lower()
+	
+	psnameprev = current_state_name
 	current_state = new_state
+	current_state.sname = new_state_name

@@ -1,7 +1,7 @@
 ## LIGHT ATTACK -> LIGHT ATTACK -> HEAVY ATTACK
-class_name GroundComboAState extends ComboState
+class_name GroundComboAState extends AttackState
 
-@onready var sword_whoosh: AudioStreamPlayer2D = $SwordWindWhoosh
+@export var sword_whoosh: AudioStreamPlayer2D = null
 
 func enter() -> void:
 	super.enter()
@@ -10,12 +10,12 @@ func enter() -> void:
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	var animated_sprite = state_entity_owner.animated_sprite
+	var animated_sprite = state_owner.animated_sprite
 	var animation: String = animated_sprite.animation
 	var frame_index: int = animated_sprite.frame 
 	var total_frames: int = animated_sprite.sprite_frames.get_frame_count(animation)
 	# Make sure that the attack that continues the combo doesn't start immediately after the last attack ended,
-	# othrewise it is too fast for the state_entity_owner to register their combo flow
+	# othrewise it is too fast for the state_owner to register their combo flow
 	var frame_progress_threshold: float = 0.2
 	
 	# During last frame
@@ -34,7 +34,7 @@ func try_continue_combo() -> bool:
 	var current_attack: ATTACK_TYPE = pop_attack()
 	var dequeued_attack: bool = combo_next_attack(current_attack)
 	if dequeued_attack:
-		state_entity_owner.deactivate_attack_area()
+		state_owner.deactivate_attack_area()
 
 	return dequeued_attack
 	
@@ -58,26 +58,26 @@ func combo_next_attack(current_attack: ATTACK_TYPE) -> bool:
 	return combo_continued
 	
 func start_attack_A() -> bool:
-	state_entity_owner.animated_sprite.play("ground_combo_A_A")
-	state_entity_owner.velocity.x = state_entity_owner.forward_direction_h * DEFAULT_H_THURST*2
+	state_owner.animated_sprite.play("ground_combo_A_A")
+	state_owner.velocity.x = state_owner.forward_direction_h * DEFAULT_H_THURST*2
 	sword_whoosh.play()
 	return true
 
 func start_attack_B() -> bool:
-	state_entity_owner.animated_sprite.play("ground_combo_A_B")
-	state_entity_owner.velocity.x = state_entity_owner.forward_direction_h * DEFAULT_H_THURST
+	state_owner.animated_sprite.play("ground_combo_A_B")
+	state_owner.velocity.x = state_owner.forward_direction_h * DEFAULT_H_THURST
 	sword_whoosh.play()
 	return true
 	
 func start_attack_C() -> bool:
-	state_entity_owner.animated_sprite.play("ground_combo_A_C")
-	state_entity_owner.velocity.x = -state_entity_owner.forward_direction_h * DEFAULT_H_THURST/10
+	state_owner.animated_sprite.play("ground_combo_A_C")
+	state_owner.velocity.x = -state_owner.forward_direction_h * DEFAULT_H_THURST/10
 	sword_whoosh.play()
 	return true
 
 func _on_animation_finished():
 	super._on_animation_finished()
-	state_entity_owner.deactivate_attack_area()
+	state_owner.deactivate_attack_area()
 	change_state()
 	
 #func _on_last_attack_lag_timeout():
@@ -88,27 +88,27 @@ func _on_animation_finished():
 	
 func _on_last_frame(animated_sprite: AnimatedSprite2D):
 	super._on_last_frame(animated_sprite)
-	state_entity_owner.velocity.x = 0
+	state_owner.velocity.x = 0
 	
-	state_entity_owner.activate_attack_area()
+	state_owner.activate_attack_area()
 	
 	#var is_animated_backward: bool = animated_sprite.(animated_sprite.animation)
 	#last_attack_lag.start(animated_sprite.frame_progress < 0.5)
 		
 	
 func change_state() -> String:
-	var current_state_name: String = state_entity_owner.state_machine.current_state.name.to_lower()
+	var current_state_name: String = state_owner.state_machine.current_state.name.to_lower()
 	
 	if fall_state_triggered():
-		transitioned.emit(self, StateMachine.FALL)
+		switch_state(StateMachine.FALL)
 		return StateMachine.FALL
 	
 	if current_state_name != StateMachine.WALK:
-		transitioned.emit(self, StateMachine.WALK)
+		switch_state(StateMachine.WALK)
 		return StateMachine.WALK
 	
-	if state_entity_owner.ninja_controller.get_input_direction_h() == 0 and state_entity_owner.velocity.x == 0 and current_state_name != StateMachine.IDLE:
-		transitioned.emit(self, StateMachine.IDLE)
+	if state_owner.ninja_controller.get_input_direction_h() == 0 and state_owner.velocity.x == 0 and current_state_name != StateMachine.IDLE:
+		switch_state(StateMachine.IDLE)
 		return StateMachine.IDLE
 	
 	return ""

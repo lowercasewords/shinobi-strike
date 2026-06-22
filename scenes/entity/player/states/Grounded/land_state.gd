@@ -1,26 +1,35 @@
-class_name LandState extends GroundedState
+class_name LandState extends State
 
-@onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@export var audio_stream: AudioStreamPlayer2D
 
 func enter() -> void:
 	super.enter()
-	state_entity_owner.animated_sprite.play("land")
+	state_owner.animated_sprite.play("land")
 	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	audio_stream.play()
-	
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
+	
+	horizontal_movement(_delta)
+	if not state_owner.is_grounded:
+		apply_gravity(_delta)
+	
 	if turn_state_triggered():
-		transitioned.emit(self, StateMachine.TURN)
+		switch_state(StateMachine.TURN)
 	elif jump_state_triggered():
-		transitioned.emit(self, StateMachine.JUMP)
-		
-	basic_movement(_delta, state_entity_owner.DEFAULT_SPEED)
+		switch_state(StateMachine.JUMP)
 
-func _on_animation_finished():
-	if state_entity_owner.state_machine.current_state.name.to_lower() == StateMachine.LAND:
-		if check_grounded_transitions() == "":
+func get_state_space() -> STATE_SPACE:
+	return STATE_SPACE.GROUNDED
+
+func on_owner_animation_finished(animation_name: String) -> void:
+	if idle_state_triggered():
+		switch_state(StateMachine.IDLE)
+	elif walk_state_triggered():
+		switch_state(StateMachine.WALK)
+	#if state_owner.state_machine.current_state.name.to_lower() == StateMachine.LAND:
+		#if check_grounded_transitions() == "":
 			# Just in case to not get stuck in this land state
-			transitioned.emit(self, StateMachine.IDLE)
+			#switch_state(StateMachine.IDLE)
 		

@@ -1,4 +1,4 @@
-class_name WalkState extends GroundedState
+class_name WalkState extends State
 
 #const MAX_SPEED: float = 300.0
 var windup_movement = 100.0
@@ -6,40 +6,56 @@ var windup_movement = 100.0
 
 func enter() -> void:
 	super.enter()
-	# Play walk animation here if you have one
-	if state_entity_owner.state_machine.current_state.name.to_lower() == StateMachine.IDLE:
-		state_entity_owner.animated_sprite.play("walk_windup")
+	var prev_state_name: String = state_owner.state_machine.psnameprev
+	if prev_state_name == StateMachine.TURN:
+		start_walking()
 	else:
-		state_entity_owner.animated_sprite.play("walk")
+		start_windup()
 
-func windup_finsh() -> void:
-	if state_entity_owner.is_on_floor():
-		state_entity_owner.animated_sprite.play("walk")
-		
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
+
+	horizontal_movement(_delta)
 	
-	basic_movement(_delta, state_entity_owner.DEFAULT_SPEED)
+	if not state_owner.is_grounded:
+		apply_gravity(_delta)
 	
-	if state_entity_owner.animated_sprite.frame == 0 and not audio_stream.playing:
+	# Scale the walking animation depending on the speed
+	if state_owner.animated_sprite.animation == "walk":
+		var speed_ratio = max(abs(state_owner.velocity.x) / max_speed, 0.5)
+		state_owner.animated_sprite.speed_scale = speed_ratio
+	
+	if state_owner.animated_sprite.frame == 0 and not audio_stream.playing:
 		audio_stream.volume_db = randf_range(-5.0, 1.0)
 		audio_stream.play()
-
-	# Scale the walking animation depending on the speed
-	if state_entity_owner.animated_sprite.animation == "walk":
-		var speed_ratio = max(abs(state_entity_owner.velocity.x) / state_entity_owner.DEFAULT_SPEED, 0.5)
-		state_entity_owner.animated_sprite.speed_scale = speed_ratio
 	
-	#if wall_cling_v_state_triggerd():
-		#transitioned.emit(self, StateMachine.WALLCLINGV)
-	if not wall_cling_v_state_triggerd():
-		# Stopping with a smooth animation
-		var new_state: String = check_grounded_transitions()
-		if new_state == StateMachine.IDLE:
-			state_entity_owner.animated_sprite.play_backwards("walk_windup")
+	if fall_state_triggered():
+		switch_state(StateMachine.FALL)
+	elif jump_state_triggered():
+		switch_state(StateMachine.JUMP)
+	elif turn_state_triggered():
+		switch_state(StateMachine.TURN)
+	elif idle_state_triggered():
+		switch_state(StateMachine.IDLE)
+		state_owner.animated_sprite.play_backwards("walk_windup")
+	#else:
+		## Stopping with a smooth animation
+		#var new_state: String = check_grounded_transitions()
+		#if new_state == StateMachine.IDLE:
+			#
+
+func start_walking() -> void:
+	state_owner.animated_sprite.play("walk")
+func start_windup() -> void:
+	state_owner.animated_sprite.play("walk_windup")
+func end_windup() -> void:
+	## Fired when the walk windup is finished
+	if state_owner.is_on_floor():
+		start_walking()
 		
-	
+func get_state_space() -> STATE_SPACE:
+	return STATE_SPACE.GROUNDED
 
-func _on_animation_finished():
-	if state_entity_owner.state_machine.current_state.name.to_lower() == StateMachine.WALK and state_entity_owner.animated_sprite.animation == "walk_windup":
-		windup_finsh()
+func on_owner_animation_finished(animation_name: String) -> void: 
+	if animation_name == "walk_windup":
+		end_windup()

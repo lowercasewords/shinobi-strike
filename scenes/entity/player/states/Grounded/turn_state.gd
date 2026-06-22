@@ -1,37 +1,43 @@
-class_name TurnState extends GroundedState
+class_name TurnState extends State
 
-const TURN_ACCELERATION = ACCELERATION*1.1
+const TURN_ACCELERATION = DEFAULT_GROUNDED_ACCELERATION*1.1
+const TURN_FRICTION = DEFAULT_GROUNDED_FRICTION*1.1
 
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func enter() -> void:
 	super.enter()
 	# Changing walking get_input_direction_h() 
-	state_entity_owner.animated_sprite.play("turn")
-	state_entity_owner.velocity.x /= 3
+	state_owner.animated_sprite.play("turn")
+	state_owner.velocity.x /= 10
+	
+	acceleration = TURN_ACCELERATION
+	friction = TURN_FRICTION
 	
 func exit():
 	super.exit()
-	acceleration = ACCELERATION
 	
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	basic_movement(_delta, state_entity_owner.DEFAULT_SPEED)
+	if not state_owner.is_grounded:
+		apply_gravity(_delta)
+		
+	horizontal_movement(_delta)
+	
 	# Turn sound
-	if state_entity_owner.animated_sprite.frame == 0 and not audio_stream.playing:
+	if state_owner.animated_sprite.frame == 0 and not audio_stream.playing:
 		audio_stream.volume_db = randf_range(5.0, 10.0)
 		audio_stream.play()
 		
-	# While turning
-	if state_entity_owner.animated_sprite.animation == "turn" and state_entity_owner.animated_sprite.is_playing():
-		# Friction is adjusted during turning
-		acceleration = TURN_ACCELERATION
-		
-		if jump_state_triggered():
-			transitioned.emit(self, StateMachine.JUMP)
-	# Done with turning
-	else:
-		check_grounded_transitions()
-	
-	
+	if jump_state_triggered():
+		switch_state(StateMachine.JUMP)
+
+func get_state_space() -> STATE_SPACE:
+	return STATE_SPACE.GROUNDED
+
+func on_owner_animation_finished(animation_name: String) -> void:
+	if walk_state_triggered():
+		switch_state(StateMachine.WALK)
+	elif idle_state_triggered():
+		switch_state(StateMachine.IDLE)

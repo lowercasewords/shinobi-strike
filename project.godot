@@ -26,6 +26,10 @@ window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 window/layer_2=""
 
+[global_group]
+
+enemy=""
+
 [input]
 
 ui_left={

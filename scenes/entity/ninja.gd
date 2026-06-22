@@ -1,11 +1,8 @@
 ## Entity Class that encapsulates all logic for an in-game entity, players and bots alike.
+## Handles the most basic logic, while subroutines like StateMachine and Controllers do the heavy lifting.
 class_name Ninja 
 extends CharacterBody2D
 
-## The default continuous walking speed 
-const DEFAULT_SPEED = 200.0
-## The default jump strength (upwards)
-const DEFAULT_JUMP_THURST = -300.0
 ## Maximum number of buffered attack inputs at the time as a safeguard
 const MAX_ATTACK_INPUT_BUFFER_SIZE: int = 10
 
@@ -70,14 +67,15 @@ func _exit_tree() -> void:
 	disconnect_all_signals()
 
 # Receive current inputs for this entity
-#func _process(delta):
-	#ninja_controller.process(delta)
+func _process(delta):
+	ninja_controller.process(delta)
+	state_machine.process(delta)
 	
 # Calculate state physics
 func _physics_process(delta):
 	state_machine.physics_process(delta)
 	
-	# Update the effects on the state_entity_owner by the environment
+	# Update the effects on the owner by the environment
 	update_environment()
 	
 	update_attack_buffer()
@@ -88,6 +86,10 @@ func _physics_process(delta):
 func get_attack_area_collision_layer() -> int: return attack_area_collision_layer
 func get_attack_area_collision_mask() -> int: return attack_area_collision_mask
 # ---------------------
+
+func check_grounded() -> bool:
+	## Check if the player is considered to be on the ground
+	return self.is_on_floor() or (coyote_timer != null and not coyote_timer.is_stopped())
 
 ## Connects all signals of this classs. 
 ## Typically used upon entering the scene tree.
@@ -145,11 +147,10 @@ func update_attack_buffer():
 		attack_input_buffer.resize(MAX_ATTACK_INPUT_BUFFER_SIZE)
 	# Buffer a light attack
 	if ninja_controller.get_input_pressed_light_attack():
-		attack_input_buffer.push_front(ComboState.ATTACK_TYPE.LIGHT)
+		attack_input_buffer.push_front(AttackState.ATTACK_TYPE.LIGHT)
 	# Buffer a heavy attack
 	if ninja_controller.get_input_pressed_heavy_attack():
-		attack_input_buffer.push_front(ComboState.ATTACK_TYPE.HEAVY)
-	
+		attack_input_buffer.push_front(AttackState.ATTACK_TYPE.HEAVY)
 
 func activate_attack_area() -> void:
 	## Makes the Attack Area interactable as this entity is attacking 
@@ -161,6 +162,7 @@ func deactivate_attack_area() -> void:
 	attack_area.collision_mask = 0
 	attack_area_collision_layer = 0
 
+
 func deal_damage(damage: int): pass
 
 func take_damage(damage: int): pass
@@ -169,7 +171,6 @@ func _on_hitbox_body_entered(body: Node2D):
 	if body is Ninja:
 		var ninja: Ninja = (body as Ninja)
 		ninja.take_damage(0)
-
 
 func _on_sensor_body_entered(area):
 	just_entered_wallbg = true

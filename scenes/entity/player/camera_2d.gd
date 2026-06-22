@@ -44,15 +44,15 @@ func handle_zoom_input() -> void:
 #var current_direction: float = 1.0 # Keeps track of which way we are officially looking
 #var time_facing_direction: float = 0.0 # Our built-in stopwatch
 #
-#@onready var state_entity_owner: NinjaPlayer = owner
+#@onready var owner: NinjaPlayer = owner
 #
 #func _process(delta: float) -> void:
-	#var get_input_direction_h() = state_entity_owner.ninja_controller.get_input_direction_h()
-	#if state_entity_owner.is_on_wall():
+	#var get_input_direction_h() = owner.ninja_controller.get_input_direction_h()
+	#if owner.is_on_wall():
 		#get_input_direction_h() *= -1
 		#print("foo")
 		#
-	## 1. Did the state_entity_owner press a button?
+	## 1. Did the owner press a button?
 	#if get_input_direction_h() != 0:
 		#var get_input_direction_h() = sign(get_input_direction_h())
 		#
