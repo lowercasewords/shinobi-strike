@@ -8,7 +8,7 @@ func enter():
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
-	horizontal_movement(_delta)
+	allow_movement(_delta)
 	apply_gravity(_delta)
 	
 	play_fall_animation()
@@ -19,13 +19,13 @@ func physics_update(_delta: float) -> void:
 		switch_state(StateMachine.LAND)
 		
 func play_fall_animation() -> void:
-	var animation: String = state_owner.animated_sprite.animation
-	if abs(state_owner.velocity.x) > VERTICAL_FALL_SPEED_THRESHOLD:
+	var animation: String = ninja_owner.animated_sprite.animation
+	if abs(ninja_owner.velocity.x) > VERTICAL_FALL_SPEED_THRESHOLD:
 		if animation != "fall":
-			state_owner.animated_sprite.play("fall")
+			ninja_owner.animated_sprite.play("fall")
 	else:
 		if animation != "fall_vertical":
-			state_owner.animated_sprite.play("fall_vertical")
+			ninja_owner.animated_sprite.play("fall_vertical")
 			
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.AIRBORNE

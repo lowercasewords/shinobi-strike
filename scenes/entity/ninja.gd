@@ -8,17 +8,17 @@ const MAX_ATTACK_INPUT_BUFFER_SIZE: int = 10
 
 ## Initializes the states as scene tree nodes and allows those states to communicate with each other
 ## in order to support complex state switching behavior via inheritance and polymorphism
-@onready var state_machine: StateMachine = $StateMachine
+@export var state_machine: StateMachine
 ## Dictates the inputs to this entity, like Player Keyboard/Controller or Bot Inputs
-@onready var ninja_controller: NinjaController = $NinjaController
+@export var ninja_controller: NinjaController
 ## The 2D Area where the attack will be registered
-@onready var attack_area: Area2D = $AttackArea
+@export var attack_area: Area2D
 ## The animated sprite of this entity
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var camera: Camera2D
-@onready var wall_cast: ShapeCast2D
-@onready var coyote_timer: Timer
-@onready var wall_sensor: Area2D
+@export var animated_sprite: AnimatedSprite2D
+@export var camera: Camera2D
+@export var wall_cast: ShapeCast2D
+@export var coyote_timer: Timer
+@export var wall_sensor: Area2D
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -28,7 +28,7 @@ var attack_area_collision_mask: int = 0
 var attack_area_collision_layer: int = 0 
 
 ## Where the entity currently looking at?
-var forward_direction_h: float = 1.0
+var forward_direction_h: int = 1.0
 
 ## Is this entity on the floor continuously (not just landed on the floor)
 var is_grounded: bool = false
@@ -39,21 +39,11 @@ var just_entered_wallbg: bool = false
 var just_changed_directions: bool = false
 var changing_direction: bool = false
 
-## Push/Pop Queue for Attack Inputs to pre-input combo strings
-var attack_input_buffer: Array
-
 # Entering the scene tree
 func _ready() -> void:
-	
-	camera = $Camera2D
-	wall_cast = $ShapeCast2D
-	coyote_timer = $CoyoteTimer
-	wall_sensor = $WallSensor
-	
 	# Attack Area initialization
 	attack_area_collision_mask = attack_area.collision_mask
 	attack_area_collision_layer = attack_area.collision_layer
-	deactivate_attack_area()
 	
 	is_grounded = is_on_floor()
 	
@@ -94,22 +84,32 @@ func check_grounded() -> bool:
 ## Connects all signals of this classs. 
 ## Typically used upon entering the scene tree.
 func connect_all_signals() -> void:
-	if not attack_area.body_entered.is_connected(_on_hitbox_body_entered):
-		attack_area.body_entered.connect(_on_hitbox_body_entered)
-	if not wall_sensor.body_entered.is_connected(_on_sensor_body_entered):
-		wall_sensor.body_entered.connect(_on_sensor_body_entered)
-	if not wall_sensor.body_exited.is_connected(_on_sensor_body_exited):
-		wall_sensor.body_exited.connect(_on_sensor_body_exited)
+	connect_signal(wall_sensor.body_entered, _on_sensor_body_entered)
+	connect_signal(wall_sensor.body_exited, _on_sensor_body_exited)
+	connect_signal(animated_sprite.animation_finished, _on_animation_finished)
+	connect_signal(animated_sprite.frame_changed, _on_frame_changed)
 
 func disconnect_all_signals() -> void:
 	## Disconnects all signals of this classs. Typically used upon exiting the scene tree
-	if attack_area.body_entered.is_connected(_on_hitbox_body_entered):
-		attack_area.body_entered.disconnect(_on_hitbox_body_entered)
-	if wall_sensor.body_entered.is_connected(_on_sensor_body_entered):
-		wall_sensor.body_entered.disconnect(_on_sensor_body_entered)
-	if wall_sensor.body_exited.is_connected(_on_sensor_body_exited):
-		wall_sensor.body_exited.disconnect(_on_sensor_body_exited)
-		
+	disconnect_signal(wall_sensor.body_entered, _on_sensor_body_entered)
+	disconnect_signal(wall_sensor.body_exited, _on_sensor_body_exited)
+	disconnect_signal(animated_sprite.animation_finished, _on_animation_finished)
+	disconnect_signal(animated_sprite.frame_changed, _on_frame_changed)
+
+## Returns if the signal needed to be connected
+func connect_signal(signal_instance: Signal, callable: Callable) -> bool:
+	var should_connect: bool = not signal_instance.is_connected(callable)
+	if should_connect:
+		signal_instance.connect(callable)
+	return should_connect
+	
+## Returns if the signal needed to be disconnected
+func disconnect_signal(signal_instance: Signal, callable: Callable) -> bool:
+	var should_connect: bool = signal_instance.is_connected(callable)
+	if should_connect:
+		signal_instance.disconnect(callable)
+	return should_connect
+	
 func update_environment() -> void:
 	# Get input get_input_direction_h() [-1.0, 1.0] and handle movement/deceleration
 	var last_forward_direction_h: float = forward_direction_h
@@ -142,36 +142,42 @@ func update_environment() -> void:
 		just_changed_directions = false
 
 func update_attack_buffer():
+	var buffer: Array = ninja_controller.attack_input_buffer
 	# Enforce buffer size limit
-	if attack_input_buffer.size() > MAX_ATTACK_INPUT_BUFFER_SIZE:
-		attack_input_buffer.resize(MAX_ATTACK_INPUT_BUFFER_SIZE)
+	if buffer.size() > MAX_ATTACK_INPUT_BUFFER_SIZE:
+		buffer.resize(MAX_ATTACK_INPUT_BUFFER_SIZE)
 	# Buffer a light attack
 	if ninja_controller.get_input_pressed_light_attack():
-		attack_input_buffer.push_front(AttackState.ATTACK_TYPE.LIGHT)
+		buffer.push_front(AttackState.ATTACK_TYPE.LIGHT)
 	# Buffer a heavy attack
 	if ninja_controller.get_input_pressed_heavy_attack():
-		attack_input_buffer.push_front(AttackState.ATTACK_TYPE.HEAVY)
+		buffer.push_front(AttackState.ATTACK_TYPE.HEAVY)
 
-func activate_attack_area() -> void:
-	## Makes the Attack Area interactable as this entity is attacking 
-	attack_area.collision_mask = get_attack_area_collision_mask()
-	attack_area_collision_layer = get_attack_area_collision_layer()
+func activate_attack_area(applied_attack_info: ComboNode) -> void:
+	# 2. Grab everything inside the area instantly
+	var overlapping_bodies: Array[Node2D] = attack_area.get_overlapping_bodies()
+	
+	# 3. Hit each enemy exactly once
+	for body in overlapping_bodies:
+		# Pass this object to your hit logic
+		on_attack_registered(body, applied_attack_info) 
 
-func deactivate_attack_area() -> void:
-	## Makes the Attack Area non-interactable as this entity is not currently attacking 
-	attack_area.collision_mask = 0
-	attack_area_collision_layer = 0
-
-
-func deal_damage(damage: int): pass
-
-func take_damage(damage: int): pass
-
-func _on_hitbox_body_entered(body: Node2D):
+func on_attack_registered(body: Node2D, applied_attack_info: ComboNode):
 	if body is Ninja:
 		var ninja: Ninja = (body as Ninja)
-		ninja.take_damage(0)
+		if ninja.state_machine.current_state != HurtState:
+			ninja.state_machine.current_state.switch_state(state_machine.HURT)
+			(ninja.state_machine.current_state as HurtState).get_hurt(applied_attack_info)
 
+func _on_animation_finished(): 
+	if state_machine != null and state_machine.current_state != null and animated_sprite != null and animated_sprite.animation != null:
+		state_machine.current_state.on_owner_animation_finished(animated_sprite.animation)
+	
+func _on_frame_changed():
+	if state_machine != null and state_machine.current_state != null and animated_sprite != null and animated_sprite.animation != null:
+		state_machine.current_state.on_owner_frame_changed()
+	
+		
 func _on_sensor_body_entered(area):
 	just_entered_wallbg = true
 

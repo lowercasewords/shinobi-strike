@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ComboNode" format=3 uid="uid://bo2oqev2lvab6"]
+
+[ext_resource type="Script" uid="uid://yfugeeewuq1c" path="res://scenes/entity/player/states/Combat/combo_node.gd" id="1_04yo1"]
+
+[resource]
+script = ExtResource("1_04yo1")
+animation_name = &"ground_combo_LLH_"
+thrust_forward = Vector2(100, 0)
+metadata/_custom_type_script = "uid://yfugeeewuq1c"

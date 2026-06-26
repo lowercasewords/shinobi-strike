@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ComboNode" format=3 uid="uid://7f6wwjujgooh"]
+
+[ext_resource type="Script" uid="uid://yfugeeewuq1c" path="res://scenes/entity/player/states/Combat/combo_node.gd" id="1_akbnh"]
+[ext_resource type="Resource" uid="uid://bo2oqev2lvab6" path="res://scenes/entity/player/states/Combat/attack_LLH.tres" id="2_jab7l"]
+
+[resource]
+script = ExtResource("1_akbnh")
+animation_name = &"ground_combo_LL_"
+thrust_forward = Vector2(300, 0)
+next_attacks = Dictionary[int, ExtResource("1_akbnh")]({
+1: ExtResource("2_jab7l")
+})
+metadata/_custom_type_script = "uid://yfugeeewuq1c"

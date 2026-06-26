@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ComboNode" format=3 uid="uid://7yf256uvbfdx"]
+
+[ext_resource type="Script" uid="uid://yfugeeewuq1c" path="res://scenes/entity/player/states/Combat/combo_node.gd" id="1_xwy3s"]
+[ext_resource type="Resource" uid="uid://chb128qdp6s0d" path="res://scenes/entity/player/states/Combat/attack_L.tres" id="2_w0k18"]
+
+[resource]
+script = ExtResource("1_xwy3s")
+next_attacks = Dictionary[int, ExtResource("1_xwy3s")]({
+0: ExtResource("2_w0k18")
+})
+metadata/_custom_type_script = "uid://yfugeeewuq1c"

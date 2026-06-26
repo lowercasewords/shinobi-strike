@@ -6,21 +6,21 @@ const MARIO_JUMP_STRENGTH: float = -8
 
 func enter() -> void:
 	super.enter()
-	if state_owner.check_grounded():
-		owner.animated_sprite.play("jump_windup")
+	if ninja_owner.check_grounded():
+		play_animation("jump_windup")
 	else:
 		windup_finsh()
 	
 func windup_finsh() -> void:
-	if state_owner.check_grounded():
+	if ninja_owner.check_grounded():
 		mario_jump_timer.start()
-		owner.animated_sprite.play('jump')
-		state_owner.velocity.y = DEFAULT_JUMP_THURST
+		play_animation('jump')
+		ninja_owner.velocity.y = DEFAULT_JUMP_THURST
 
 func physics_update(delta: float) -> void:
 	super.physics_update(delta)
 	
-	horizontal_movement(delta)
+	allow_movement(delta)
 	mario_jump_update(delta, mario_jump_timer, MARIO_JUMP_STRENGTH)
 	apply_gravity(delta)
 	
@@ -32,6 +32,6 @@ func physics_update(delta: float) -> void:
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.AIRBORNE
 	
-func _on_animation_finished():
-	if state_owner.animated_sprite.animation == 'jump_windup':
+func on_owner_animation_finished(animation_name: String) -> void:
+	if ninja_owner.animated_sprite.animation == 'jump_windup':
 		windup_finsh()

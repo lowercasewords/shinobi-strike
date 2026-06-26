@@ -13,29 +13,29 @@ func enter():
 	super.enter()
 	var wall_direction: float = sidewalls_collision_direction()
 	
-	state_owner.animated_sprite.play("wall_cling_v_windup")
+	ninja_owner.animated_sprite.play("wall_cling_v_windup")
 	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	#cling_timer.start()
 	audio_stream.play()
-	#state_owner.overriden_direction(wall_direction)
-	state_owner.forward_direction_h = wall_direction
+	#ninja_owner.overriden_direction(wall_direction)
+	ninja_owner.forward_direction_h = wall_direction
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	#var overriden_state: String = check_wall_transitions()
 	
-	state_owner.velocity.y = move_toward(state_owner.velocity.y, 0.0, CLING_FRICTION * _delta)
+	ninja_owner.velocity.y = move_toward(ninja_owner.velocity.y, 0.0, CLING_FRICTION * _delta)
 
 func _on_animation_finished():
 	var wall_direction: float = sidewalls_collision_direction()
-	var inpux_x: float = state_owner.ninja_controller.get_input_direction_h()
-	var pressing_jump: float = state_owner.ninja_controller.get_input_pressed_jump()
+	var inpux_x: float = ninja_owner.ninja_controller.get_input_direction_h()
+	var pressing_jump: float = ninja_owner.ninja_controller.get_input_pressed_jump()
 	
-	state_owner.forward_direction_h = wall_direction
+	ninja_owner.forward_direction_h = wall_direction
 	
 	if inpux_x != wall_direction:
 		switch_state(StateMachine.WALLJUMPV)
-	elif state_owner.is_on_floor():
+	elif ninja_owner.is_on_floor():
 		switch_state(StateMachine.LAND)
 	elif inpux_x == wall_direction:
 		switch_state(StateMachine.WALLRUNV)
@@ -44,4 +44,4 @@ func _on_animation_finished():
 	else:
 		switch_state(StateMachine.FALL)
 	#if animation_name == "wall_cling_v_windup":
-		#state_owner.animated_sprite.play("wall_cling_v")
+		#ninja_owner.animated_sprite.play("wall_cling_v")

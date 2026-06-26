@@ -17,7 +17,10 @@ const WALLRUNV = "wallrunvstate"
 const WALLJUMPV = "walljumpvstate"
 const WALLCLINGV = "wallclingvstate"
 const WALLSLIDEV = "wallslidevstate"
-const GROUNDCOMBOA = "groundcomboastate"
+
+const ATTACK = "attackstate"
+const RECOVER = "recoverstate"
+const HURT = "hurtstate"
 
 ######
 #public state current_state;

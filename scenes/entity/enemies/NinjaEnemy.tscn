@@ -1,66 +1,14 @@
 [gd_scene format=3 uid="uid://c41uiw0ucssp2"]
 
-[ext_resource type="Script" uid="uid://cks8ejc483gb2" path="res://scenes/entity/ninja.gd" id="1_jvudk"]
+[ext_resource type="Script" uid="uid://banmwrgyq0u7v" path="res://scenes/entity/player/ninja_enemy.gd" id="1_c85yp"]
 [ext_resource type="Texture2D" uid="uid://thwxp03rte75" path="res://assets/sprites/enemy/ninja_hurt_still_.png" id="2_bqx36"]
-[ext_resource type="Script" uid="uid://33136d856app" path="res://scenes/entity/state_machine.gd" id="4_u7cqt"]
+[ext_resource type="Script" uid="uid://dh3v818ece5uk" path="res://scenes/entity/states/hurt_state.gd" id="4_0gvwv"]
+[ext_resource type="Texture2D" uid="uid://duq86vvqdc8i7" path="res://assets/sprites/enemy/ninja_lost_arm_.png" id="4_c85yp"]
+[ext_resource type="Script" uid="uid://c3ycpeq6t3ykw" path="res://scenes/entity/state_machine.gd" id="4_u7cqt"]
 [ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/entity/player/states/Grounded/idle_state.gd" id="5_67vnk"]
 [ext_resource type="Script" uid="uid://db7uxw1awmy6m" path="res://scenes/entity/ninja_enemy_controller.gd" id="5_c85yp"]
-[ext_resource type="Texture2D" uid="uid://dfurtvsdi0dac" path="res://assets/sprites/enemy/ninja_stand_.png" id="5_u7cqt"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5meks"]
-atlas = ExtResource("2_bqx36")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u7cqt"]
-atlas = ExtResource("2_bqx36")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ii643"]
-atlas = ExtResource("2_bqx36")
-region = Rect2(0, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c85yp"]
-atlas = ExtResource("5_u7cqt")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0gvwv"]
-atlas = ExtResource("5_u7cqt")
-region = Rect2(0, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_67vnk"]
-atlas = ExtResource("5_u7cqt")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_jvudk"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5meks")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u7cqt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ii643")
-}],
-"loop": false,
-"name": &"hurt_still",
-"speed": 15.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c85yp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0gvwv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_67vnk")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}]
+[ext_resource type="Script" uid="uid://ce0qj2dqnqg0l" path="res://scenes/entity/states/recover_state.gd" id="5_ii643"]
+[ext_resource type="Texture2D" uid="uid://dfurtvsdi0dac" path="res://assets/sprites/enemy/ninja_idle_.png" id="5_u7cqt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4tba"]
 size = Vector2(16, 24)
@@ -71,16 +19,117 @@ size = Vector2(100, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_67vnk"]
 size = Vector2(5, 20)
 
-[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1496748218 groups=["enemy"]]
-collision_layer = 2
-collision_mask = 3
-script = ExtResource("1_jvudk")
-metadata/_custom_type_script = "uid://cks8ejc483gb2"
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2td2"]
+atlas = ExtResource("4_c85yp")
+region = Rect2(0, 0, 32, 32)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1235654335]
-sprite_frames = SubResource("SpriteFrames_jvudk")
-animation = &"idle"
-autoplay = "idle"
+[sub_resource type="AtlasTexture" id="AtlasTexture_32tm5"]
+atlas = ExtResource("4_c85yp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv23b"]
+atlas = ExtResource("4_c85yp")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7pec"]
+atlas = ExtResource("4_c85yp")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3bwd"]
+atlas = ExtResource("4_c85yp")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iusm7"]
+atlas = ExtResource("4_c85yp")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ii643"]
+atlas = ExtResource("2_bqx36")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nsxe1"]
+atlas = ExtResource("2_bqx36")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hq6qp"]
+atlas = ExtResource("2_bqx36")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbqd7"]
+atlas = ExtResource("5_u7cqt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmmvc"]
+atlas = ExtResource("5_u7cqt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oai3s"]
+atlas = ExtResource("5_u7cqt")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jvudk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2td2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32tm5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mv23b")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_d7pec")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_h3bwd")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_iusm7")
+}],
+"loop": false,
+"name": &"arms_chopped_off",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ii643")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nsxe1")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_hq6qp")
+}],
+"loop": false,
+"name": &"hurt_still",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbqd7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmmvc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oai3s")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1928144445 node_paths=PackedStringArray("state_machine", "ninja_controller", "attack_area", "animated_sprite", "wall_sensor") groups=["enemy"]]
+collision_layer = 4
+script = ExtResource("1_c85yp")
+state_machine = NodePath("StateMachine")
+ninja_controller = NodePath("NinjaController")
+attack_area = NodePath("AttackArea")
+animated_sprite = NodePath("AnimatedSprite2D")
+wall_sensor = NodePath("WallSensor")
+metadata/_custom_type_script = "uid://banmwrgyq0u7v"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=243842588]
 position = Vector2(0, 4)
@@ -88,25 +137,43 @@ shape = SubResource("RectangleShape2D_b4tba")
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=945928435]
 collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1127351311]
 shape = SubResource("RectangleShape2D_5meks")
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=1843389203]
 script = ExtResource("4_u7cqt")
-metadata/_custom_type_script = "uid://33136d856app"
 
 [node name="IdleState" type="Node2D" parent="StateMachine" unique_id=274454400]
 script = ExtResource("5_67vnk")
 metadata/_custom_type_script = "uid://bedamvreg4ic1"
+
+[node name="HurtState" type="Node2D" parent="StateMachine" unique_id=629093215]
+script = ExtResource("4_0gvwv")
+metadata/_custom_type_script = "uid://dh3v818ece5uk"
+
+[node name="RecoverState" type="Node2D" parent="StateMachine" unique_id=630036508]
+script = ExtResource("5_ii643")
+metadata/_custom_type_script = "uid://ce0qj2dqnqg0l"
 
 [node name="NinjaController" type="Node2D" parent="." unique_id=358939884]
 script = ExtResource("5_c85yp")
 metadata/_custom_type_script = "uid://db7uxw1awmy6m"
 
 [node name="WallSensor" type="Area2D" parent="." unique_id=1099084262]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSensor" unique_id=86567240]
 shape = SubResource("RectangleShape2D_67vnk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1235654335]
+sprite_frames = SubResource("SpriteFrames_jvudk")
+animation = &"arms_chopped_off"
+autoplay = "idle"
+frame = 5
+frame_progress = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2096814488]
+active = false
+deterministic = true

@@ -4,6 +4,8 @@ class_name NinjaController extends Node2D
 ## Error message for a non-overriden input function
 const UNIMPLEMENTED_ERROR: String = "Input Not implemented! Function must be overridden."
 
+var attack_input_buffer: Array[AttackState.ATTACK_TYPE]
+
 var _input_direction_h: float = 0.0
 var _input_direction_v: float = 0.0
 var _input_pressing_jump: bool = false
@@ -57,6 +59,12 @@ func process(delta):
 	set_input_pressed_jump()
 	set_input_pressed_light_attack()
 	set_input_pressed_heavy_attack()
+	
+func get_buffered_input() -> AttackState.ATTACK_TYPE:
+	var current_attack: Variant = attack_input_buffer.pop_back()
+	if current_attack == null:
+		current_attack = AttackState.ATTACK_TYPE.UNKNOWN
+	return current_attack
 
 func exit() -> void:
 	## NON-SIGNAL, i.e must be manually invoked by Entity Script
