@@ -48,12 +48,14 @@ func attempt_next_attack() -> bool:
 	## Check the controller for an input (e.g., "light", "heavy", "forward_light")
 	var attempted_input: ATTACK_TYPE = ninja_owner.ninja_controller.get_buffered_input()
 	
+	var attacked: bool = false
 	if attempted_input != ATTACK_TYPE.UNKNOWN and current_attack_node.next_attacks.has(attempted_input):
 		# Step down the tree branch
 		current_attack_node = current_attack_node.next_attacks[attempted_input]
 		execute_current_attack()
+		attacked = true
 	
-	return current_attack_node == null
+	return attacked
 
 func execute_current_attack():
 	var direction: Vector2 = Vector2.RIGHT * ninja_owner.forward_direction_h
@@ -93,4 +95,7 @@ func on_after_keyframe_invoked(_animation: String, _frame_index: int):
 	attempt_next_attack()
 
 func on_owner_animation_finished(animation_name: String) -> void:
-	switch_to_next_state()
+	#switch_to_next_state()
+	var success: bool = attempt_next_attack()
+	if not success:
+		switch_to_next_state()

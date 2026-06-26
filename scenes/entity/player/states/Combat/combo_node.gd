@@ -5,8 +5,9 @@ class_name ComboNode extends Resource
 @export var impact_key_frame_index: int = 2
 @export var impact_frames: int = 1
 
-@export var arms_cut_chance: float = 1.0
-@export var legs_cut_chance: float = 1.0
+@export_range(0.0, 1.0, 0.01) var arms_cut_chance: float = 0.1
+@export_range(0.0, 1.0, 0.01) var legs_cut_chance: float = 0.1
+@export_range(0.0, 1.0, 0.01) var head_cut_chance: float = 0.1
 
 @export var thrust_forward: Vector2 = Vector2.ZERO
 

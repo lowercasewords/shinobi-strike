@@ -173,7 +173,3 @@ animation = &"arms_chopped_off"
 autoplay = "idle"
 frame = 5
 frame_progress = 1.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2096814488]
-active = false
-deterministic = true

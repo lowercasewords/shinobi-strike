@@ -59,7 +59,11 @@ func _exit_tree() -> void:
 # Receive current inputs for this entity
 func _process(delta):
 	ninja_controller.process(delta)
+	
+	update_attack_buffer()
+	
 	state_machine.process(delta)
+	
 	
 # Calculate state physics
 func _physics_process(delta):
@@ -68,7 +72,6 @@ func _physics_process(delta):
 	# Update the effects on the owner by the environment
 	update_environment()
 	
-	update_attack_buffer()
 	# Apply movement
 	move_and_slide()
 
@@ -146,6 +149,7 @@ func update_attack_buffer():
 	# Enforce buffer size limit
 	if buffer.size() > MAX_ATTACK_INPUT_BUFFER_SIZE:
 		buffer.resize(MAX_ATTACK_INPUT_BUFFER_SIZE)
+	
 	# Buffer a light attack
 	if ninja_controller.get_input_pressed_light_attack():
 		buffer.push_front(AttackState.ATTACK_TYPE.LIGHT)
