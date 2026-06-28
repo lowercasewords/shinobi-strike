@@ -12,12 +12,16 @@ const DEFAULT_H_THURST: float = 50
 const DEFAULT_V_THURST: float = 1.0
 
 @export var sword_whoosh: AudioStreamPlayer2D
-@export var _root_combo: ComboNode = preload("res://scenes/entity/player/states/Combat/attack_neutral.tres")
+@onready var _root_combo: ComboNode = preload("res://scenes/entity/player/states/Combat/attack_neutral.tres")
 
 var current_attack_node: ComboNode
 
 ## The velocity of the entity before entering the attacking state.
 var before_combo_velocity: Vector2
+
+func attempt_eradication(ninja_enemy: NinjaEnemy) -> void:
+	if ninja_owner is NinjaPlayer:
+		(ninja_owner as NinjaPlayer).initialite_eradication(ninja_enemy)
 
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED
@@ -26,7 +30,9 @@ func enter() -> void:
 	super.enter()
 	before_combo_velocity = abs(ninja_owner.velocity)
 	current_attack_node = _root_combo
-	attempt_next_attack()
+	var success: bool = attempt_next_attack()
+	if not success:
+		switch_to_next_state()
 
 func exit() -> void:
 	super.exit()
@@ -47,9 +53,15 @@ func activate_attack_area() -> void:
 func attempt_next_attack() -> bool:
 	## Check the controller for an input (e.g., "light", "heavy", "forward_light")
 	var attempted_input: ATTACK_TYPE = ninja_owner.ninja_controller.get_buffered_input()
-	
 	var attacked: bool = false
-	if attempted_input != ATTACK_TYPE.UNKNOWN and current_attack_node.next_attacks.has(attempted_input):
+	
+	# Grab everything inside the area instantly
+	var overlapping_body: NinjaEnemy = ninja_owner.attack_area.get_overlapping_bodies().get(0) as NinjaEnemy
+	
+	if attempted_input == ATTACK_TYPE.HEAVY and overlapping_body != null and overlapping_body.is_missing_limb():
+		attempt_eradication(overlapping_body)
+	
+	elif attempted_input != ATTACK_TYPE.UNKNOWN and current_attack_node.next_attacks.has(attempted_input):
 		# Step down the tree branch
 		current_attack_node = current_attack_node.next_attacks[attempted_input]
 		execute_current_attack()
@@ -77,13 +89,13 @@ func switch_to_next_state():
 	switch_state(StateMachine.IDLE)
 
 func on_owner_frame_changed(): 
-	var frame_index: int = ninja_owner.animated_sprite.frame
+	var frame_index: int = ninja_owner.animation_player.frame
 	var key_frame_index: int = current_attack_node.impact_key_frame_index
 	
 	if frame_index == key_frame_index:
-		on_keyframe_invoked(ninja_owner.animated_sprite.animation, ninja_owner.animated_sprite.frame)
+		on_keyframe_invoked(ninja_owner.animation_player.animation, ninja_owner.animation_player.frame)
 	elif frame_index == key_frame_index+1:
-		on_after_keyframe_invoked(ninja_owner.animated_sprite.animation, ninja_owner.animated_sprite.frame)
+		on_after_keyframe_invoked(ninja_owner.animation_player.animation, ninja_owner.animation_player.frame)
 	
 func on_keyframe_invoked(_animation: String, _frame_index: int): 
 	

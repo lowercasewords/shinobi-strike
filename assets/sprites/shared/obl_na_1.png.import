@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b71l5eh1gnurl"
-path="res://.godot/imported/pieces.png-004393502b3f02add577ff34cb279b85.ctex"
+uid="uid://4bgtancsiq2x"
+path="res://.godot/imported/obl_na_1.png-69d613f7dea2eb94da18af64b161eeb9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/pieces.png"
-dest_files=["res://.godot/imported/pieces.png-004393502b3f02add577ff34cb279b85.ctex"]
+source_file="res://assets/sprites/shared/obl_na_1.png"
+dest_files=["res://.godot/imported/obl_na_1.png-69d613f7dea2eb94da18af64b161eeb9.ctex"]
 
 [params]
 

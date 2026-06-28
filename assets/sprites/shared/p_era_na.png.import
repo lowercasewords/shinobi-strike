@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duq86vvqdc8i7"
-path="res://.godot/imported/ninja_lost_arm_.png-05272d1aead88d02e8fd0839f712079b.ctex"
+uid="uid://brq4pkm46mvqc"
+path="res://.godot/imported/p_era_na.png-f947c96518b800e8136cc994c2403b11.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/ninja_lost_arm_.png"
-dest_files=["res://.godot/imported/ninja_lost_arm_.png-05272d1aead88d02e8fd0839f712079b.ctex"]
+source_file="res://assets/sprites/shared/p_era_na.png"
+dest_files=["res://.godot/imported/p_era_na.png-f947c96518b800e8136cc994c2403b11.ctex"]
 
 [params]
 

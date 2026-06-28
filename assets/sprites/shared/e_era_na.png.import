@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b71l5eh1gnurl"
-path="res://.godot/imported/pieces.png-004393502b3f02add577ff34cb279b85.ctex"
+uid="uid://d15sbaco3v3nh"
+path="res://.godot/imported/e_era_na.png-563c8627bc2f102fb0506e0ae558dcfd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/pieces.png"
-dest_files=["res://.godot/imported/pieces.png-004393502b3f02add577ff34cb279b85.ctex"]
+source_file="res://assets/sprites/shared/e_era_na.png"
+dest_files=["res://.godot/imported/e_era_na.png-563c8627bc2f102fb0506e0ae558dcfd.ctex"]
 
 [params]
 

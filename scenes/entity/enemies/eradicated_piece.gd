@@ -1,4 +1,5 @@
-class_name DismemberedPiece extends RigidBody2D
+# Ripped piece of an enemy 
+class_name EradicatedPiece extends RigidBody2D
 
 enum Piece {
 	Arm,
@@ -8,9 +9,8 @@ enum Piece {
 	Torso
 }
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
 @onready var particles: GPUParticles2D = $GPUParticles2D
-
 
 func _ready() -> void:
 	particles.one_shot = true

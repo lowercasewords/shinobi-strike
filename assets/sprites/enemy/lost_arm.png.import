@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfurtvsdi0dac"
-path="res://.godot/imported/ninja_idle_.png-5367aa3f1c582c5d332f0793d5cc41a9.ctex"
+uid="uid://bbdmgtk8kasj3"
+path="res://.godot/imported/lost_arm.png-85a7e794a1dfe4efe4375272d6f4960e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/ninja_idle_.png"
-dest_files=["res://.godot/imported/ninja_idle_.png-5367aa3f1c582c5d332f0793d5cc41a9.ctex"]
+source_file="res://assets/sprites/enemy/lost_arm.png"
+dest_files=["res://.godot/imported/lost_arm.png-85a7e794a1dfe4efe4375272d6f4960e.ctex"]
 
 [params]
 

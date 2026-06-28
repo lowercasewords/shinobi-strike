@@ -4,7 +4,7 @@ class_name LandState extends State
 
 func enter() -> void:
 	super.enter()
-	ninja_owner.animated_sprite.play("land")
+	ninja_owner.animation_player.play("land")
 	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	audio_stream.play()
 
@@ -15,7 +15,7 @@ func physics_update(_delta: float) -> void:
 	if not ninja_owner.is_grounded:
 		apply_gravity(_delta)
 	
-	if combo_A_triggered():
+	if attack_triggered():
 		switch_state(StateMachine.ATTACK)
 	elif turn_state_triggered():
 		switch_state(StateMachine.TURN)

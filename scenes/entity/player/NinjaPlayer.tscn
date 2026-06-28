@@ -66,9 +66,6 @@
 [ext_resource type="Script" uid="uid://c12fdx6vajhxa" path="res://scenes/entity/player/states/Wall/wall_jump_v_state.gd" id="66_ih1r2"]
 [ext_resource type="AudioStream" uid="uid://d3yvlq5omvitt" path="res://assets/sounds/sword_wind_whoosh.wav" id="79_we34s"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ktadw"]
-size = Vector2(12.87, 9.38)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_gcdwb"]
 atlas = ExtResource("11_wu60g")
 region = Rect2(64, 192, 64, 64)
@@ -451,6 +448,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ktadw"]
+size = Vector2(12.87, 9.38)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wr5hl"]
 size = Vector2(8, 24)
 
@@ -465,21 +465,86 @@ stream_2/stream = ExtResource("36_4ntn1")
 size = Vector2(5, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfb2t"]
-size = Vector2(48, 34)
+size = Vector2(80, 34)
 
-[node name="NinjaPlayer" type="CharacterBody2D" unique_id=192304658 node_paths=PackedStringArray("state_machine", "ninja_controller", "attack_area", "animated_sprite", "camera", "wall_cast", "coyote_timer", "wall_sensor")]
+[sub_resource type="Animation" id="Animation_jlnkn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ymjof"]
+resource_name = "eradication_no_hands"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7333333, 1.0666667, 1.4, 2.2333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_t82ou"]
+resource_name = "idle"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jlnkn"]
+_data = {
+&"RESET": SubResource("Animation_jlnkn"),
+&"eradication_no_hands": SubResource("Animation_ymjof"),
+&"idle": SubResource("Animation_t82ou")
+}
+
+[node name="NinjaPlayer" type="CharacterBody2D" unique_id=192304658 node_paths=PackedStringArray("state_machine", "ninja_controller", "attack_area", "animation_player", "camera", "wall_cast", "coyote_timer", "wall_sensor")]
 collision_layer = 2
 script = ExtResource("1_jlnkn")
 state_machine = NodePath("StateMachine")
 ninja_controller = NodePath("NinjaController")
-attack_area = NodePath("AttackArea")
-animated_sprite = NodePath("AnimatedSprite2D")
+attack_area = NodePath("HurtBox")
+animation_player = NodePath("AnimationPlayer")
 camera = NodePath("Camera2D")
 wall_cast = NodePath("ShapeCast2D")
 coyote_timer = NodePath("CoyoteTimer")
 wall_sensor = NodePath("WallSensor")
 metadata/_custom_type_script = "uid://cavqrol53rj1q"
 metadata/_edit_vertical_guides_ = [-56.0, -48.0]
+
+[node name="AnimatedSprite" type="Sprite2D" parent="." unique_id=1441445061]
+texture = ExtResource("17_o3wtp")
+hframes = 2
+vframes = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
+visible = false
+sprite_frames = SubResource("SpriteFrames_v6fml")
+animation = &"jump"
+autoplay = "idle"
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=1249686623]
 visible = false
@@ -488,25 +553,17 @@ shape = SubResource("RectangleShape2D_ktadw")
 target_position = Vector2(-4.78, 0)
 max_results = 5
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1994341334]
-sprite_frames = SubResource("SpriteFrames_v6fml")
-animation = &"ground_combo_LLH_"
-autoplay = "idle"
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2065698952]
-visible = false
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_wr5hl")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1170208015]
-visible = false
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 script = ExtResource("35_ooivl")
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=1877628401]
-visible = false
 script = ExtResource("46_jlnkn")
 metadata/_custom_type_script = "uid://c3ycpeq6t3ykw"
 
@@ -580,13 +637,10 @@ metadata/_custom_type_script = "uid://sl3qbdibuelf"
 
 [node name="AttackState" type="Node2D" parent="StateMachine" unique_id=1764644332 node_paths=PackedStringArray("sword_whoosh")]
 script = ExtResource("63_jlnkn")
-sword_whoosh = NodePath("SwordWindWhoosh")
+sword_whoosh = NodePath("../../SwordWindWhoosh")
 metadata/_custom_type_script = "uid://bgyft4w7ld2h5"
 
 [node name="Timer" type="Timer" parent="StateMachine/AttackState" unique_id=1903270818]
-
-[node name="SwordWindWhoosh" type="AudioStreamPlayer2D" parent="StateMachine/AttackState" unique_id=396529066]
-stream = ExtResource("79_we34s")
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=927083260]
 wait_time = 0.2
@@ -599,14 +653,19 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSensor" unique_id=487473812]
 shape = SubResource("RectangleShape2D_80bwr")
 
-[node name="AttackArea" type="Area2D" parent="." unique_id=2141497931]
+[node name="HurtBox" type="Area2D" parent="." unique_id=2141497931]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1398667613]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1398667613]
 shape = SubResource("RectangleShape2D_pfb2t")
 
 [node name="NinjaController" type="Node2D" parent="." unique_id=2007222039]
-visible = false
 script = ExtResource("65_jlnkn")
 metadata/_custom_type_script = "uid://c5qiqtavmo8qg"
+
+[node name="SwordWindWhoosh" type="AudioStreamPlayer2D" parent="." unique_id=396529066]
+stream = ExtResource("79_we34s")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=515429803]
+libraries/ = SubResource("AnimationLibrary_jlnkn")

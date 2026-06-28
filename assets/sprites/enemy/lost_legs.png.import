@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b71l5eh1gnurl"
-path="res://.godot/imported/pieces.png-004393502b3f02add577ff34cb279b85.ctex"
+uid="uid://dnakesd7qsdar"
+path="res://.godot/imported/lost_legs.png-29d9f9c732cc2320d8c8a5f622458f0c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/pieces.png"
-dest_files=["res://.godot/imported/pieces.png-004393502b3f02add577ff34cb279b85.ctex"]
+source_file="res://assets/sprites/enemy/lost_legs.png"
+dest_files=["res://.godot/imported/lost_legs.png-29d9f9c732cc2320d8c8a5f622458f0c.ctex"]
 
 [params]
 

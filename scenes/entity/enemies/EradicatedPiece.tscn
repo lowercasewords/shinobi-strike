@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://t6fe4jbnix6r"]
+
+[ext_resource type="Script" uid="uid://xvyqkyqb3bja" path="res://scenes/entity/enemies/eradicated_piece.gd" id="1_sybe2"]
+[ext_resource type="Texture2D" uid="uid://b71l5eh1gnurl" path="res://assets/sprites/enemy/pieces.png" id="2_k02f2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sybe2"]
+absorbent = true
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rhmpp"]
+b = Vector2(8, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k02f2"]
+atlas = ExtResource("2_k02f2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6l1i6"]
+atlas = ExtResource("2_k02f2")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sybe2"]
+atlas = ExtResource("2_k02f2")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guu40"]
+atlas = ExtResource("2_k02f2")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mj1h"]
+atlas = ExtResource("2_k02f2")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlwik"]
+atlas = ExtResource("2_k02f2")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eq44p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k02f2")
+}],
+"loop": true,
+"name": &"arm",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6l1i6")
+}],
+"loop": true,
+"name": &"feet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sybe2")
+}],
+"loop": true,
+"name": &"head_front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_guu40")
+}],
+"loop": true,
+"name": &"head_side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mj1h")
+}],
+"loop": true,
+"name": &"leg",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlwik")
+}],
+"loop": false,
+"name": &"sword",
+"speed": 5.0
+}]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ydi6j"]
+lifetime_randomness = 0.51
+particle_flag_disable_z = true
+direction = Vector3(1, 1, 0)
+spread = 180.0
+initial_velocity_min = 77.27
+initial_velocity_max = 77.27
+gravity = Vector3(0, 98, 0)
+scale_max = 2.0
+color = Color(1, 0.1537252, 0.25303638, 1)
+
+[node name="EradicatedPiece" type="RigidBody2D" unique_id=1375005537]
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_sybe2")
+script = ExtResource("1_sybe2")
+metadata/_custom_type_script = "uid://xvyqkyqb3bja"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1033583335]
+scale = Vector2(1, 0.52)
+shape = SubResource("SegmentShape2D_rhmpp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1026421379]
+position = Vector2(8, 0)
+sprite_frames = SubResource("SpriteFrames_eq44p")
+animation = &"sword"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=611984447]
+emitting = false
+explosiveness = 0.61
+fixed_fps = 15
+process_material = SubResource("ParticleProcessMaterial_ydi6j")

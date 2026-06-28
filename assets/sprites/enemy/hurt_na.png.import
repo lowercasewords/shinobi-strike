@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b71l5eh1gnurl"
-path="res://.godot/imported/pieces.png-004393502b3f02add577ff34cb279b85.ctex"
+uid="uid://7pjs8324i46"
+path="res://.godot/imported/hurt_na.png-75a6dacd9c3551f69634436e45f5210f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/pieces.png"
-dest_files=["res://.godot/imported/pieces.png-004393502b3f02add577ff34cb279b85.ctex"]
+source_file="res://assets/sprites/enemy/hurt_na.png"
+dest_files=["res://.godot/imported/hurt_na.png-75a6dacd9c3551f69634436e45f5210f.ctex"]
 
 [params]
 

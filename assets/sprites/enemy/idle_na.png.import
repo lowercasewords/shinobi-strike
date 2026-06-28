@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://thwxp03rte75"
-path="res://.godot/imported/ninja_hurt_still_.png-01977ac07e94b26c31b8e8ecd07679ac.ctex"
+uid="uid://bsf3bg5b5x3cf"
+path="res://.godot/imported/idle_na.png-fe8fe175e373230023731014ac51cc76.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/ninja_hurt_still_.png"
-dest_files=["res://.godot/imported/ninja_hurt_still_.png-01977ac07e94b26c31b8e8ecd07679ac.ctex"]
+source_file="res://assets/sprites/enemy/idle_na.png"
+dest_files=["res://.godot/imported/idle_na.png-fe8fe175e373230023731014ac51cc76.ctex"]
 
 [params]
 

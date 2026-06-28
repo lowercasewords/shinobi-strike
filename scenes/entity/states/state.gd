@@ -49,7 +49,7 @@ func exit():
 func update(_delta: float): pass
 ## Called upon by the state machine on _physics_update
 func physics_update(_delta: float) -> void:
-	ninja_owner.animated_sprite.speed_scale = 1
+	ninja_owner.animation_player.speed_scale = 1
 	
 func switch_state(state_name: String):
 	ninja_owner.state_machine.transition_state(self, state_name)
@@ -65,7 +65,7 @@ func on_owner_animation_finished(animation_name: String) -> void:
 func on_owner_frame_changed(): pass
 	
 func play_animation(animation: String):
-	ninja_owner.animated_sprite.play(animation)
+	ninja_owner.play_animation(animation)
 
 func set_physics_grounded() -> void:
 	friction = DEFAULT_GROUNDED_FRICTION
@@ -77,15 +77,8 @@ func set_physics_airborne() -> void:
 	acceleration = DEFAULT_AIRBONE_ACCELERATION
 	max_speed = DEFAULT_SPEED
 
-func apply_thrust(applied_force: Vector2) -> void:
-	ninja_owner.velocity = applied_force
-
-func apply_gravity(_delta) -> float:
-	var gravity_applied = 0
-	if not ninja_owner.is_on_floor():
-		gravity_applied = ninja_owner.gravity * _delta
-		ninja_owner.velocity.y += gravity_applied
-	return gravity_applied
+func apply_gravity(_delta) -> void:
+	pass ## This should be removed
 
 ## Similar to the `allow_movement`, but only applies friction without player movement and acceleration
 func apply_friction(delta: float) -> float:
@@ -108,11 +101,11 @@ func mario_jump_update(_delta: float, mario_jump_timer: Timer, MARIO_JUMP_STRENG
 # Flips the sprite horizontally based on the owner's get_input_direction_h()
 # Returns: Whether the flip was made
 func direction_flip_horiz() -> bool:
-	var previous_flip: bool = ninja_owner.animated_sprite.flip_h
+	var previous_flip: float = ninja_owner.scale.x
 	# Flip the sprite if get_input_direction_h() is negative (left)
 	if ninja_owner.ninja_controller.get_input_direction_h() != 0:
-		ninja_owner.animated_sprite.flip_h = ninja_owner.ninja_controller.get_input_direction_h() != 1
-	return previous_flip != ninja_owner.animated_sprite.flip_h
+		ninja_owner.scale.x = ninja_owner.ninja_controller.get_input_direction_h()
+	return previous_flip != ninja_owner.scale.x
 	
 func allow_movement(delta: float) -> float:
 	var input_x: float = ninja_owner.ninja_controller.get_input_direction_h()
@@ -163,12 +156,12 @@ func land_state_triggered() -> bool:
 func fall_state_triggered() -> bool:
 	return ninja_owner.velocity.y > 0 and sname != StateMachine.FALL
 
-func combo_A_triggered() -> bool:
+func attack_triggered() -> bool:
 	var input_buffer = ninja_owner.ninja_controller.attack_input_buffer
 	var left_attacks_buffered: bool = input_buffer.size() > 0
-	var light_attack_is_next: bool  = left_attacks_buffered and input_buffer[0] == AttackState.ATTACK_TYPE.LIGHT
+	var valid_attack_is_next: bool  = left_attacks_buffered and input_buffer[0] != AttackState.ATTACK_TYPE.UNKNOWN
 	
-	return light_attack_is_next
+	return valid_attack_is_next
 	
 func wallrun_state_triggered() -> bool: 
 	return ninja_owner.just_entered_wallbg and ninja_owner.ninja_controller.get_input_pressed_jump()
