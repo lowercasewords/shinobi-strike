@@ -16,5 +16,5 @@ func get_hurt(attack_node: ComboNode):
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED
 
-func on_owner_animation_finished(animation_name: String) -> void:
+func on_owner_animation_finished(_animation_name: String) -> void:
 	switch_state(StateMachine.RECOVER)

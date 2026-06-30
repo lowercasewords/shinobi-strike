@@ -15,7 +15,7 @@ func enter():
 	
 	var input_direction_h = sidewalls_collision_direction()
 	if not ninja_owner.state_machine.current_state is WallJumpVState:
-		ninja_owner.animation_player.play("wall_jump_v_windup")
+		ninja_owner.animated_sprite.play("wall_jump_v_windup")
 	elif abs(input_direction_h) == 1:
 		jump_off_the_wall(-input_direction_h)
 
@@ -41,11 +41,11 @@ func physics_update(_delta: float) -> void:
 
 func jump_off_the_wall(input_direction_h: float):
 	mario_jump_timer.start()
-	ninja_owner.animation_player.play("wall_jump_v")
+	ninja_owner.animated_sprite.play("wall_jump_v")
 	ninja_owner.velocity.x = JUMP_SPEED_INITIAL.x * -input_direction_h
 	ninja_owner.velocity.y = JUMP_SPEED_INITIAL.y
 
 func _on_animation_finished():
 	var input_direction_h = sidewalls_collision_direction()
-	if ninja_owner.animation_player.animation == "wall_jump_v_windup" and abs(input_direction_h) == 1:
+	if ninja_owner.animated_sprite.animation == "wall_jump_v_windup" and abs(input_direction_h) == 1:
 		jump_off_the_wall(-input_direction_h)

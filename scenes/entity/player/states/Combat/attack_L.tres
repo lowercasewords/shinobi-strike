@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_6imsa")
-animation_name = &"ground_combo_L_"
+animation_name = &"combo_A_L"
 legs_cut_chance = 1.0
 thrust_forward = Vector2(200, 0)
 next_attacks = Dictionary[int, ExtResource("1_6imsa")]({

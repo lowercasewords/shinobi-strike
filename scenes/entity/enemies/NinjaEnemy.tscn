@@ -11,10 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://7pjs8324i46" path="res://assets/sprites/enemy/hurt_na.png" id="7_g2td2"]
 [ext_resource type="Texture2D" uid="uid://2elrntgai54q" path="res://assets/sprites/enemy/hurt.png" id="7_ii643"]
 [ext_resource type="Texture2D" uid="uid://bsf3bg5b5x3cf" path="res://assets/sprites/enemy/idle_na.png" id="8_0gvwv"]
+[ext_resource type="Texture2D" uid="uid://c168y4ddtksqx" path="res://assets/sprites/enemy/era_na.png" id="8_iusm7"]
 [ext_resource type="Texture2D" uid="uid://dcqfjjukbxuj8" path="res://assets/sprites/enemy/idle.png" id="10_32tm5"]
 [ext_resource type="Texture2D" uid="uid://ci3fxbfamjm4d" path="res://assets/sprites/enemy/idle_nl.png" id="11_d7pec"]
 [ext_resource type="Texture2D" uid="uid://dnakesd7qsdar" path="res://assets/sprites/enemy/lost_legs.png" id="12_mv23b"]
-[ext_resource type="Texture2D" uid="uid://4bgtancsiq2x" path="res://assets/sprites/shared/obl_na_1.png" id="14_h3bwd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4tba"]
 size = Vector2(16, 24)
@@ -24,6 +24,26 @@ size = Vector2(100, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_67vnk"]
 size = Vector2(5, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ae45w"]
+atlas = ExtResource("8_iusm7")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqt63"]
+atlas = ExtResource("8_iusm7")
+region = Rect2(96, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ko8j8"]
+atlas = ExtResource("8_iusm7")
+region = Rect2(0, 64, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enw8e"]
+atlas = ExtResource("8_iusm7")
+region = Rect2(96, 64, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qojdt"]
+atlas = ExtResource("8_iusm7")
+region = Rect2(0, 128, 96, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2vebm"]
 atlas = ExtResource("7_ii643")
@@ -125,28 +145,28 @@ region = Rect2(0, 64, 32, 32)
 atlas = ExtResource("12_mv23b")
 region = Rect2(32, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ae45w"]
-atlas = ExtResource("14_h3bwd")
-region = Rect2(0, 0, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yqt63"]
-atlas = ExtResource("14_h3bwd")
-region = Rect2(96, 0, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ko8j8"]
-atlas = ExtResource("14_h3bwd")
-region = Rect2(0, 64, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_enw8e"]
-atlas = ExtResource("14_h3bwd")
-region = Rect2(96, 64, 96, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qojdt"]
-atlas = ExtResource("14_h3bwd")
-region = Rect2(0, 128, 96, 64)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_jvudk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ae45w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqt63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ko8j8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enw8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qojdt")
+}],
+"loop": false,
+"name": &"era_na",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2vebm")
@@ -256,79 +276,17 @@ animations = [{
 "loop": false,
 "name": &"lost_legs",
 "speed": 15.0
-}, {
-"frames": [{
-"duration": 5.0,
-"texture": SubResource("AtlasTexture_ae45w")
-}, {
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_yqt63")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ko8j8")
-}, {
-"duration": 5.0,
-"texture": SubResource("AtlasTexture_enw8e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qojdt")
-}],
-"loop": false,
-"name": &"obl_na",
-"speed": 15.0
 }]
 
-[sub_resource type="Animation" id="Animation_pbqd7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_iusm7"]
-resource_name = "idle"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13730025, 0.26666668),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0, 1, 2]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pbqd7"]
-_data = {
-&"RESET": SubResource("Animation_pbqd7"),
-&"idle": SubResource("Animation_iusm7")
-}
-
-[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1928144445 node_paths=PackedStringArray("state_machine", "ninja_controller", "attack_area", "animation_player", "wall_sensor") groups=["enemy"]]
+[node name="NinjaEnemy" type="CharacterBody2D" unique_id=1928144445 node_paths=PackedStringArray("state_machine", "ninja_controller", "attack_area", "animated_sprite", "wall_sensor") groups=["enemy"]]
 collision_layer = 4
 script = ExtResource("1_c85yp")
 state_machine = NodePath("StateMachine")
 ninja_controller = NodePath("NinjaController")
 attack_area = NodePath("AttackArea")
-animation_player = NodePath("AnimationPlayer")
+animated_sprite = NodePath("AnimatedSprite2D")
 wall_sensor = NodePath("WallSensor")
 metadata/_custom_type_script = "uid://banmwrgyq0u7v"
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1079736745]
-texture = ExtResource("10_32tm5")
-hframes = 2
-vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=243842588]
 position = Vector2(0, 4)
@@ -371,12 +329,8 @@ collision_layer = 0
 shape = SubResource("RectangleShape2D_67vnk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1235654335]
-visible = false
 sprite_frames = SubResource("SpriteFrames_jvudk")
-animation = &"obl_na"
+animation = &"era_na"
 autoplay = "idle"
 frame = 4
 frame_progress = 1.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=893162733]
-libraries/ = SubResource("AnimationLibrary_pbqd7")

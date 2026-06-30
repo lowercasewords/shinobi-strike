@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_akbnh")
-animation_name = &"ground_combo_LL_"
+animation_name = &"combo_A_LL"
 thrust_forward = Vector2(300, 0)
 next_attacks = Dictionary[int, ExtResource("1_akbnh")]({
 1: ExtResource("2_jab7l")

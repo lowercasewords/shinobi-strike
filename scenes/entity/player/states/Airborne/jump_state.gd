@@ -32,6 +32,6 @@ func physics_update(delta: float) -> void:
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.AIRBORNE
 	
-func on_owner_animation_finished(animation_name: String) -> void:
-	if ninja_owner.animation_player.animation == 'jump_windup':
+func on_owner_animation_finished(_animation_name: String) -> void:
+	if ninja_owner.animated_sprite.animation == 'jump_windup':
 		windup_finsh()

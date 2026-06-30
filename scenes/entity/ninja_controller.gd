@@ -33,24 +33,24 @@ func get_input_pressed_heavy_attack() -> bool:
 	return _input_pressed_heavy_attack
 
 func set_input_direction_h() -> void: 
-	return raise_unimplemented()
+	raise_unimplemented()
 func set_input_direction_v() -> void: 
-	return raise_unimplemented()
+	raise_unimplemented()
 func set_input_pressing_jump() -> void: 
-	return raise_unimplemented()
+	raise_unimplemented()
 func set_input_pressed_jump() -> void: 
-	return raise_unimplemented()
+	raise_unimplemented()
 func set_input_pressed_light_attack() -> void: 
-	return raise_unimplemented()
+	raise_unimplemented()
 func set_input_pressed_heavy_attack() -> void: 
-	return raise_unimplemented()
+	raise_unimplemented()
 
 func ready() -> void:
 	## NON-SIGNAL, i.e must be manually invoked by Entity Script
 	## Entering the scene tree, simulating `_ready` signal handler
 	pass
 
-func process(delta):
+func process(_delta):
 	## NON-SIGNAL, i.e must be manually invoked by Entity Script
 	## Every tic processing, simulating `_process` signal handler
 	set_input_direction_h()

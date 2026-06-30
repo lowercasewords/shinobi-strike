@@ -1,8 +1,6 @@
 ## Each State acts as a simple, self-contained "Brain" for the ninja_owner (such as player).
 class_name State extends Node2D
 
-signal transitioned
-
 ## The default continuous walking speed 
 const DEFAULT_SPEED = 200.0
 ## The default jump strength (upwards)
@@ -49,7 +47,7 @@ func exit():
 func update(_delta: float): pass
 ## Called upon by the state machine on _physics_update
 func physics_update(_delta: float) -> void:
-	ninja_owner.animation_player.speed_scale = 1
+	ninja_owner.animated_sprite.speed_scale = 1
 	
 func switch_state(state_name: String):
 	ninja_owner.state_machine.transition_state(self, state_name)
@@ -59,9 +57,8 @@ func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.UNKNOWN
 	
 func windup_finsh() -> void: pass
-func on_owner_animation_finished(animation_name: String) -> void:
-	## Modified version for `_on_animation_finished`, supplying the animation name of the state owner automatically
-	pass
+## Modified version for `_on_animation_finished`, supplying the animation name of the state owner automatically
+func on_owner_animation_finished(_animation_name: String) -> void: pass
 func on_owner_frame_changed(): pass
 	
 func play_animation(animation: String):
@@ -101,11 +98,11 @@ func mario_jump_update(_delta: float, mario_jump_timer: Timer, MARIO_JUMP_STRENG
 # Flips the sprite horizontally based on the owner's get_input_direction_h()
 # Returns: Whether the flip was made
 func direction_flip_horiz() -> bool:
-	var previous_flip: float = ninja_owner.scale.x
+	var previous_flip: bool = ninja_owner.animated_sprite.flip_h
 	# Flip the sprite if get_input_direction_h() is negative (left)
 	if ninja_owner.ninja_controller.get_input_direction_h() != 0:
-		ninja_owner.scale.x = ninja_owner.ninja_controller.get_input_direction_h()
-	return previous_flip != ninja_owner.scale.x
+		ninja_owner.animated_sprite.flip_h = ninja_owner.ninja_controller.get_input_direction_h() != 1
+	return previous_flip != ninja_owner.animated_sprite.flip_h
 	
 func allow_movement(delta: float) -> float:
 	var input_x: float = ninja_owner.ninja_controller.get_input_direction_h()
@@ -124,18 +121,18 @@ func allow_movement(delta: float) -> float:
 	return applied_force
 
 func check_wall_exit(wall_direction: float) -> String:
-	var input_direction_h: float = ninja_owner.ninja_controller.get_input_direction_h()
+	var _input_direction_h: float = ninja_owner.ninja_controller.get_input_direction_h()
 	if ninja_owner.just_grounded:
 		return StateMachine.LAND
 	elif wall_direction == 0:
 		return StateMachine.FALL
 	return ""
 
-func sidewalls_collision_direction() -> float:
+func sidewalls_collision_direction() -> int:
 	# Force the cast to update immediately (prevents 1-frame lag bugs)
 	ninja_owner.wall_cast.force_shapecast_update()
 	
-	var wall_direction: float = 0
+	var wall_direction: int = 0
 	# Are we hitting a valid wall?
 	if ninja_owner.wall_cast.is_colliding():
 		# Grab the normal from the very first thing the cast hit (index 0)

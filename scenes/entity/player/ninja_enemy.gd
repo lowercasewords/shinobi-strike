@@ -20,7 +20,7 @@ func is_missing_limb() -> bool:
 
 ## Checks if the animation name exists for this entity
 func has_animation(animation: String) -> bool:
-	return animation_player.sprite_frames.has_animation(animation)
+	return animated_sprite.sprite_frames.has_animation(animation)
 
 ## Play animation accounting for the missing limbs
 func play_animation(animation: String):
@@ -35,11 +35,13 @@ func play_animation(animation: String):
 		super.play_animation(animation)
 
 func get_obliterated(eradication_finished_callback: Callable) -> void:
-	play_animation("obl")
-	eradication_finished.connect(eradication_finished_callback)
+	#play_animation("era_")
+	animated_sprite.play("era_na")
+	if not eradication_finished.is_connected(eradication_finished_callback):
+		eradication_finished.connect(eradication_finished_callback)
 
 func _on_animation_finished() -> void:
-	if animation_player.animation.begins_with("obl"):
+	if animated_sprite.animation.begins_with("era"):
 		eradication_finished.emit()
 
 func get_hurt(attack_node: ComboNode):
@@ -49,7 +51,7 @@ func get_hurt(attack_node: ComboNode):
 	var ninja_thrust_velocity: Vector2 = Vector2.ZERO
 	var arms_chopped_chance: float = attack_node.arms_cut_chance
 	var legs_chopped_chance: float = arms_chopped_chance + attack_node.legs_cut_chance
-	var head_chopped_chance: float = legs_chopped_chance + attack_node.head_cut_chance
+	var _head_chopped_chance: float = legs_chopped_chance + attack_node.head_cut_chance
 	
 	if chance < arms_chopped_chance and body.has_arms:
 		play_animation("lost_arms")
@@ -89,7 +91,7 @@ func chop_piece_off(animation: String, direction: int = 1) -> EradicatedPiece:
 	piece.global_position = self.global_position
 	piece.linear_velocity = piece_linear_velocity
 	piece.angular_velocity = piece_angular_velocity
-	piece.animation_player.play(animation)
+	piece.animated_sprite.play(animation)
 	
 	return piece
 	

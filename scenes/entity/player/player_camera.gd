@@ -1,0 +1,77 @@
+class_name PlayerCamera extends Camera2D
+
+# Expose these so you can easily tweak them in the Inspector
+@export var min_zoom: float = 0.2  # How far out they can see
+@export var max_zoom: float = 3.0  # How close in they can look
+@export var zoom_step: float = 0.2 # How much one key press zooms
+@export var zoom_speed: float = 10.0 # How fast the camera glides to the new zoom
+
+# We store what the zoom *should* be, so lerp can smoothly chase it
+var target_zoom: float = 1.0
+var prev_camera_zoom: float = 1.0
+
+func _ready() -> void:
+	# Initialize target_zoom to whatever the camera starts at
+	target_zoom = zoom.x
+	
+func _physics_process(delta):
+	# Clamp the zoom so it never exceeds your min/max limits
+	target_zoom = clamp(target_zoom, min_zoom, max_zoom)
+
+func _process(delta: float) -> void:
+	# Smoothly glide the actual camera zoom toward our target
+	var current_zoom = lerp(zoom.x, target_zoom, zoom_speed * delta)
+	zoom = Vector2(current_zoom, current_zoom)
+	
+func _input(event):
+	# Note: On a standard keyboard, the '+' key is technically the '=' key 
+	# unless you hold shift. We check for KEY_EQUAL to catch the unshifted press!
+	if event.is_action_pressed("zoom_in"):
+		target_zoom += zoom_step
+	elif Input.is_action_just_pressed("zoom_out"):
+		target_zoom -= zoom_step
+
+func eradication_zoom_in(eradication_zoom: float):
+	target_zoom = eradication_zoom
+
+func eradication_zoom_out():
+	target_zoom = 1.0
+
+## camera_lookahead.gd
+#extends Camera2D
+#@export var lookahead_distance: float = 60.0 
+#@export var smooth_speed: float = 3.0 
+#@export var switch_delay: float = 0.3 # NEW: Wait 0.3 seconds before panning
+#
+#var target_offset_x: float = 0.0
+#var current_direction: float = 1.0 # Keeps track of which way we are officially looking
+#var time_facing_direction: float = 0.0 # Our built-in stopwatch
+#
+#@onready var owner: NinjaPlayer = owner
+#
+#func _process(delta: float) -> void:
+	#var get_input_direction_h() = owner.ninja_controller.get_input_direction_h()
+	#if owner.is_on_wall():
+		#get_input_direction_h() *= -1
+		#print("foo")
+		#
+	## 1. Did the owner press a button?
+	#if get_input_direction_h() != 0:
+		#var get_input_direction_h() = sign(get_input_direction_h())
+		#
+		## 2. Did they change get_input_direction_h()?
+		#if get_input_direction_h() != current_direction:
+			## They turned around! Reset the stopwatch, but DO NOT move the camera yet.
+			#current_direction = get_input_direction_h()
+			#time_facing_direction = 0.0
+		#else:
+			## They are holding the same get_input_direction_h(). Keep counting up.
+			#time_facing_direction += delta
+			#
+	## 3. THE COMMITMENT CHECK
+	## Only change the target offset if they held the button past our delay threshold
+	#if time_facing_direction >= switch_delay:
+		#target_offset_x = lookahead_distance * current_direction
+		#
+	## 4. Smoothly glide the camera (same as before!)
+	#offset.x = lerp(offset.x, target_offset_x, smooth_speed * delta)

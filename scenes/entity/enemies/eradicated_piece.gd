@@ -9,7 +9,7 @@ enum Piece {
 	Torso
 }
 
-@onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var particles: GPUParticles2D = $GPUParticles2D
 
 func _ready() -> void:

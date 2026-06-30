@@ -2,7 +2,7 @@ class_name WallRunState extends State
 
 func enter():
 	super.enter()
-	ninja_owner.animation_player.play("wall_run")
+	ninja_owner.animated_sprite.play("wall_run")
 	ninja_owner.coyote_timer.stop()
 
 func exit():

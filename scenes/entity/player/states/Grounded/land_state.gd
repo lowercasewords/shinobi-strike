@@ -4,7 +4,7 @@ class_name LandState extends State
 
 func enter() -> void:
 	super.enter()
-	ninja_owner.animation_player.play("land")
+	ninja_owner.animated_sprite.play("land")
 	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	audio_stream.play()
 
@@ -25,7 +25,7 @@ func physics_update(_delta: float) -> void:
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED
 
-func on_owner_animation_finished(animation_name: String) -> void:
+func on_owner_animation_finished(_animation_name: String) -> void:
 	if idle_state_triggered():
 		switch_state(StateMachine.IDLE)
 	elif walk_state_triggered():

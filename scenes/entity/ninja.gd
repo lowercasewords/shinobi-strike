@@ -14,8 +14,8 @@ const MAX_ATTACK_INPUT_BUFFER_SIZE: int = 10
 ## The 2D Area where the attack will be registered
 @export var attack_area: Area2D
 ## The animated sprite of this entity
-@export var animation_player: AnimationPlayer
-@export var camera: Camera2D
+@export var animated_sprite: AnimatedSprite2D
+@export var camera: PlayerCamera
 @export var wall_cast: ShapeCast2D
 @export var coyote_timer: Timer
 @export var wall_sensor: Area2D
@@ -28,7 +28,7 @@ var attack_area_collision_mask: int = 0
 var attack_area_collision_layer: int = 0 
 
 ## Where the entity currently looking at?
-var forward_direction_h: int = 1.0
+var forward_direction_h: int = 1
 
 ## Is this entity on the floor continuously (not just landed on the floor)
 var is_grounded: bool = false
@@ -84,10 +84,10 @@ func apply_gravity(_delta) -> float:
 		velocity.y += gravity_applied
 	return gravity_applied
 
-func get_hurt(attack_node: ComboNode): pass
+func get_hurt(_attack_node: ComboNode): pass
 
 func play_animation(animation: String):
-	animation_player.play(animation)
+	animated_sprite.play(animation)
 	
 func apply_thrust(applied_force: Vector2) -> void:
 	velocity = applied_force
@@ -106,15 +106,15 @@ func check_grounded() -> bool:
 func connect_all_signals() -> void:
 	connect_signal(wall_sensor.body_entered, _on_sensor_body_entered)
 	connect_signal(wall_sensor.body_exited, _on_sensor_body_exited)
-	connect_signal(animation_player.animation_finished, _on_animation_finished)
-	#connect_signal(animation_player.frame_changed, _on_frame_changed)
+	connect_signal(animated_sprite.animation_finished, _on_animation_finished)
+	connect_signal(animated_sprite.frame_changed, _on_frame_changed)
 
 func disconnect_all_signals() -> void:
 	## Disconnects all signals of this classs. Typically used upon exiting the scene tree
 	disconnect_signal(wall_sensor.body_entered, _on_sensor_body_entered)
 	disconnect_signal(wall_sensor.body_exited, _on_sensor_body_exited)
-	disconnect_signal(animation_player.animation_finished, _on_animation_finished)
-	#disconnect_signal(animation_player.frame_changed, _on_frame_changed)
+	disconnect_signal(animated_sprite.animation_finished, _on_animation_finished)
+	disconnect_signal(animated_sprite.frame_changed, _on_frame_changed)
 
 ## Returns if the signal needed to be connected
 func connect_signal(signal_instance: Signal, callable: Callable) -> bool:
@@ -132,14 +132,14 @@ func disconnect_signal(signal_instance: Signal, callable: Callable) -> bool:
 	
 func update_environment() -> void:
 	# Get input get_input_direction_h() [-1.0, 1.0] and handle movement/deceleration
-	var last_forward_direction_h: float = forward_direction_h
-	var last_input_pressing_jump: bool  = ninja_controller.get_input_pressing_jump()
-	var input_pressing_jump: bool       = ninja_controller.get_input_pressing_jump()
+	var _last_forward_direction_h: float = forward_direction_h
+	var _last_input_pressing_jump: bool  = ninja_controller.get_input_pressing_jump()
+	var _input_pressing_jump: bool       = ninja_controller.get_input_pressing_jump()
 	var input_direction_h: float        = ninja_controller.get_input_direction_h()
-	var input_direction_v: float        = ninja_controller.get_input_direction_v()
+	var _input_direction_v: float        = ninja_controller.get_input_direction_v()
 	
 	if input_direction_h != 0.0:
-		forward_direction_h = input_direction_h
+		forward_direction_h = int(input_direction_h)
 	
 	just_grounded = false
 	if not is_grounded and is_on_floor():
@@ -191,15 +191,15 @@ func on_attack_registered(body: Node2D, applied_attack_info: ComboNode):
 			(ninja.state_machine.current_state as HurtState).get_hurt(applied_attack_info)
 
 func _on_animation_finished(): 
-	if state_machine != null and state_machine.current_state != null and animation_player != null and animation_player.animation != null:
-		state_machine.current_state.on_owner_animation_finished(animation_player.animation)
+	if state_machine != null and state_machine.current_state != null and animated_sprite != null and animated_sprite.animation != null:
+		state_machine.current_state.on_owner_animation_finished(animated_sprite.animation)
 	
 func _on_frame_changed():
-	if state_machine != null and state_machine.current_state != null and animation_player != null and animation_player.animation != null:
+	if state_machine != null and state_machine.current_state != null and animated_sprite != null and animated_sprite.animation != null:
 		state_machine.current_state.on_owner_frame_changed()
 	
-func _on_sensor_body_entered(area):
+func _on_sensor_body_entered(_area):
 	just_entered_wallbg = true
 
-func _on_sensor_body_exited(body):
+func _on_sensor_body_exited(_body):
 	just_entered_wallbg = false
