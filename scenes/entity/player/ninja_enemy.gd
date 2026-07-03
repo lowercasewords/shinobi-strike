@@ -22,7 +22,7 @@ func _ready() -> void:
 	super._ready()
 	hit_pool = randi_range(MIN_HITS, MAX_HITS)
 
-
+## Is this enemy alive enough to be eradicated?
 func get_can_be_eradicated() -> bool:
 	return not (not (body.has_arms or body.has_legs) or not (body.has_arms or body.has_head) or not (body.has_legs or body.has_head))
 
@@ -30,9 +30,13 @@ func get_can_be_eradicated() -> bool:
 func is_missing_limb() -> bool:
 	return not (body.has_arms and body.has_legs and body.has_head)
 
+## This variation of animation player automatically plays the varied animation depending
+## on how intact this enemy's body is
 func play_animation(animation: String):
 	super.play_animation(get_animation_varied(animation, self))
 
+## Played when the player initiates the finisher move on this enemy, 
+## forcing this enemy to be finished
 func get_eradicated(player_forward_direction_h: int, eradication_animation: String, eradication_type: Eradication, eradication_finished_callback: Callable) -> void:
 	
 	set_forward_direction_h(player_forward_direction_h)
@@ -42,6 +46,8 @@ func get_eradicated(player_forward_direction_h: int, eradication_animation: Stri
 	if not eradication_finished.is_connected(eradication_finished_callback):
 		eradication_finished.connect(eradication_finished_callback)
 
+## Enemy is now supposed to receive damage, so decide how this incoming damage 
+## will be registered
 func detecting_incoming_damage(attacker: Ninja, attack_node: ComboNode):
 	super.detecting_incoming_damage(attacker, attack_node)
 	
@@ -53,9 +59,11 @@ func detecting_incoming_damage(attacker: Ninja, attack_node: ComboNode):
 	else:
 		apply_incoming_damage(attacker, attack_node)
 
+## Apply logic so that this enemy dies now
 func apply_death() -> void:
 	self.disable_mode = DisableMode.DISABLE_MODE_MAKE_STATIC
 
+## Applies damage to this enemy
 func apply_incoming_damage(attacker: Ninja, attack_node: ComboNode):
 	var chance: float = randf()
 	
@@ -107,7 +115,6 @@ func apply_incoming_damage(attacker: Ninja, attack_node: ComboNode):
 			#chop_limb_off("head", -1)
 	else:
 		play_animation("hurt")
-	
 
 ## Chops any piece off the enemy, could be a limb or a sword
 func chop_piece_off(animation: String, piece_linear_velocity: Vector2) -> EradicatedPiece:
