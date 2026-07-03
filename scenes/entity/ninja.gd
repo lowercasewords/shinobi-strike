@@ -5,6 +5,22 @@ extends CharacterBody2D
 
 ## Maximum number of buffered attack inputs at the time as a safeguard
 const MAX_ATTACK_INPUT_BUFFER_SIZE: int = 10
+const STRIKE_DISTANCE_H: float = 200
+
+## Many animations can be different depending on how "intact" the enemy's body is,
+## For example, if enemy is fully intact it will play "idle" animation, but if missing 
+## arms the enemy will play "idle_na" animation instead.
+## This is primarely used for all enemy animations, but also used for player for 
+## eradication technique because play animation delivers different finishers depending
+## on how "intact" enemy is
+const VARIED_ANIMATION_ENDINGS: Dictionary[String, String] = {
+	"NO_ARMS": "_na",
+	"NO_LEGS": "_nl",
+	"NO_HEAD": "_nh",
+	"NO_ARMS_HEAD": "_nah",
+	"NO_LEGS_HEAD": "_nlh",
+	"NO_ARMS_LEGS": "_nal"
+}
 
 ## Initializes the states as scene tree nodes and allows those states to communicate with each other
 ## in order to support complex state switching behavior via inheritance and polymorphism
@@ -83,23 +99,59 @@ func apply_gravity(_delta) -> float:
 		gravity_applied = gravity * _delta
 		velocity.y += gravity_applied
 	return gravity_applied
+	
+## Returns True if the sprite is flipped
+func set_forward_direction_h(direction: int = 0) -> bool:
+	var previous_flip: int = forward_direction_h
+	var normalized_direction: int = previous_flip if direction == 0 else direction
+	
+	if previous_flip != normalized_direction:
+		animated_sprite.flip_h = normalized_direction != 1
+	return animated_sprite.flip_h
 
-func get_hurt(_attack_node: ComboNode): pass
+## Checks if the animation name exists for this entity
+func has_animation(animation: String) -> bool:
+	return animated_sprite.sprite_frames.has_animation(animation)
+
+func detecting_incoming_damage(_attacker: Ninja, _attack_node: ComboNode): pass
+
+## Returns the varied animation, the variety depends on the dismemberment state of the enemy
+func get_animation_varied(animation: String, enemy_ninja: NinjaEnemy) -> String:
+	var animation_no_arms_variant: String = animation + VARIED_ANIMATION_ENDINGS.NO_ARMS
+	var animation_no_legs_variant: String = animation + VARIED_ANIMATION_ENDINGS.NO_LEGS
+	var animation_no_head_variant: String = animation + VARIED_ANIMATION_ENDINGS.NO_HEAD
+	
+	var animation_to_play: String = animation
+	# The body of the enemy to judge the dismemberment state
+	var body: Dictionary[String, bool] = enemy_ninja.body
+	
+	# Just missing the Arms
+	if not body.has_arms and (body.has_legs and body.has_head) and has_animation(animation_no_arms_variant):
+		animation_to_play = animation_no_arms_variant
+	# Just missing the Legs
+	elif not body.has_legs and (body.has_arms and body.has_head) and has_animation(animation_no_legs_variant):
+		animation_to_play = animation_no_legs_variant
+	# Just missing the Head
+	elif not body.has_head and (body.has_arms and body.has_legs) and has_animation(animation_no_head_variant):
+		pass
+	
+	return animation_to_play
 
 func play_animation(animation: String):
 	animated_sprite.play(animation)
 	
 func apply_thrust(applied_force: Vector2) -> void:
 	velocity = applied_force
+	
+func apply_death() -> void: pass
 
 # --- Get Functions ---
 func get_attack_area_collision_layer() -> int: return attack_area_collision_layer
 func get_attack_area_collision_mask() -> int: return attack_area_collision_mask
 # ---------------------
 
-func check_grounded() -> bool:
-	## Check if the player is considered to be on the ground
-	return self.is_on_floor() or (coyote_timer != null and not coyote_timer.is_stopped())
+## Check if the player is considered to be on the ground
+func check_grounded() -> bool: return self.is_on_floor() or (coyote_timer != null and not coyote_timer.is_stopped())
 
 ## Connects all signals of this classs. 
 ## Typically used upon entering the scene tree.
@@ -188,7 +240,7 @@ func on_attack_registered(body: Node2D, applied_attack_info: ComboNode):
 		var ninja: Ninja = (body as Ninja)
 		if ninja.state_machine.current_state != HurtState:
 			ninja.state_machine.current_state.switch_state(state_machine.HURT)
-			(ninja.state_machine.current_state as HurtState).get_hurt(applied_attack_info)
+			(ninja.state_machine.current_state as HurtState).detecting_incoming_damage(self, applied_attack_info)
 
 func _on_animation_finished(): 
 	if state_machine != null and state_machine.current_state != null and animated_sprite != null and animated_sprite.animation != null:

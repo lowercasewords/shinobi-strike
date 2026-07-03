@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Eradication" format=3 uid="uid://behg61qqrrfms"]
+
+[ext_resource type="Script" uid="uid://1di5iu5okajy" path="res://scenes/entity/player/states/Eradications/eradication.gd" id="1_i2isy"]
+
+[resource]
+script = ExtResource("1_i2isy")
+impact_frame_indecies = Array[int]([3, 5, 7])
+metadata/_custom_type_script = "uid://1di5iu5okajy"

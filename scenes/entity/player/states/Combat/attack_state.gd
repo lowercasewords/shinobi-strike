@@ -22,7 +22,7 @@ var before_combo_velocity: Vector2
 func attempt_eradication(ninja_enemy: NinjaEnemy) -> void:
 	if ninja_owner is NinjaPlayer:
 		current_attack_node = null
-		(ninja_owner as NinjaPlayer).initialite_eradication(ninja_enemy)
+		(ninja_owner as NinjaPlayer).initialize_eradication(ninja_enemy)
 
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED
@@ -59,7 +59,7 @@ func attempt_next_attack() -> bool:
 	# Grab everything inside the area instantly
 	var overlapping_body: NinjaEnemy = ninja_owner.attack_area.get_overlapping_bodies().get(0) as NinjaEnemy
 	
-	if current_attack_node == _root_combo and attempted_input == ATTACK_TYPE.HEAVY and overlapping_body != null and overlapping_body.is_missing_limb():
+	if overlapping_body != null and overlapping_body.get_can_be_eradicated() and current_attack_node == _root_combo and attempted_input == ATTACK_TYPE.HEAVY and overlapping_body.is_missing_limb():
 		attempt_eradication(overlapping_body)
 		attacked = true
 	

@@ -95,14 +95,7 @@ func mario_jump_update(_delta: float, mario_jump_timer: Timer, MARIO_JUMP_STRENG
 		if not ninja_owner.is_on_floor():
 			ninja_owner.velocity.y += MARIO_JUMP_STRENGTH
 
-# Flips the sprite horizontally based on the owner's get_input_direction_h()
-# Returns: Whether the flip was made
-func direction_flip_horiz() -> bool:
-	var previous_flip: bool = ninja_owner.animated_sprite.flip_h
-	# Flip the sprite if get_input_direction_h() is negative (left)
-	if ninja_owner.ninja_controller.get_input_direction_h() != 0:
-		ninja_owner.animated_sprite.flip_h = ninja_owner.ninja_controller.get_input_direction_h() != 1
-	return previous_flip != ninja_owner.animated_sprite.flip_h
+
 	
 func allow_movement(delta: float) -> float:
 	var input_x: float = ninja_owner.ninja_controller.get_input_direction_h()
@@ -115,8 +108,6 @@ func allow_movement(delta: float) -> float:
 	applied_force = move_toward(ninja_owner.velocity.x, target_velocity, extra_force * delta)
 	
 	ninja_owner.velocity.x = applied_force
-	
-	direction_flip_horiz()
 	
 	return applied_force
 

@@ -10,8 +10,7 @@ func physics_update(_delta: float) -> void:
 func exit():
 	super.exit()
 
-func get_hurt(attack_node: ComboNode):
-	ninja_owner.get_hurt(attack_node)
+func detecting_incoming_damage(attacker: Ninja, attack_node: ComboNode): ninja_owner.detecting_incoming_damage(attacker, attack_node)
 
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED

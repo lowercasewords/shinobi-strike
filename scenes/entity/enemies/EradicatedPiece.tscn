@@ -110,7 +110,7 @@ position = Vector2(8, 0)
 sprite_frames = SubResource("SpriteFrames_eq44p")
 animation = &"sword"
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=611984447]
+[node name="BloodDrops" type="GPUParticles2D" parent="." unique_id=611984447]
 emitting = false
 explosiveness = 0.61
 fixed_fps = 15

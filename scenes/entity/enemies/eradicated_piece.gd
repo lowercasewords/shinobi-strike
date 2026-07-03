@@ -10,7 +10,7 @@ enum Piece {
 }
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var particles: GPUParticles2D = $GPUParticles2D
+@onready var particles: GPUParticles2D = $BloodDrops
 
 func _ready() -> void:
 	particles.one_shot = true

@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_04yo1")
 animation_name = &"combo_A_LLH"
-arms_cut_chance = 1.0
+head_cut_chance = 0.5
 thrust_forward = Vector2(100, 0)
 metadata/_custom_type_script = "uid://yfugeeewuq1c"
