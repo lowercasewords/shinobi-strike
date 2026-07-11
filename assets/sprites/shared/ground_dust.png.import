@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbdmgtk8kasj3"
-path="res://.godot/imported/lost_arm.png-85a7e794a1dfe4efe4375272d6f4960e.ctex"
+uid="uid://d388h7lf6ifxl"
+path="res://.godot/imported/ground_dust.png-0a93da53bf2e3c104daa52aeb387858e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemy/lost_arm.png"
-dest_files=["res://.godot/imported/lost_arm.png-85a7e794a1dfe4efe4375272d6f4960e.ctex"]
+source_file="res://assets/sprites/shared/ground_dust.png"
+dest_files=["res://.godot/imported/ground_dust.png-0a93da53bf2e3c104daa52aeb387858e.ctex"]
 
 [params]
 

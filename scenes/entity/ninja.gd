@@ -7,6 +7,9 @@ extends CharacterBody2D
 const MAX_ATTACK_INPUT_BUFFER_SIZE: int = 10
 const STRIKE_DISTANCE_H: float = 200
 
+## When the player is landing on the ground, this dust is spawned on the ground for visual feedback
+const DUST_EFFECT_SCENE: PackedScene = preload("res://scenes/entity/dust_effect.tscn")
+
 ## Many animations can be different depending on how "intact" the enemy's body is,
 ## For example, if enemy is fully intact it will play "idle" animation, but if missing 
 ## arms the enemy will play "idle_na" animation instead.
@@ -30,7 +33,7 @@ const VARIED_ANIMATION_ENDINGS: Dictionary[String, String] = {
 ## The 2D Area where the attack will be registered
 @export var attack_area: Area2D
 ## The animated sprite of this entity
-@export var animated_sprite: AnimatedSprite2D
+@export var animation_player: AnimationPlayer
 @export var camera: PlayerCamera
 @export var wall_cast: ShapeCast2D
 @export var coyote_timer: Timer
@@ -101,17 +104,18 @@ func apply_gravity(_delta) -> float:
 	return gravity_applied
 	
 ## Returns True if the sprite is flipped
-func set_forward_direction_h(direction: int = 0) -> bool:
+func set_forward_direction_h(direction: int = 0) -> int:
 	var previous_flip: int = forward_direction_h
 	var normalized_direction: int = previous_flip if direction == 0 else direction
-	
+		
 	if previous_flip != normalized_direction:
-		animated_sprite.flip_h = normalized_direction != 1
-	return animated_sprite.flip_h
+		#animation_player.flip_h = normalized_direction != 1
+		self.scale.x = -self.scale.x
+	return self.scale.x
 
 ## Checks if the animation name exists for this entity
 func has_animation(animation: String) -> bool:
-	return animated_sprite.sprite_frames.has_animation(animation)
+	return animation_player.has_animation(animation)
 
 func detecting_incoming_damage(_attacker: Ninja, _attack_node: ComboNode): pass
 
@@ -138,9 +142,9 @@ func get_animation_varied(animation: String, enemy_ninja: NinjaEnemy) -> String:
 	return animation_to_play
 
 func play_animation(animation: String):
-	animated_sprite.play(animation)
+	animation_player.play(animation)
 	
-func apply_thrust(applied_force: Vector2) -> void:
+func override_velocity(applied_force: Vector2) -> void:
 	velocity = applied_force
 	
 func apply_death() -> void: pass
@@ -158,15 +162,15 @@ func check_grounded() -> bool: return self.is_on_floor() or (coyote_timer != nul
 func connect_all_signals() -> void:
 	connect_signal(wall_sensor.body_entered, _on_sensor_body_entered)
 	connect_signal(wall_sensor.body_exited, _on_sensor_body_exited)
-	connect_signal(animated_sprite.animation_finished, _on_animation_finished)
-	connect_signal(animated_sprite.frame_changed, _on_frame_changed)
+	connect_signal(animation_player.animation_finished, _on_animation_finished)
+	#connect_signal(animation_player.frame_changed, _on_frame_changed)
 
 func disconnect_all_signals() -> void:
 	## Disconnects all signals of this classs. Typically used upon exiting the scene tree
 	disconnect_signal(wall_sensor.body_entered, _on_sensor_body_entered)
 	disconnect_signal(wall_sensor.body_exited, _on_sensor_body_exited)
-	disconnect_signal(animated_sprite.animation_finished, _on_animation_finished)
-	disconnect_signal(animated_sprite.frame_changed, _on_frame_changed)
+	disconnect_signal(animation_player.animation_finished, _on_animation_finished)
+	#disconnect_signal(animation_player.frame_changed, _on_frame_changed)
 
 ## Returns if the signal needed to be connected
 func connect_signal(signal_instance: Signal, callable: Callable) -> bool:
@@ -195,6 +199,13 @@ func update_environment() -> void:
 	
 	just_grounded = false
 	if not is_grounded and is_on_floor():
+		
+		var effect: DustEffect = (DUST_EFFECT_SCENE.instantiate() as DustEffect)
+		effect.global_position = global_position
+		add_sibling(effect)
+		
+		#effect.dust_player.play("spawn")
+		
 		just_grounded = true
 		is_grounded = true
 		if coyote_timer != null:
@@ -242,13 +253,13 @@ func on_attack_registered(body: Node2D, applied_attack_info: ComboNode):
 			ninja.state_machine.current_state.switch_state(state_machine.HURT)
 			(ninja.state_machine.current_state as HurtState).detecting_incoming_damage(self, applied_attack_info)
 
-func _on_animation_finished(): 
-	if state_machine != null and state_machine.current_state != null and animated_sprite != null and animated_sprite.animation != null:
-		state_machine.current_state.on_owner_animation_finished(animated_sprite.animation)
+func _on_animation_finished(animation_name: String): 
+	if state_machine != null and state_machine.current_state != null and animation_player != null:
+		state_machine.current_state.on_owner_animation_finished(animation_name)
 	
-func _on_frame_changed():
-	if state_machine != null and state_machine.current_state != null and animated_sprite != null and animated_sprite.animation != null:
-		state_machine.current_state.on_owner_frame_changed()
+#func _on_frame_changed():
+	#if state_machine != null and state_machine.current_state != null and animation_player != null and animation_player.current_animation != null:
+		#state_machine.current_state.on_owner_frame_changed()
 	
 func _on_sensor_body_entered(_area):
 	just_entered_wallbg = true

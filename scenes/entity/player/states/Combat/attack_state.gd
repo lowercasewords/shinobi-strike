@@ -19,6 +19,9 @@ var current_attack_node: ComboNode
 ## The velocity of the entity before entering the attacking state.
 var before_combo_velocity: Vector2
 
+func set_thurst(thrust_speed: float = 20) -> void:
+	ninja_owner.override_velocity(Vector2(ninja_owner.velocity.x + thrust_speed, ninja_owner.velocity.y))
+
 func attempt_eradication(ninja_enemy: NinjaEnemy) -> void:
 	if ninja_owner is NinjaPlayer:
 		current_attack_node = null
@@ -93,19 +96,19 @@ func switch_to_next_state():
 func on_owner_frame_changed(): 
 	if current_attack_node != null:
 		
-		var frame_index: int = ninja_owner.animated_sprite.frame
+		var frame_index: int = ninja_owner.animation_player.frame
 		var key_frame_index: int = current_attack_node.impact_key_frame_index
 		
 		if frame_index == key_frame_index:
-			on_keyframe_invoked(ninja_owner.animated_sprite.animation, ninja_owner.animated_sprite.frame)
+			on_keyframe_invoked(ninja_owner.animation_player.current_animation, ninja_owner.animation_player.frame)
 		elif frame_index == key_frame_index+1:
-			on_after_keyframe_invoked(ninja_owner.animated_sprite.animation, ninja_owner.animated_sprite.frame)
+			on_after_keyframe_invoked(ninja_owner.animation_player.current_animation, ninja_owner.animation_player.frame)
 	
 func on_keyframe_invoked(_animation: String, _frame_index: int): 
 	
 	ninja_owner.velocity /= 10
 	#attempt_next_attack()
-	activate_attack_area()
+	#activate_attack_area()
 	
 func on_after_keyframe_invoked(_animation: String, _frame_index: int): 
 	attempt_next_attack()

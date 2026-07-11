@@ -4,9 +4,7 @@ class_name LandState extends State
 
 func enter() -> void:
 	super.enter()
-	ninja_owner.animated_sprite.play("land")
-	audio_stream.volume_db = randf_range(-5.0, 5.0)
-	audio_stream.play()
+	ninja_owner.animation_player.play("land")
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)

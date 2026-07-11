@@ -21,13 +21,13 @@ func physics_update(_delta: float) -> void:
 		apply_gravity(_delta)
 	
 	# Scale the walking animation depending on the speed
-	if ninja_owner.animated_sprite.animation == "walk":
-		var speed_ratio = max(abs(ninja_owner.velocity.x) / max_speed, 0.5)
-		ninja_owner.animated_sprite.speed_scale = speed_ratio
+	#if ninja_owner.animation_player.current_animation == "walk":
+		#var speed_ratio = max(abs(ninja_owner.velocity.x) / max_speed, 0.5)
+		#ninja_owner.animation_player.speed_scale = speed_ratio
 	
-	if ninja_owner.animated_sprite.frame == 0 and not audio_stream.playing:
-		audio_stream.volume_db = randf_range(-5.0, 1.0)
-		audio_stream.play()
+	#if ninja_owner.animation_player.frame == 0 and not audio_stream.playing:
+		#audio_stream.volume_db = randf_range(-5.0, 1.0)
+		#audio_stream.play()
 	
 	if attack_triggered():
 		switch_state(StateMachine.ATTACK)
@@ -39,17 +39,20 @@ func physics_update(_delta: float) -> void:
 		switch_state(StateMachine.TURN)
 	elif idle_state_triggered():
 		switch_state(StateMachine.IDLE)
-		ninja_owner.animated_sprite.play_backwards("walk_windup")
 	#else:
 		## Stopping with a smooth animation
 		#var new_state: String = check_grounded_transitions()
 		#if new_state == StateMachine.IDLE:
 			#
 
+func switch_state(state_name: String):
+	#ninja_owner.animation_player.speed_scale = 1.0
+	super.switch_state(state_name)
+
 func start_walking() -> void:
-	ninja_owner.animated_sprite.play("walk")
+	ninja_owner.animation_player.play("walk")
 func start_windup() -> void:
-	ninja_owner.animated_sprite.play("walk_windup")
+	ninja_owner.animation_player.play("walk_windup")
 func end_windup() -> void:
 	## Fired when the walk windup is finished
 	if ninja_owner.is_on_floor():

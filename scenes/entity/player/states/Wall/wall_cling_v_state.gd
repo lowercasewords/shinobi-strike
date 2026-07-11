@@ -1,10 +1,9 @@
-class_name WallClingVState extends State
+class_name WallState extends State
 
 const CLING_FRICTION = 10000.0    # How aggressively the wall eats their momentum
 
-## 
 #@onready var cling_timer: Timer = $Timer
-@onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var audio_stream: AudioStreamPlayer2D #$AudioStreamPlayer2D
 
 #func _ready():
 	#cling_timer.connect("timeout", _on_cling_cling_timeout)
@@ -13,7 +12,7 @@ func enter():
 	super.enter()
 	var wall_direction: float = sidewalls_collision_direction()
 	
-	ninja_owner.animated_sprite.play("wall_cling_v_windup")
+	ninja_owner.animation_player.play("wall_cling_v_windup")
 	audio_stream.volume_db = randf_range(-5.0, 5.0)
 	#cling_timer.start()
 	audio_stream.play()
@@ -44,4 +43,4 @@ func _on_animation_finished():
 	else:
 		switch_state(StateMachine.FALL)
 	#if animation_name == "wall_cling_v_windup":
-		#ninja_owner.animated_sprite.play("wall_cling_v")
+		#ninja_owner.animation_player.play("wall_cling_v")

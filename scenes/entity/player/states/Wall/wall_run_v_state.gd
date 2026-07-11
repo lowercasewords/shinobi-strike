@@ -12,13 +12,13 @@ func enter() -> void:
 	# Account for one pixel of rotation
 	if wall_direction < 0:
 		sprites_shift_amount += 1
-	ninja_owner.animated_sprite.play("wall_run_v")
+	ninja_owner.animation_player.play("wall_run_v")
 	ninja_owner.velocity.y = WALL_RUN_SPEED
-	ninja_owner.animated_sprite.position.x = sprites_shift_amount * wall_direction
+	ninja_owner.animation_player.position.x = sprites_shift_amount * wall_direction
 	
 func exit() -> void:
 	super.exit()
-	ninja_owner.animated_sprite.position.x = 0.0
+	ninja_owner.animation_player.position.x = 0.0
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)

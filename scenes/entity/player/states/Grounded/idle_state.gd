@@ -5,7 +5,11 @@ func enter() -> void:
 	# Play idle animation here if you have one
 	if not ninja_owner.is_node_ready():
 		await ninja_owner.ready
-	play_animation("idle")
+		
+	if abs(ninja_owner.velocity.x) > 0:
+		ninja_owner.animation_player.play_backwards("walk_windup")
+	else:
+		play_animation("idle")
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -24,6 +28,6 @@ func physics_update(_delta: float) -> void:
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED
 
-func on_owner_animation_finished(_animation_name: String) -> void:
-	if (ninja_owner.animated_sprite.animation == "walk_windup"):
+func on_owner_animation_finished(animation_name: String) -> void:
+	if animation_name == "walk_windup":
 		play_animation("idle")

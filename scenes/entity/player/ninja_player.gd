@@ -45,10 +45,10 @@ func on_eradication_finished() -> void:
 	camera.eradication_zoom_out()
 	current_eradication = null
 
-func _on_frame_changed():
-	super._on_frame_changed()
-	if current_eradication != null:
-		if current_eradication.impact_frame_indecies.has(animated_sprite.frame):
-			camera.eradication_zoom_in(eradication_impact_zoom)
-		else:
-			camera.eradication_zoom_in(eradication_zoom)
+#func _on_frame_changed():
+	#super._on_frame_changed()
+	#if current_eradication != null:
+		#if current_eradication.impact_frame_indecies.has(animation_player.frame):
+			#camera.eradication_zoom_in(eradication_impact_zoom)
+		#else:
+			#camera.eradication_zoom_in(eradication_zoom)

@@ -41,4 +41,4 @@ func physics_update(_delta: float) -> void:
 
 func enter() -> void:
 	super.enter()
-	ninja_owner.animated_sprite.play("wall_slide_v")
+	ninja_owner.animation_player.play("wall_slide_v")

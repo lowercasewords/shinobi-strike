@@ -39,7 +39,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k02f2")
 }],
-"loop": true,
+"loop": false,
 "name": &"arm",
 "speed": 5.0
 }, {
@@ -47,7 +47,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6l1i6")
 }],
-"loop": true,
+"loop": false,
 "name": &"feet",
 "speed": 5.0
 }, {
@@ -55,7 +55,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sybe2")
 }],
-"loop": true,
+"loop": false,
 "name": &"head_front",
 "speed": 5.0
 }, {
@@ -63,7 +63,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_guu40")
 }],
-"loop": true,
+"loop": false,
 "name": &"head_side",
 "speed": 5.0
 }, {
@@ -71,7 +71,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3mj1h")
 }],
-"loop": true,
+"loop": false,
 "name": &"leg",
 "speed": 5.0
 }, {
@@ -108,7 +108,7 @@ shape = SubResource("SegmentShape2D_rhmpp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1026421379]
 position = Vector2(8, 0)
 sprite_frames = SubResource("SpriteFrames_eq44p")
-animation = &"sword"
+animation = &"head_front"
 
 [node name="BloodDrops" type="GPUParticles2D" parent="." unique_id=611984447]
 emitting = false

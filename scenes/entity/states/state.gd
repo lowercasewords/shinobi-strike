@@ -47,7 +47,7 @@ func exit():
 func update(_delta: float): pass
 ## Called upon by the state machine on _physics_update
 func physics_update(_delta: float) -> void:
-	ninja_owner.animated_sprite.speed_scale = 1
+	ninja_owner.animation_player.speed_scale = 1
 	
 func switch_state(state_name: String):
 	ninja_owner.state_machine.transition_state(self, state_name)

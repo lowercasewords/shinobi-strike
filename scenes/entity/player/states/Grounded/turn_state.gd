@@ -8,7 +8,7 @@ const TURN_FRICTION = DEFAULT_GROUNDED_FRICTION*1.1
 func enter() -> void:
 	super.enter()
 	# Changing walking get_input_direction_h() 
-	ninja_owner.animated_sprite.play("turn")
+	ninja_owner.animation_player.play("walk_turn")
 	ninja_owner.velocity.x /= 10
 	
 	acceleration = TURN_ACCELERATION
@@ -26,7 +26,7 @@ func physics_update(_delta: float) -> void:
 	allow_movement(_delta)
 	
 	# Turn sound
-	#if ninja_owner.animated_sprite.started and not audio_stream.playing:
+	#if ninja_owner.animation_player.started and not audio_stream.playing:
 		#audio_stream.volume_db = randf_range(5.0, 10.0)
 		#audio_stream.play()
 		
