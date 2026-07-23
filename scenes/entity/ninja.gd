@@ -37,7 +37,7 @@ const VARIED_ANIMATION_ENDINGS: Dictionary[String, String] = {
 @export var camera: PlayerCamera
 @export var wall_cast: ShapeCast2D
 @export var coyote_timer: Timer
-@export var wall_sensor: Area2D
+@export var flippable: Node2D
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -91,8 +91,6 @@ func _physics_process(delta):
 	# Update the effects on the owner by the environment
 	update_environment()
 	
-	apply_gravity(delta)
-	
 	# Apply movement
 	move_and_slide()
 
@@ -104,14 +102,16 @@ func apply_gravity(_delta) -> float:
 	return gravity_applied
 	
 ## Returns True if the sprite is flipped
-func set_forward_direction_h(direction: int = 0) -> int:
-	var previous_flip: int = forward_direction_h
-	var normalized_direction: int = previous_flip if direction == 0 else direction
-		
-	if previous_flip != normalized_direction:
-		#animation_player.flip_h = normalized_direction != 1
-		self.scale.x = -self.scale.x
-	return self.scale.x
+func set_forward_direction_h(new_direction: int = 0) -> bool:
+	var previous_forward_direction_h: int = -1 if forward_direction_h < 0 else 1
+	var new_normalized_direction: int = -1 if new_direction < 0 else 1 #previous_forward_direction_h if new_direction == 0 else new_direction
+	
+	forward_direction_h = new_normalized_direction
+	
+	if flippable != null:
+		flippable.scale.x = forward_direction_h
+	
+	return previous_forward_direction_h == new_normalized_direction
 
 ## Checks if the animation name exists for this entity
 func has_animation(animation: String) -> bool:
@@ -155,20 +155,20 @@ func get_attack_area_collision_mask() -> int: return attack_area_collision_mask
 # ---------------------
 
 ## Check if the player is considered to be on the ground
-func check_grounded() -> bool: return self.is_on_floor() or (coyote_timer != null and not coyote_timer.is_stopped())
+func s_ninja_grounded() -> bool: return self.is_on_floor() or (coyote_timer != null and not coyote_timer.is_stopped())
 
 ## Connects all signals of this classs. 
 ## Typically used upon entering the scene tree.
 func connect_all_signals() -> void:
-	connect_signal(wall_sensor.body_entered, _on_sensor_body_entered)
-	connect_signal(wall_sensor.body_exited, _on_sensor_body_exited)
+	#connect_signal(wall_cast.body_entered, _on_sensor_body_entered)
+	#connect_signal(wall_cast.body_exited, _on_sensor_body_exited)
 	connect_signal(animation_player.animation_finished, _on_animation_finished)
 	#connect_signal(animation_player.frame_changed, _on_frame_changed)
 
 func disconnect_all_signals() -> void:
 	## Disconnects all signals of this classs. Typically used upon exiting the scene tree
-	disconnect_signal(wall_sensor.body_entered, _on_sensor_body_entered)
-	disconnect_signal(wall_sensor.body_exited, _on_sensor_body_exited)
+	#disconnect_signal(wall_cast.body_entered, _on_sensor_body_entered)
+	#disconnect_signal(wall_cast.body_exited, _on_sensor_body_exited)
 	disconnect_signal(animation_player.animation_finished, _on_animation_finished)
 	#disconnect_signal(animation_player.frame_changed, _on_frame_changed)
 
@@ -191,11 +191,11 @@ func update_environment() -> void:
 	var _last_forward_direction_h: float = forward_direction_h
 	var _last_input_pressing_jump: bool  = ninja_controller.get_input_pressing_jump()
 	var _input_pressing_jump: bool       = ninja_controller.get_input_pressing_jump()
-	var input_direction_h: float        = ninja_controller.get_input_direction_h()
+	var _input_direction_h: float        = ninja_controller.get_input_direction_h()
 	var _input_direction_v: float        = ninja_controller.get_input_direction_v()
 	
-	if input_direction_h != 0.0:
-		forward_direction_h = int(input_direction_h)
+	#if input_direction_h != 0.0:
+		#forward_direction_h = int(input_direction_h)
 	
 	just_grounded = false
 	if not is_grounded and is_on_floor():

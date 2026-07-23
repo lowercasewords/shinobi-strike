@@ -34,4 +34,4 @@ position = Vector2(-232, 208)
 [node name="Enemies" type="Node" parent="Actors" unique_id=996459482]
 
 [node name="NinjaEnemy" parent="Actors/Enemies" unique_id=1928144445 instance=ExtResource("4_ymjof")]
-position = Vector2(-144, 216)
+position = Vector2(-128, 208)

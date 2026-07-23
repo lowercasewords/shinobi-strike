@@ -29,7 +29,7 @@ func on_owner_animation_finished(_animation_name: String) -> void:
 	elif walk_state_triggered():
 		switch_state(StateMachine.WALK)
 	#if ninja_owner.state_machine.current_state.name.to_lower() == StateMachine.LAND:
-		#if check_grounded_transitions() == "":
+		#if s_ninja_grounded_transitions() == "":
 			# Just in case to not get stuck in this land state
 			#switch_state(StateMachine.IDLE)
 		

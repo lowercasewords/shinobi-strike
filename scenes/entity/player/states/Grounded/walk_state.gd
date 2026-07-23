@@ -6,11 +6,21 @@ var windup_movement = 100.0
 
 func enter() -> void:
 	super.enter()
+	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
+	var _new_direction: int = update_forward_direction_h(input_direction)
+	
 	var prev_state_name: String = ninja_owner.state_machine.psnameprev
 	if prev_state_name == StateMachine.TURN:
 		start_walking()
 	else:
 		start_windup()
+	
+#func exit() -> void:
+	#print("Exit: " + str(ninja_owner.ninja_controller.get_input_direction_h()))
+	#print("Exit: " + str(ninja_owner.forward_direction_h))
+
+func update(_delta: float):
+	super.update(_delta)
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -41,7 +51,7 @@ func physics_update(_delta: float) -> void:
 		switch_state(StateMachine.IDLE)
 	#else:
 		## Stopping with a smooth animation
-		#var new_state: String = check_grounded_transitions()
+		#var new_state: String = s_ninja_grounded_transitions()
 		#if new_state == StateMachine.IDLE:
 			#
 
@@ -51,6 +61,7 @@ func switch_state(state_name: String):
 
 func start_walking() -> void:
 	ninja_owner.animation_player.play("walk")
+
 func start_windup() -> void:
 	ninja_owner.animation_player.play("walk_windup")
 func end_windup() -> void:

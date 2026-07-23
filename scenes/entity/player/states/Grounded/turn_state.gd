@@ -24,6 +24,7 @@ func physics_update(_delta: float) -> void:
 		apply_gravity(_delta)
 		
 	allow_movement(_delta)
+	apply_gravity(_delta)
 	
 	# Turn sound
 	#if ninja_owner.animation_player.started and not audio_stream.playing:

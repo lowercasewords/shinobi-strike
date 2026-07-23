@@ -14,13 +14,13 @@ func _ready() -> void:
 	# Initialize target_zoom to whatever the camera starts at
 	target_zoom = zoom.x
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Clamp the zoom so it never exceeds your min/max limits
 	target_zoom = clamp(target_zoom, min_zoom, max_zoom)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Smoothly glide the actual camera zoom toward our target
-	var current_zoom = lerp(zoom.x, target_zoom, zoom_speed * delta)
+	var current_zoom = lerp(zoom.x, target_zoom, zoom_speed * _delta)
 	zoom = Vector2(current_zoom, current_zoom)
 	
 func _input(event):

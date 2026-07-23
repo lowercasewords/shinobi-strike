@@ -1,5 +1,8 @@
 class_name NinjaPlayer extends Ninja
 
+
+@export var mario_jump_timer: Timer
+
 const eradication_zoom: float = 1.2
 const eradication_impact_zoom: float = eradication_zoom + 0.5
 
@@ -13,14 +16,13 @@ var current_eradication: Eradication
 func _process(delta):
 	super._process(delta)
 	
-	var input_direction: int = ninja_controller.get_input_direction_h()
-	if input_direction != forward_direction_h:
-		set_forward_direction_h(input_direction)
+func _physics_process(delta):
+	super._physics_process(delta)
 	
 ## Starts the process of eradicating (finish animation) the enemy 
 func initialize_eradication(target_ninja: NinjaEnemy) -> void:
 	## Body parts of the enemy
-	var body = target_ninja.body
+	var _body = target_ninja.body
 	var eradication_animation: String = "era_ground"
 	var eradication: Resource
 	
@@ -44,11 +46,3 @@ func initialize_eradication(target_ninja: NinjaEnemy) -> void:
 func on_eradication_finished() -> void:
 	camera.eradication_zoom_out()
 	current_eradication = null
-
-#func _on_frame_changed():
-	#super._on_frame_changed()
-	#if current_eradication != null:
-		#if current_eradication.impact_frame_indecies.has(animation_player.frame):
-			#camera.eradication_zoom_in(eradication_impact_zoom)
-		#else:
-			#camera.eradication_zoom_in(eradication_zoom)

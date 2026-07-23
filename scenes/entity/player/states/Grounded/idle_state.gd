@@ -10,7 +10,7 @@ func enter() -> void:
 		ninja_owner.animation_player.play_backwards("walk_windup")
 	else:
 		play_animation("idle")
-
+	
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	

@@ -13,8 +13,8 @@ func physics_update(_delta: float) -> void:
 	
 	play_fall_animation()
 
-	if wall_cling_v_state_triggered():
-		switch_state(StateMachine.WALLCLINGV)
+	if wall_state_triggered():
+		switch_state(StateMachine.WALL)
 	elif land_state_triggered():
 		switch_state(StateMachine.LAND)
 		

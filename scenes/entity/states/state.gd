@@ -46,8 +46,8 @@ func exit():
 ## Called upon by the state machine on _update
 func update(_delta: float): pass
 ## Called upon by the state machine on _physics_update
-func physics_update(_delta: float) -> void:
-	ninja_owner.animation_player.speed_scale = 1
+func physics_update(_delta: float) -> void: pass
+	#ninja_owner.animation_player.speed_scale = 1
 	
 func switch_state(state_name: String):
 	ninja_owner.state_machine.transition_state(self, state_name)
@@ -75,7 +75,7 @@ func set_physics_airborne() -> void:
 	max_speed = DEFAULT_SPEED
 
 func apply_gravity(_delta) -> void:
-	pass ## This should be removed
+	ninja_owner.apply_gravity(_delta)
 
 ## Similar to the `allow_movement`, but only applies friction without player movement and acceleration
 func apply_friction(delta: float) -> float:
@@ -84,20 +84,37 @@ func apply_friction(delta: float) -> float:
 	
 	return applied_force
 
-func mario_jump_update(_delta: float, mario_jump_timer: Timer, MARIO_JUMP_STRENGTH: float) -> void:
+## Updates the forward direction while flipping the character towards said direction
+## Returns true if the direction was switched
+func update_forward_direction_h(new_direction: int) -> bool:
+	return ninja_owner.set_forward_direction_h(new_direction)
+
+## Requires the timer to be started manually when the jump starts
+func mario_jump_update(_delta: float, MARIO_JUMP_STRENGTH: float) -> void:
 	# Stop mario jump because owner stopped holding jump button 
-	if not ninja_owner.ninja_controller.get_input_pressing_jump() and mario_jump_timer.time_left > 0:
-		mario_jump_timer.stop()
-		mario_jump_timer.timeout.emit()
+	if not ninja_owner.ninja_controller.get_input_pressing_jump() and ninja_owner.mario_jump_timer.time_left > 0:
+		ninja_owner.mario_jump_timer.stop()
+		ninja_owner.mario_jump_timer.timeout.emit()
 		
 	# Mario jump is applied
-	if not mario_jump_timer.is_stopped():
-		if not ninja_owner.is_on_floor():
-			ninja_owner.velocity.y += MARIO_JUMP_STRENGTH
+	if not ninja_owner.mario_jump_timer.is_stopped() and not ninja_owner.is_on_floor():
+		ninja_owner.velocity.y += MARIO_JUMP_STRENGTH
 
-
+## Returns the direction (-1 or 1) opposite to the wall the player is grabbing onto
+func get_wall_direction() -> int:
+	# Force the cast to update immediately (prevents 1-frame lag bugs)
+	ninja_owner.wall_cast.force_shapecast_update()
+	
+	var wall_direction: int = 0
+	# Are we hitting a valid wall?
+	if ninja_owner.wall_cast.is_colliding():
+		# Grab the normal from the very first thing the cast hit (index 0)
+		var wall_normal = ninja_owner.wall_cast.get_collision_normal(0)
+		wall_direction = sign(wall_normal.x)
+	return wall_direction
 	
 func allow_movement(delta: float) -> float:
+	
 	var input_x: float = ninja_owner.ninja_controller.get_input_direction_h()
 	# Determine target velocity
 	var target_velocity = input_x * max_speed
@@ -106,6 +123,10 @@ func allow_movement(delta: float) -> float:
 	var applied_force: float = 0.0
 	
 	applied_force = move_toward(ninja_owner.velocity.x, target_velocity, extra_force * delta)
+	
+	print("target_velocity: " + str(target_velocity))
+	print("extra_force: " + str(extra_force))
+	print("applied force: " + str(applied_force) + "\n")
 	
 	ninja_owner.velocity.x = applied_force
 	
@@ -119,21 +140,6 @@ func check_wall_exit(wall_direction: float) -> String:
 		return StateMachine.FALL
 	return ""
 
-func sidewalls_collision_direction() -> int:
-	# Force the cast to update immediately (prevents 1-frame lag bugs)
-	ninja_owner.wall_cast.force_shapecast_update()
-	
-	var wall_direction: int = 0
-	# Are we hitting a valid wall?
-	if ninja_owner.wall_cast.is_colliding():
-		# Grab the normal from the very first thing the cast hit (index 0)
-		var wall_normal = ninja_owner.wall_cast.get_collision_normal(0)
-		wall_direction = -sign(wall_normal.x)
-		
-	#print("p: ", ninja_owner.ninja_controller.get_input_direction_h())
-	#print("w: ", wall_direction)
-	return wall_direction
-
 # -------- 
 # -------- State Trigger Checks
 # -------- 
@@ -142,7 +148,7 @@ func land_state_triggered() -> bool:
 	return ninja_owner.just_grounded and sname != StateMachine.LAND
 
 func fall_state_triggered() -> bool:
-	return ninja_owner.velocity.y > 0 and sname != StateMachine.FALL
+	return ninja_owner.velocity.y > 0 and sname != StateMachine.FALL and not ninja_owner.s_ninja_grounded()
 
 func attack_triggered() -> bool:
 	var input_buffer = ninja_owner.ninja_controller.attack_input_buffer
@@ -150,9 +156,6 @@ func attack_triggered() -> bool:
 	var valid_attack_is_next: bool  = left_attacks_buffered and input_buffer[0] != AttackState.ATTACK_TYPE.UNKNOWN
 	
 	return valid_attack_is_next
-	
-func wallrun_state_triggered() -> bool: 
-	return ninja_owner.just_entered_wallbg and ninja_owner.ninja_controller.get_input_pressed_jump()
 
 func idle_state_triggered() -> bool:
 	return ninja_owner.ninja_controller.get_input_direction_h() == 0 and sname != StateMachine.IDLE
@@ -173,6 +176,6 @@ func turn_state_triggered() -> bool:
 	
 	return has_switched_movement_direction and fast_enough and not_turning_already
 
-func wall_cling_v_state_triggered() -> bool:
+func wall_state_triggered() -> bool:
 	var input_direction_h = ninja_owner.ninja_controller.get_input_direction_h()
-	return not get_state_space() == STATE_SPACE.WALLCRAWL and sidewalls_collision_direction() == input_direction_h and input_direction_h != 0
+	return not get_state_space() == STATE_SPACE.WALLCRAWL and -get_wall_direction() == input_direction_h and input_direction_h != 0

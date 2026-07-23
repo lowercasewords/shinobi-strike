@@ -36,11 +36,11 @@ func play_animation(animation: String):
 
 ## Played when the player initiates the finisher move on this enemy, 
 ## forcing this enemy to be finished
-func get_eradicated(player_forward_direction_h: int, eradication_animation: String, eradication_type: Eradication, eradication_finished_callback: Callable) -> void:
+func get_eradicated(_player_forward_direction_h: int, _eradication_animation: String, _eradication_type: Eradication, eradication_finished_callback: Callable) -> void:
 	
-	set_forward_direction_h(player_forward_direction_h)
+	set_forward_direction_h(_player_forward_direction_h)
 	
-	play_animation(eradication_animation)
+	play_animation(_eradication_animation)
 	
 	if not eradication_finished.is_connected(eradication_finished_callback):
 		eradication_finished.connect(eradication_finished_callback)
@@ -51,7 +51,7 @@ func detecting_incoming_damage(attacker: Ninja, attack_node: ComboNode):
 	super.detecting_incoming_damage(attacker, attack_node)
 	
 	var attacker_direction: int = attacker.forward_direction_h
-	var has_changed_direction: bool = set_forward_direction_h(-attacker_direction)
+	var _has_changed_direction: bool = set_forward_direction_h(-attacker_direction)
 	
 	if not get_can_be_eradicated():
 		apply_death()

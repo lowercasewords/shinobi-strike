@@ -202,12 +202,9 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.26666668),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"vanish"
-}]
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -306,3 +303,5 @@ scale = Vector2(0.8, 0.5)
 texture = ExtResource("1_ocaqr")
 hframes = 2
 vframes = 3
+
+[connection signal="animation_changed" from="DustPlayer" to="." method="_on_dust_player_animation_changed"]
