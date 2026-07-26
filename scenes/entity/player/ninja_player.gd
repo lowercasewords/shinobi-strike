@@ -1,6 +1,5 @@
 class_name NinjaPlayer extends Ninja
 
-
 @export var mario_jump_timer: Timer
 
 const eradication_zoom: float = 1.2
@@ -32,7 +31,7 @@ func initialize_eradication(target_ninja: NinjaEnemy) -> void:
 	
 	# If data found in the first place
 	if eradication:
-		play_animation(eradication_animation)
+		set_animation(eradication_animation)
 		
 		# Align the player for the syncronous eradication animation with the enemy
 		global_position = target_ninja.global_position

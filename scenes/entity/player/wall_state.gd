@@ -63,7 +63,7 @@ func attempt_cling_v(animation: String = "wall_cling_v") -> bool:
 ## Continues the jump after the windup
 func continue_jump_v() -> bool:
 	
-	#play_animation("wall_jump_v")
+	#set_animation("wall_jump_v")
 	
 	return true
 	
@@ -75,7 +75,7 @@ func attempt_jump_v() -> bool:
 		return false
 	
 	update_forward_direction_h(-wall_direction)
-	play_animation("wall_jump_windup_v")
+	set_animation("wall_jump_windup_v")
 	
 	ninja_owner.mario_jump_timer.start()
 	
@@ -89,7 +89,7 @@ func attempt_jump_v() -> bool:
 
 ## Attempts to perform a slide on a vertical wall
 func attempt_slide_v() -> bool:
-	play_animation("wall_slide_v")
+	set_animation("wall_slide_v")
 	
 	ninja_owner.velocity.y /= 2
 	
@@ -104,7 +104,7 @@ func attempt_run_v() -> bool:
 	
 	ninja_owner.velocity.y /= 2
 	
-	play_animation("wall_run_v")
+	set_animation("wall_run_v")
 	#ninja_owner.coyote_timer.stop()
 	
 	# Account for one pixel of rotation

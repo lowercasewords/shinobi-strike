@@ -5,6 +5,9 @@ class_name LandState extends State
 func enter() -> void:
 	super.enter()
 	ninja_owner.animation_player.play("land")
+	
+	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
+	var _new_direction: int = update_forward_direction_h(input_direction)
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -29,7 +32,7 @@ func on_owner_animation_finished(_animation_name: String) -> void:
 	elif walk_state_triggered():
 		switch_state(StateMachine.WALK)
 	#if ninja_owner.state_machine.current_state.name.to_lower() == StateMachine.LAND:
-		#if s_ninja_grounded_transitions() == "":
+		#if get_ninja_grounded_transitions() == "":
 			# Just in case to not get stuck in this land state
 			#switch_state(StateMachine.IDLE)
 		

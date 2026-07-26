@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ComboNode" format=3 uid="uid://chb128qdp6s0d"]
+
+[ext_resource type="Script" uid="uid://yfugeeewuq1c" path="res://scenes/entity/player/states/Combat/combo_node.gd" id="1_da10x"]
+[ext_resource type="Resource" uid="uid://7f6wwjujgooh" path="res://scenes/entity/player/states/Combat/Combo/combo_LL.tres" id="2_nwhmr"]
+[ext_resource type="Resource" uid="uid://dm5til4sxynu5" path="res://scenes/entity/player/states/Combat/Combo/combo_LH.tres" id="3_is75a"]
+
+[resource]
+script = ExtResource("1_da10x")
+animation_name = &"combo_A_L"
+next_attacks = Dictionary[int, ExtResource("1_da10x")]({
+0: ExtResource("2_nwhmr"),
+1: ExtResource("3_is75a")
+})
+metadata/_custom_type_script = "uid://yfugeeewuq1c"

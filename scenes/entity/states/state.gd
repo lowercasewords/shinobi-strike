@@ -32,6 +32,9 @@ var max_speed: float = 0.0
 var friction: float = 0.0
 var acceleration: float = 0.0
 
+func get_max_speed() -> float:
+	return max_speed
+
 ## Called upon by the state machine on _ready
 func enter(): 
 	if get_state_space() == STATE_SPACE.GROUNDED:
@@ -61,8 +64,8 @@ func windup_finsh() -> void: pass
 func on_owner_animation_finished(_animation_name: String) -> void: pass
 func on_owner_frame_changed(): pass
 	
-func play_animation(animation: String):
-	ninja_owner.play_animation(animation)
+func set_animation(animation: String):
+	ninja_owner.set_animation(animation)
 
 func set_physics_grounded() -> void:
 	friction = DEFAULT_GROUNDED_FRICTION
@@ -124,9 +127,9 @@ func allow_movement(delta: float) -> float:
 	
 	applied_force = move_toward(ninja_owner.velocity.x, target_velocity, extra_force * delta)
 	
-	print("target_velocity: " + str(target_velocity))
-	print("extra_force: " + str(extra_force))
-	print("applied force: " + str(applied_force) + "\n")
+	#print("target_velocity: " + str(target_velocity))
+	#print("extra_force: " + str(extra_force))
+	#print("applied force: " + str(applied_force) + "\n")
 	
 	ninja_owner.velocity.x = applied_force
 	
@@ -148,7 +151,7 @@ func land_state_triggered() -> bool:
 	return ninja_owner.just_grounded and sname != StateMachine.LAND
 
 func fall_state_triggered() -> bool:
-	return ninja_owner.velocity.y > 0 and sname != StateMachine.FALL and not ninja_owner.s_ninja_grounded()
+	return not ninja_owner.animation_player.is_playing() and ninja_owner.animation_player.current_animation == "jump_curl" and ninja_owner.velocity.y > 0 and sname != StateMachine.FALL #and not ninja_owner.get_ninja_grounded()
 
 func attack_triggered() -> bool:
 	var input_buffer = ninja_owner.ninja_controller.attack_input_buffer

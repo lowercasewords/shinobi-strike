@@ -31,8 +31,8 @@ func is_missing_limb() -> bool:
 
 ## This variation of animation player automatically plays the varied animation depending
 ## on how intact this enemy's body is
-func play_animation(animation: String):
-	super.play_animation(get_animation_varied(animation, self))
+func set_animation(animation: String):
+	super.set_animation(get_animation_varied(animation, self))
 
 ## Played when the player initiates the finisher move on this enemy, 
 ## forcing this enemy to be finished
@@ -40,16 +40,13 @@ func get_eradicated(_player_forward_direction_h: int, _eradication_animation: St
 	
 	set_forward_direction_h(_player_forward_direction_h)
 	
-	play_animation(_eradication_animation)
+	set_animation(_eradication_animation)
 	
 	if not eradication_finished.is_connected(eradication_finished_callback):
 		eradication_finished.connect(eradication_finished_callback)
 
 ## Enemy is now supposed to receive damage, so decide how this incoming damage 
-## will be registered
-func detecting_incoming_damage(attacker: Ninja, attack_node: ComboNode):
-	super.detecting_incoming_damage(attacker, attack_node)
-	
+func detected_incoming_damage(attacker: Ninja, attack_node: ComboNode):
 	var attacker_direction: int = attacker.forward_direction_h
 	var _has_changed_direction: bool = set_forward_direction_h(-attacker_direction)
 	
@@ -64,45 +61,46 @@ func apply_death() -> void:
 
 ## Applies damage to this enemy
 func apply_incoming_damage(attacker: Ninja, attack_node: ComboNode):
+	super.apply_incoming_damage(attacker, attack_node)
 	var chance: float = randf()
 	
 	var arms_chopped_chance: float = attack_node.arms_cut_chance
 	var legs_chopped_chance: float = arms_chopped_chance + attack_node.legs_cut_chance
 	var head_chopped_chance: float = legs_chopped_chance + attack_node.head_cut_chance
 	
-	var ninja_relative_offset: Vector2 = Vector2(15*attacker.forward_direction_h, 0)
+	var ninja_relative_offset: Vector2 = attack_node.enemy_offset_hit*attacker.forward_direction_h
 	var ninja_thrust_velocity: Vector2 = Vector2.ZERO
 	
-	position += ninja_relative_offset
+	global_position = attacker.global_position + ninja_relative_offset
 	
 	# Chopping off the arms
 	if chance < arms_chopped_chance and body.has_arms:
 		body.has_arms = false
-		play_animation("lost_arms")
+		set_animation("lost_arms")
 		
 		#chop_piece_off("sword", piece_linear_velocity * )
 		
 		#chop_limb_off("arm", piece_linear_velocity)
 		#chop_limb_off("arm", -piece_linear_velocity)
 		
-		ninja_thrust_velocity = Vector2(300*forward_direction_h, 0)
-		override_velocity(ninja_thrust_velocity)
+		ninja_thrust_velocity = Vector2(300*-forward_direction_h, 0)
+		apply_velocity(ninja_thrust_velocity)
 	# Chopping off the legs
 	elif chance < legs_chopped_chance and body.has_legs:
-		play_animation("lost_legs")
+		set_animation("lost_legs")
 		
 		#chop_limb_off("leg", piece_linear_velocity)
 		#chop_limb_off("leg", piece_linear_velocity)
 		
-		ninja_thrust_velocity = Vector2(350*forward_direction_h, -150)
-		override_velocity(ninja_thrust_velocity)
+		ninja_thrust_velocity = Vector2(350*-forward_direction_h, -150)
+		apply_velocity(ninja_thrust_velocity)
 		
 		body.has_legs = false
 	# Chopping off the head
 	elif chance < head_chopped_chance and (body.has_head):
 		apply_death()
 		
-		play_animation("lost_head")
+		set_animation("lost_head")
 		
 		#chop_limb_off("head", piece_linear_velocity)
 		
@@ -112,7 +110,7 @@ func apply_incoming_damage(attacker: Ninja, attack_node: ComboNode):
 		#if not body.has_arms:
 			#chop_limb_off("head", -1)
 	else:
-		play_animation("hurt")
+		set_animation("hurt")
 
 func _on_animation_finished(animation_name: String) -> void:
 	# Signifies that this enemy has finished being eradicated

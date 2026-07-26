@@ -51,7 +51,7 @@ func physics_update(_delta: float) -> void:
 		switch_state(StateMachine.IDLE)
 	#else:
 		## Stopping with a smooth animation
-		#var new_state: String = s_ninja_grounded_transitions()
+		#var new_state: String = get_ninja_grounded_transitions()
 		#if new_state == StateMachine.IDLE:
 			#
 

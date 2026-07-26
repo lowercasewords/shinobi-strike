@@ -9,11 +9,12 @@ func enter() -> void:
 	if abs(ninja_owner.velocity.x) > 0:
 		ninja_owner.animation_player.play_backwards("walk_windup")
 	else:
-		play_animation("idle")
+		set_animation("idle")
 	
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 	
+	apply_gravity(_delta)
 	allow_movement(_delta)
 	
 	if fall_state_triggered():
@@ -30,4 +31,4 @@ func get_state_space() -> STATE_SPACE:
 
 func on_owner_animation_finished(animation_name: String) -> void:
 	if animation_name == "walk_windup":
-		play_animation("idle")
+		set_animation("idle")

@@ -4,10 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cs6r0xee0ajb3" path="res://assets/sprites/player/combo_A.png" id="2_8bb0w"]
 [ext_resource type="Texture2D" uid="uid://ccxqc53w1ai1r" path="res://assets/sprites/player/fall.png" id="3_txp57"]
 [ext_resource type="Texture2D" uid="uid://dbvira5cwd4q4" path="res://assets/sprites/player/idle.png" id="5_8xgka"]
-[ext_resource type="Resource" uid="uid://chb128qdp6s0d" path="res://scenes/entity/player/states/Combat/attack_L.tres" id="5_bre1c"]
 [ext_resource type="Texture2D" uid="uid://brgqwo2qhkwxw" path="res://assets/sprites/player/fall_v.png" id="6_63uqy"]
-[ext_resource type="Resource" uid="uid://7f6wwjujgooh" path="res://scenes/entity/player/states/Combat/attack_LL.tres" id="6_hscmw"]
-[ext_resource type="Resource" uid="uid://bo2oqev2lvab6" path="res://scenes/entity/player/states/Combat/attack_LLH.tres" id="7_iwpqj"]
 [ext_resource type="Texture2D" uid="uid://eahknwvmcgty" path="res://assets/sprites/player/jump.png" id="9_looiq"]
 [ext_resource type="Texture2D" uid="uid://dg0jrhq6wq7rs" path="res://assets/sprites/player/land.png" id="9_xfd2k"]
 [ext_resource type="Texture2D" uid="uid://cau5cb6wabl14" path="res://assets/sprites/player/walk_turn.png" id="10_8xgka"]
@@ -17,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dd84kp1uv1xh8" path="res://assets/sprites/player/walk_windup.png" id="12_looiq"]
 [ext_resource type="Script" uid="uid://dv0mhfj5jkjpx" path="res://scenes/entity/player/player_camera.gd" id="13_looiq"]
 [ext_resource type="Script" uid="uid://bsyh8g21vunej" path="res://scenes/entity/player/states/Airborne/jump_state.gd" id="14_ov1oi"]
+[ext_resource type="Texture2D" uid="uid://bydl7ba20w6nv" path="res://assets/sprites/player/combo_AU.png" id="20_hscmw"]
 [ext_resource type="Script" uid="uid://bqf4onwxnfx6u" path="res://scenes/entity/player/states/Grounded/land_state.gd" id="20_ro0t8"]
 [ext_resource type="Texture2D" uid="uid://cpov71c4ksvej" path="res://assets/sprites/player/wall_cling_windup_v.png" id="21_kr8cq"]
 [ext_resource type="Texture2D" uid="uid://cx1mdfnc1vpf5" path="res://assets/sprites/player/wall_jump_v.png" id="23_hscmw"]
@@ -148,6 +146,99 @@ tracks/7/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_vtcnf"]
+resource_name = "combo_AU_LH"
+length = 0.6666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flippable/BodyAnimator:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("20_hscmw")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Flippable/BodyAnimator:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(7.450581e-09, 0.03333333, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioPlayer:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("79_we34s")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioPlayer:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.13333334),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [Vector2(150, -250)],
+"method": &"apply_velocity_forward"
+}, {
+"args": [],
+"method": &"apply_attack_area"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Flippable/BodyAnimator:hframes")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Flippable/BodyAnimator:vframes")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
 [sub_resource type="Animation" id="Animation_bdnsq"]
 resource_name = "combo_A_L"
 length = 0.33333334
@@ -241,11 +332,14 @@ tracks/7/path = NodePath(".")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.13333334),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
-"args": [ExtResource("5_bre1c")],
-"method": &"activate_attack_area"
+"args": [Vector2(200, 0)],
+"method": &"apply_velocity_forward"
+}, {
+"args": [],
+"method": &"apply_attack_area"
 }]
 }
 
@@ -310,8 +404,8 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0.13333334),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [ExtResource("6_hscmw")],
-"method": &"activate_attack_area"
+"args": [],
+"method": &"apply_attack_area"
 }]
 }
 
@@ -400,8 +494,8 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0.13333334),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [ExtResource("7_iwpqj")],
-"method": &"activate_attack_area"
+"args": [],
+"method": &"apply_attack_area"
 }]
 }
 
@@ -568,9 +662,8 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_adt5v"]
 resource_name = "jump"
-length = 0.22222222
-loop_mode = 2
-step = 0.11111111
+length = 0.33333334
+step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -593,7 +686,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [2]
+"values": [4]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -605,7 +698,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [2]
+"values": [5]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -614,10 +707,62 @@ tracks/3/path = NodePath("Flippable/BodyAnimator:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.11111111, 0.22222222),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2]
+"values": [3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_fvjsj"]
+resource_name = "jump_curl"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flippable/BodyAnimator:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_looiq")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Flippable/BodyAnimator:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Flippable/BodyAnimator:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Flippable/BodyAnimator:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(7.450581e-09, 0.06666666, 0.13333333, 0.2, 0.26666665, 0.33333334, 0.4, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 13, 14, 15, 16]
 }
 
 [sub_resource type="Animation" id="Animation_t3hh2"]
@@ -770,9 +915,9 @@ stream_2/stream = ExtResource("36_4ntn1")
 
 [sub_resource type="Animation" id="Animation_hscmw"]
 resource_name = "walk"
-length = 0.33333334
+length = 0.53333336
 loop_mode = 1
-step = 0.11111111
+step = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -780,7 +925,7 @@ tracks/0/path = NodePath("Flippable/BodyAnimator:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.11111111, 0.22222222, 0.33333334),
+"times": PackedFloat32Array(0, 0.13333334, 0.26666668, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -1174,8 +1319,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_4cqwv"]
 resource_name = "wall_jump_fall_v"
 length = 0.4
-loop_mode = 2
-step = 0.2
+step = 0.11111111
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1219,7 +1363,7 @@ tracks/3/path = NodePath("Flippable/BodyAnimator:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.11111111, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [8, 9, 10]
@@ -1227,7 +1371,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_t0jp1"]
 resource_name = "wall_jump_v"
-length = 0.44715136
+length = 0.46666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1271,7 +1415,7 @@ tracks/3/path = NodePath("Flippable/BodyAnimator:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.1, 0.33333334, 0.4),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.33333334, 0.43333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [2, 3, 4, 5, 6]
@@ -1402,7 +1546,7 @@ tracks/3/path = NodePath("Flippable/BodyAnimator:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.13333334, 0.2, 0.33333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -1465,6 +1609,7 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hscmw"]
 _data = {
 &"RESET": SubResource("Animation_kr8cq"),
+&"combo_AU_LH": SubResource("Animation_vtcnf"),
 &"combo_A_L": SubResource("Animation_bdnsq"),
 &"combo_A_LL": SubResource("Animation_2f7fp"),
 &"combo_A_LLH": SubResource("Animation_aapas"),
@@ -1472,6 +1617,7 @@ _data = {
 &"fall_v": SubResource("Animation_y6l5d"),
 &"idle": SubResource("Animation_bre1c"),
 &"jump": SubResource("Animation_adt5v"),
+&"jump_curl": SubResource("Animation_fvjsj"),
 &"jump_windup": SubResource("Animation_t3hh2"),
 &"land": SubResource("Animation_ajvel"),
 &"walk": SubResource("Animation_hscmw"),
@@ -1601,6 +1747,8 @@ vframes = 3
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_hscmw")
 autoplay = &"idle"
+next/jump = &"jump_curl"
+next/wall_jump_fall_v = &"jump_curl"
 next/wall_jump_v = &"wall_jump_fall_v"
 next/wall_jump_windup_v = &"wall_jump_v"
 

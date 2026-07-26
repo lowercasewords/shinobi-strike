@@ -5,15 +5,19 @@ const MARIO_JUMP_STRENGTH: float = -8
 
 func enter() -> void:
 	super.enter()
-	if ninja_owner.s_ninja_grounded():
-		play_animation("jump_windup")
+	
+	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
+	var _new_direction: int = update_forward_direction_h(input_direction)
+	
+	if ninja_owner.get_ninja_grounded():
+		set_animation("jump_windup")
 	else:
 		windup_finsh()
 	
 func windup_finsh() -> void:
-	if ninja_owner.s_ninja_grounded():
+	if ninja_owner.get_ninja_grounded():
 		ninja_owner.mario_jump_timer.start()
-		play_animation('jump')
+		set_animation('jump')
 		ninja_owner.velocity.y = DEFAULT_JUMP_THURST
 
 func physics_update(delta: float) -> void:
@@ -25,8 +29,9 @@ func physics_update(delta: float) -> void:
 	
 	if wall_state_triggered():
 		switch_state(StateMachine.WALL)
-	elif fall_state_triggered():
-		switch_state(StateMachine.FALL)
+	elif land_state_triggered():
+		switch_state(StateMachine.LAND)
+		
 
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.AIRBORNE
@@ -35,4 +40,7 @@ func on_owner_animation_finished(animation_name: String) -> void:
 	match animation_name:
 		'jump_windup':
 			windup_finsh()
+		'jump_curl':
+			switch_state(StateMachine.FALL)
+			
 			

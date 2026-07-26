@@ -7,7 +7,11 @@ const TURN_FRICTION = DEFAULT_GROUNDED_FRICTION*1.1
 
 func enter() -> void:
 	super.enter()
+	
 	# Changing walking get_input_direction_h() 
+	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
+	var _new_direction: int = update_forward_direction_h(input_direction)
+	
 	ninja_owner.animation_player.play("walk_turn")
 	ninja_owner.velocity.x /= 10
 	

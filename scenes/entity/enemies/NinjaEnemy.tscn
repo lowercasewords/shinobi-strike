@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/entity/player/states/Grounded/idle_state.gd" id="5_67vnk"]
 [ext_resource type="Script" uid="uid://db7uxw1awmy6m" path="res://scenes/entity/ninja_enemy_controller.gd" id="5_c85yp"]
 [ext_resource type="Script" uid="uid://ce0qj2dqnqg0l" path="res://scenes/entity/states/recover_state.gd" id="5_ii643"]
-[ext_resource type="Script" uid="uid://cef2ycqhnubg1" path="res://scenes/entity/states/state.gd" id="6_iusm7"]
 [ext_resource type="AudioStream" uid="uid://bs13psisdbg0l" path="res://assets/sounds/footstep_1.wav" id="7_disna"]
 [ext_resource type="Texture2D" uid="uid://7pjs8324i46" path="res://assets/sprites/enemy/hurt_na.png" id="7_g2td2"]
 [ext_resource type="Texture2D" uid="uid://2elrntgai54q" path="res://assets/sprites/enemy/hurt.png" id="7_ii643"]
@@ -2282,10 +2281,6 @@ metadata/_custom_type_script = "uid://dh3v818ece5uk"
 [node name="RecoverState" type="Node2D" parent="StateMachine" unique_id=630036508]
 script = ExtResource("5_ii643")
 metadata/_custom_type_script = "uid://ce0qj2dqnqg0l"
-
-[node name="State" type="Node2D" parent="StateMachine" unique_id=1365272178]
-script = ExtResource("6_iusm7")
-metadata/_custom_type_script = "uid://cef2ycqhnubg1"
 
 [node name="NinjaController" type="Node2D" parent="." unique_id=358939884]
 script = ExtResource("5_c85yp")

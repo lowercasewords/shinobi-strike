@@ -12,15 +12,15 @@ const DEFAULT_H_THURST: float = 50
 const DEFAULT_V_THURST: float = 1.0
 
 @export var sword_whoosh: AudioStreamPlayer2D
-@onready var _root_combo: ComboNode = preload("res://scenes/entity/player/states/Combat/attack_neutral.tres")
+@onready var _root_combo: ComboNode = preload("res://scenes/entity/player/states/Combat/Combo/combo_neutral.tres")
 
 var current_attack_node: ComboNode
 
 ## The velocity of the entity before entering the attacking state.
 var before_combo_velocity: Vector2
 
-func set_thurst(thrust_speed: float = 20) -> void:
-	ninja_owner.override_velocity(Vector2(ninja_owner.velocity.x + thrust_speed, ninja_owner.velocity.y))
+func set_thurst(thrust_velocity: Vector2 = Vector2(200, 0)) -> void:
+	ninja_owner.apply_velocity(thrust_velocity)
 
 func attempt_eradication(ninja_enemy: NinjaEnemy) -> void:
 	if ninja_owner is NinjaPlayer:
@@ -50,22 +50,24 @@ func physics_update(_delta: float) -> void:
 	if not ninja_owner.is_grounded:
 		apply_gravity(_delta)
 		
-func activate_attack_area() -> void:
-	ninja_owner.activate_attack_area(current_attack_node)
+func apply_attack_area() -> void:
+	ninja_owner.apply_attack_area()
 
 ## Attempts to perform either the first attack or continue combo
 func attempt_next_attack() -> bool:
 	## Check the controller for an input (e.g., "light", "heavy", "forward_light")
 	var attempted_input: ATTACK_TYPE = ninja_owner.ninja_controller.get_buffered_input()
 	var attacked: bool = false
+	## Grab everything inside the area instantly
+	var overlapping_bodies: Array[Node2D] = ninja_owner.attack_area.get_overlapping_bodies()
+	var overlapping_ninja_enemy: NinjaEnemy = null
 	
-	# Grab everything inside the area instantly
-	var overlapping_body: NinjaEnemy = ninja_owner.attack_area.get_overlapping_bodies().get(0) as NinjaEnemy
+	if not overlapping_bodies.is_empty():
+		overlapping_bodies.get(0) as NinjaEnemy
 	
-	if overlapping_body != null and overlapping_body.get_can_be_eradicated() and current_attack_node == _root_combo and attempted_input == ATTACK_TYPE.HEAVY and overlapping_body.is_missing_limb():
-		attempt_eradication(overlapping_body)
+	if overlapping_ninja_enemy != null and overlapping_ninja_enemy.get_can_be_eradicated() and current_attack_node == _root_combo and attempted_input == ATTACK_TYPE.HEAVY and overlapping_ninja_enemy.is_missing_limb():
+		attempt_eradication(overlapping_ninja_enemy)
 		attacked = true
-	
 	elif attempted_input != ATTACK_TYPE.UNKNOWN and current_attack_node != null and current_attack_node.next_attacks.has(attempted_input):
 		# Step down the tree branch
 		current_attack_node = current_attack_node.next_attacks[attempted_input]
@@ -75,13 +77,15 @@ func attempt_next_attack() -> bool:
 	return attacked
 
 func execute_current_attack():
-	var direction: Vector2 = Vector2.RIGHT * ninja_owner.forward_direction_h
-	var extra_thrust: Vector2 = current_attack_node.thrust_forward if current_attack_node != null else Vector2.ZERO
-	var _existing_velocity: Vector2 = before_combo_velocity if ninja_owner.ninja_controller.get_input_direction_h() != direction.x else Vector2.ZERO
+	#var direction: Vector2 = Vector2.RIGHT * ninja_owner.forward_direction_h
+	#var extra_thrust: Vector2 = current_attack_node.thrust_forward if current_attack_node != null else Vector2.ZERO
+	#var _existing_velocity: Vector2 = before_combo_velocity if ninja_owner.ninja_controller.get_input_direction_h() != direction.x else Vector2.ZERO
 	
-	ninja_owner.velocity = extra_thrust * direction
+	#ninja_owner.velocity = extra_thrust * direction
 	
-	play_animation(current_attack_node.animation_name)
+	#print("Velocity: " + str(ninja_owner.velocity))
+	
+	set_animation(current_attack_node.animation_name)
 	sword_whoosh.play()
 
 func switch_to_next_state():
@@ -92,26 +96,26 @@ func switch_to_next_state():
 		switch_state(StateMachine.WALK)
 	
 	switch_state(StateMachine.IDLE)
-
-func on_owner_frame_changed(): 
-	if current_attack_node != null:
-		
-		var frame_index: int = ninja_owner.animation_player.frame
-		var key_frame_index: int = current_attack_node.impact_key_frame_index
-		
-		if frame_index == key_frame_index:
-			on_keyframe_invoked(ninja_owner.animation_player.current_animation, ninja_owner.animation_player.frame)
-		elif frame_index == key_frame_index+1:
-			on_after_keyframe_invoked(ninja_owner.animation_player.current_animation, ninja_owner.animation_player.frame)
-	
-func on_keyframe_invoked(_animation: String, _frame_index: int): 
-	
-	ninja_owner.velocity /= 10
+#
+#func on_owner_frame_changed(): 
+	#if current_attack_node != null:
+		#
+		#var frame_index: int = ninja_owner.animation_player.frame
+		#var key_frame_index: int = current_attack_node.impact_key_frame_index
+		#
+		#if frame_index == key_frame_index:
+			#on_keyframe_invoked(ninja_owner.animation_player.current_animation, ninja_owner.animation_player.frame)
+		#elif frame_index == key_frame_index+1:
+			#on_after_keyframe_invoked(ninja_owner.animation_player.current_animation, ninja_owner.animation_player.frame)
+	#
+#func on_keyframe_invoked(_animation: String, _frame_index: int): 
+	#
+	#ninja_owner.velocity /= 10
+	##attempt_next_attack()
+	##apply_attack_area()
+	#
+#func on_after_keyframe_invoked(_animation: String, _frame_index: int): 
 	#attempt_next_attack()
-	#activate_attack_area()
-	
-func on_after_keyframe_invoked(_animation: String, _frame_index: int): 
-	attempt_next_attack()
 
 func on_owner_animation_finished(_animation_name: String) -> void:
 	#switch_to_next_state()

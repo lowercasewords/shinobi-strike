@@ -58,41 +58,16 @@ var just_entered_wallbg: bool = false
 var just_changed_directions: bool = false
 var changing_direction: bool = false
 
-# Entering the scene tree
-func _ready() -> void:
-	# Attack Area initialization
-	attack_area_collision_mask = attack_area.collision_mask
-	attack_area_collision_layer = attack_area.collision_layer
-	
-	is_grounded = is_on_floor()
-	
-	# Activate state machine
-	state_machine.start_state_machine()
-	
-	connect_all_signals()
+### ----------------------------
+### ----------------------------
+### ----------------------------
+###
+### Apply functions
+###
+### ----------------------------
+### ----------------------------
+### ----------------------------
 
-# Exiting the scene tree
-func _exit_tree() -> void:
-	disconnect_all_signals()
-
-# Receive current inputs for this entity
-func _process(delta):
-	ninja_controller.process(delta)
-	
-	update_attack_buffer()
-	
-	state_machine.process(delta)
-	
-	
-# Calculate state physics
-func _physics_process(delta):
-	state_machine.physics_process(delta)
-	
-	# Update the effects on the owner by the environment
-	update_environment()
-	
-	# Apply movement
-	move_and_slide()
 
 func apply_gravity(_delta) -> float:
 	var gravity_applied = 0
@@ -100,24 +75,51 @@ func apply_gravity(_delta) -> float:
 		gravity_applied = gravity * _delta
 		velocity.y += gravity_applied
 	return gravity_applied
-	
-## Returns True if the sprite is flipped
-func set_forward_direction_h(new_direction: int = 0) -> bool:
-	var previous_forward_direction_h: int = -1 if forward_direction_h < 0 else 1
-	var new_normalized_direction: int = -1 if new_direction < 0 else 1 #previous_forward_direction_h if new_direction == 0 else new_direction
-	
-	forward_direction_h = new_normalized_direction
-	
-	if flippable != null:
-		flippable.scale.x = forward_direction_h
-	
-	return previous_forward_direction_h == new_normalized_direction
 
-## Checks if the animation name exists for this entity
-func has_animation(animation: String) -> bool:
-	return animation_player.has_animation(animation)
+## Overrides the velocity all the same, but x-axis portion of the velocity is affected by the forward direction 
+func apply_velocity_forward(applied_velocity: Vector2):
+	applied_velocity.x *= forward_direction_h
+	apply_velocity(applied_velocity)
 
-func detecting_incoming_damage(_attacker: Ninja, _attack_node: ComboNode): pass
+## Overrides the velocity
+func apply_velocity(applied_velocity: Vector2) -> void:
+	velocity = applied_velocity
+	
+func apply_death() -> void: pass
+
+func apply_attack_area() -> void:
+	
+	var attack_info: ComboNode = get_current_attack_node()
+	
+	if attack_info != null:
+		## Grab everything inside the area instantly
+		var overlapping_bodies: Array[Node2D] = attack_area.get_overlapping_bodies()
+		
+		## Hit each enemy exactly once
+		for body in overlapping_bodies:
+			# Pass this object to your hit logic
+			if body is Ninja:
+				on_attack_registered(body, attack_info) 
+
+func apply_incoming_damage(_attacker: Ninja, _attack_node: ComboNode): pass
+
+### ----------------------------
+### ----------------------------
+### ----------------------------
+###
+### Get & Set functions
+###
+### ----------------------------
+### ----------------------------
+### ----------------------------
+
+## Returns the current attack node information for combos
+func get_current_attack_node() -> ComboNode:
+	var attack_state: AttackState = state_machine.current_state as AttackState
+	var applied_attack_info: ComboNode = null
+	if attack_state != null:
+		applied_attack_info = attack_state.current_attack_node as ComboNode
+	return applied_attack_info
 
 ## Returns the varied animation, the variety depends on the dismemberment state of the enemy
 func get_animation_varied(animation: String, enemy_ninja: NinjaEnemy) -> String:
@@ -130,61 +132,53 @@ func get_animation_varied(animation: String, enemy_ninja: NinjaEnemy) -> String:
 	var body: Dictionary[String, bool] = enemy_ninja.body
 	
 	# Just missing the Arms
-	if not body.has_arms and (body.has_legs and body.has_head) and has_animation(animation_no_arms_variant):
+	if not body.has_arms and (body.has_legs and body.has_head) and animation_player.has_animation(animation_no_arms_variant):
 		animation_to_play = animation_no_arms_variant
 	# Just missing the Legs
-	elif not body.has_legs and (body.has_arms and body.has_head) and has_animation(animation_no_legs_variant):
+	elif not body.has_legs and (body.has_arms and body.has_head) and animation_player.has_animation(animation_no_legs_variant):
 		animation_to_play = animation_no_legs_variant
 	# Just missing the Head
-	elif not body.has_head and (body.has_arms and body.has_legs) and has_animation(animation_no_head_variant):
+	elif not body.has_head and (body.has_arms and body.has_legs) and animation_player.has_animation(animation_no_head_variant):
 		pass
 	
 	return animation_to_play
 
-func play_animation(animation: String):
-	animation_player.play(animation)
+## Returns True if the sprite is flipped
+func set_forward_direction_h(new_direction: int = 0) -> bool:
+	var previous_forward_direction_h: int = -1 if forward_direction_h < 0 else 1
+	var new_normalized_direction: int = -1 if new_direction < 0 else 1 #previous_forward_direction_h if new_direction == 0 else new_direction
 	
-func override_velocity(applied_force: Vector2) -> void:
-	velocity = applied_force
+	forward_direction_h = new_normalized_direction
 	
-func apply_death() -> void: pass
+	if flippable != null:
+		flippable.scale.x = forward_direction_h
+	
+	return previous_forward_direction_h == new_normalized_direction
 
-# --- Get Functions ---
+func set_animation(animation: String):
+	animation_player.play(animation)
+
 func get_attack_area_collision_layer() -> int: return attack_area_collision_layer
 func get_attack_area_collision_mask() -> int: return attack_area_collision_mask
-# ---------------------
 
-## Check if the player is considered to be on the ground
-func s_ninja_grounded() -> bool: return self.is_on_floor() or (coyote_timer != null and not coyote_timer.is_stopped())
+### ----------------------------
+### ----------------------------
+### ----------------------------
+###
+### Update functions
+###
+### ----------------------------
+### ----------------------------
+### ----------------------------
 
-## Connects all signals of this classs. 
-## Typically used upon entering the scene tree.
-func connect_all_signals() -> void:
-	#connect_signal(wall_cast.body_entered, _on_sensor_body_entered)
-	#connect_signal(wall_cast.body_exited, _on_sensor_body_exited)
-	connect_signal(animation_player.animation_finished, _on_animation_finished)
-	#connect_signal(animation_player.frame_changed, _on_frame_changed)
 
-func disconnect_all_signals() -> void:
-	## Disconnects all signals of this classs. Typically used upon exiting the scene tree
-	#disconnect_signal(wall_cast.body_entered, _on_sensor_body_entered)
-	#disconnect_signal(wall_cast.body_exited, _on_sensor_body_exited)
-	disconnect_signal(animation_player.animation_finished, _on_animation_finished)
-	#disconnect_signal(animation_player.frame_changed, _on_frame_changed)
-
-## Returns if the signal needed to be connected
-func connect_signal(signal_instance: Signal, callable: Callable) -> bool:
-	var should_connect: bool = not signal_instance.is_connected(callable)
-	if should_connect:
-		signal_instance.connect(callable)
-	return should_connect
-	
-## Returns if the signal needed to be disconnected
-func disconnect_signal(signal_instance: Signal, callable: Callable) -> bool:
-	var should_connect: bool = signal_instance.is_connected(callable)
-	if should_connect:
-		signal_instance.disconnect(callable)
-	return should_connect
+func update_speed_scale(_delta):
+	var state_max_speed: float = abs(state_machine.current_state.get_max_speed())
+	var current_speed: Vector2 = abs(velocity)
+	var highest_speed_scale = 1 + max(current_speed.x / state_max_speed, current_speed.y / state_max_speed) / 2
+	#print(current_speed)
+	#print(highest_speed_scale)
+	animation_player.speed_scale = highest_speed_scale
 	
 func update_environment() -> void:
 	# Get input get_input_direction_h() [-1.0, 1.0] and handle movement/deceleration
@@ -237,32 +231,99 @@ func update_attack_buffer():
 	if ninja_controller.get_input_pressed_heavy_attack():
 		buffer.push_front(AttackState.ATTACK_TYPE.HEAVY)
 
-func activate_attack_area(applied_attack_info: ComboNode) -> void:
-	# 2. Grab everything inside the area instantly
-	var overlapping_bodies: Array[Node2D] = attack_area.get_overlapping_bodies()
-	
-	# 3. Hit each enemy exactly once
-	for body in overlapping_bodies:
-		# Pass this object to your hit logic
-		on_attack_registered(body, applied_attack_info) 
+## Check if the player is considered to be on the ground
+func get_ninja_grounded() -> bool: return self.is_on_floor() or (coyote_timer != null and not coyote_timer.is_stopped())
 
+
+### ----------------------------
+### ----------------------------
+### ----------------------------
+###
+### Event Handlers
+###
+### ----------------------------
+### ----------------------------
+### ----------------------------
+
+
+# Entering the scene tree
+func _ready() -> void:
+	# Attack Area initialization
+	attack_area_collision_mask = attack_area.collision_mask
+	attack_area_collision_layer = attack_area.collision_layer
+	
+	is_grounded = is_on_floor()
+	
+	# Activate state machine
+	state_machine.start_state_machine()
+	
+	connect_all_signals()
+
+# Exiting the scene tree
+func _exit_tree() -> void:
+	disconnect_all_signals()
+
+# Receive current inputs for this entity
+func _process(delta):
+	ninja_controller.process(delta)
+	
+	update_attack_buffer()
+	
+	state_machine.process(delta)
+# Calculate state physics
+func _physics_process(delta):
+	state_machine.physics_process(delta)
+	
+	update_speed_scale(delta)
+	
+	# Update the effects on the owner by the environment
+	update_environment()
+	
+	# Apply movement
+	move_and_slide()
+
+## Connects all signals of this classs. 
+## Typically used upon entering the scene tree.
+func connect_all_signals() -> void:
+	#connect_signal(wall_cast.body_entered, on_sensor_body_entered)
+	#connect_signal(wall_cast.body_exited, on_sensor_body_exited)
+	connect_signal(animation_player.animation_finished, on_animation_finished)
+	#connect_signal(animation_player.frame_changed, _on_frame_changed)
+
+func disconnect_all_signals() -> void:
+	## Disconnects all signals of this classs. Typically used upon exiting the scene tree
+	#disconnect_signal(wall_cast.body_entered, on_sensor_body_entered)
+	#disconnect_signal(wall_cast.body_exited, on_sensor_body_exited)
+	disconnect_signal(animation_player.animation_finished, on_animation_finished)
+	#disconnect_signal(animation_player.frame_changed, _on_frame_changed)
+
+## Returns if the signal needed to be connected
+func connect_signal(signal_instance: Signal, callable: Callable) -> bool:
+	var should_connect: bool = not signal_instance.is_connected(callable)
+	if should_connect:
+		signal_instance.connect(callable)
+	return should_connect
+	
+## Returns if the signal needed to be disconnected
+func disconnect_signal(signal_instance: Signal, callable: Callable) -> bool:
+	var should_connect: bool = signal_instance.is_connected(callable)
+	if should_connect:
+		signal_instance.disconnect(callable)
+	return should_connect
+	
 func on_attack_registered(body: Node2D, applied_attack_info: ComboNode):
 	if body is Ninja:
 		var ninja: Ninja = (body as Ninja)
 		if ninja.state_machine.current_state != HurtState:
 			ninja.state_machine.current_state.switch_state(state_machine.HURT)
-			(ninja.state_machine.current_state as HurtState).detecting_incoming_damage(self, applied_attack_info)
+			(ninja.state_machine.current_state as HurtState).apply_incoming_damage(self, applied_attack_info)
 
-func _on_animation_finished(animation_name: String): 
+func on_animation_finished(animation_name: String): 
 	if state_machine != null and state_machine.current_state != null and animation_player != null:
 		state_machine.current_state.on_owner_animation_finished(animation_name)
 	
-#func _on_frame_changed():
-	#if state_machine != null and state_machine.current_state != null and animation_player != null and animation_player.current_animation != null:
-		#state_machine.current_state.on_owner_frame_changed()
-	
-func _on_sensor_body_entered(_area):
+func on_sensor_body_entered(_area):
 	just_entered_wallbg = true
 
-func _on_sensor_body_exited(_body):
+func on_sensor_body_exited(_body):
 	just_entered_wallbg = false
