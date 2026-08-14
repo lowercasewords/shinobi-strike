@@ -4,6 +4,10 @@ const VERTICAL_FALL_SPEED_THRESHOLD: float = 5.0
 
 func enter():
 	super.enter()
+	
+	
+	#else:
+		#play_fall_animation()
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -11,8 +15,7 @@ func physics_update(_delta: float) -> void:
 	allow_movement(_delta)
 	apply_gravity(_delta)
 	
-	play_fall_animation()
-
+	
 	if wall_state_triggered():
 		switch_state(StateMachine.WALL)
 	elif land_state_triggered():

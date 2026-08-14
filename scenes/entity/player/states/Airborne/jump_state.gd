@@ -9,7 +9,9 @@ func enter() -> void:
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)
 	
-	if ninja_owner.get_ninja_grounded():
+	if ninja_owner.state_machine.psnameprev == StateMachine.WALL:
+		set_animation("wall_run_fall_v")
+	elif ninja_owner.get_ninja_grounded():
 		set_animation("jump_windup")
 	else:
 		windup_finsh()
@@ -40,7 +42,6 @@ func on_owner_animation_finished(animation_name: String) -> void:
 	match animation_name:
 		'jump_windup':
 			windup_finsh()
-		'jump_curl':
-			switch_state(StateMachine.FALL)
+		#'jump_curl':
 			
 			

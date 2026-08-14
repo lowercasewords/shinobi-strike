@@ -17,9 +17,7 @@ func physics_update(_delta: float) -> void:
 	apply_gravity(_delta)
 	allow_movement(_delta)
 	
-	if fall_state_triggered():
-		switch_state(StateMachine.FALL)
-	elif walk_state_triggered():
+	if walk_state_triggered():
 		switch_state(StateMachine.WALK)
 	elif jump_state_triggered():
 		switch_state(StateMachine.JUMP)

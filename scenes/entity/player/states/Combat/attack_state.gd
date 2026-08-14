@@ -90,9 +90,7 @@ func execute_current_attack():
 
 func switch_to_next_state():
 	
-	if fall_state_triggered():
-		switch_state(StateMachine.FALL)
-	elif walk_state_triggered():
+	if walk_state_triggered():
 		switch_state(StateMachine.WALK)
 	
 	switch_state(StateMachine.IDLE)

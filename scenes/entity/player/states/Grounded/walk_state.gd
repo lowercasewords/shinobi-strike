@@ -41,8 +41,6 @@ func physics_update(_delta: float) -> void:
 	
 	if attack_triggered():
 		switch_state(StateMachine.ATTACK)
-	elif fall_state_triggered():
-		switch_state(StateMachine.FALL)
 	elif jump_state_triggered():
 		switch_state(StateMachine.JUMP)
 	elif turn_state_triggered():

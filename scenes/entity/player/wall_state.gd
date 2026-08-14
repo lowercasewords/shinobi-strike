@@ -11,7 +11,7 @@ const CLING_FRICTION = 10000.0    # How aggressively the wall eats their momentu
 
 const SPRITE_SHIFT_AMOUNT = -12
 const WALL_RUN_SPEED: float = -200
-const WALL_RUN_ACCELERATION: float = 300
+const WALL_RUN_ACCELERATION: float = 400
 
 const WALL_FRICTION: float = DEFAULT_GROUNDED_FRICTION/10
 
@@ -33,8 +33,15 @@ const MARIO_JUMP_STRENGTH: float = -4
 
 var current_substate: Substate = Substate.CLING
 
+func set_physics_wallcrawl():
+	friction = WALL_FRICTION
+	acceleration = WALL_RUN_ACCELERATION
+	max_speed = WALL_RUN_SPEED
+
 func enter():
 	super.enter()
+	#if get_state_space() == STATE_SPACE.WALLCRAWL:
+	set_physics_wallcrawl()
 	#max_speed = 500
 	
 	var has_clinged: bool = attempt_cling_v()
@@ -130,19 +137,6 @@ func physics_slide_v(_delta) -> void:
 	var is_jump_triggered: bool = ninja_owner.ninja_controller.get_input_pressed_jump()
 	var wall_direction: int = get_wall_direction()
 	
-	#slide_gravity = SLIDE_GRAVITY
-	#max_slide_speed = MAX_SLIDE_SPEED
-	
-	# NinjaPlayer wants the ninja_owner to go down
-	#if input_y < 0:
-		#slide_gravity = SLIDE_GAVITY_HASTE
-		#max_slide_speed = MAX_SLIDE_SPEED_HASTE
-	## NinjaPlayer wants to stay in place
-	#else:
-		## Stabilize the ninja_owner by reduce the falling speed
-		#if ninja_owner.velocity.y > MAX_SLIDE_SPEED:
-			#slide_gravity = SLIDE_GAVITY_HASTE
-		
 	ninja_owner.velocity.y = clamp(move_toward(ninja_owner.velocity.y, MAX_SLIDE_SPEED, SLIDE_GRAVITY * _delta), 0, MAX_SLIDE_SPEED)
 
 ## Physics during the cling on a vertical wall
@@ -150,9 +144,6 @@ func physics_cling_v(_delta) -> void:
 	var input_x: float = ninja_owner.ninja_controller.get_input_direction_h()
 	var started_sliding = false
 	
-	#if input_x != -get_wall_direction():
-		#started_slidXing = attempt_slide_v()
-		
 	if not started_sliding:
 		ninja_owner.velocity.y = 0
 	
@@ -162,8 +153,6 @@ func physics_run_v(_delta) -> void:
 	
 	# Exited the wall
 	if abs(wall_direction) != 1:
-		#var input_x: float = ninja_owner.ninja_controller.get_input_direction_x()
-		# Default switching in physics should automatically transition ninja to fall state
 		ninja_owner.velocity.y = -250
 		ninja_owner.velocity.x = 10
 	# Running up the wall
@@ -179,7 +168,7 @@ func default_state_switch() -> bool:
 	if land_state_triggered():
 		switch_state(StateMachine.LAND)
 	elif wall_direction == 0 and current_substate != Substate.JUMP:
-		switch_state(StateMachine.FALL)
+		switch_state(StateMachine.JUMP)
 	else:
 		switched = false
 	
@@ -199,8 +188,7 @@ func wall_substate_switch() -> void:
 	var is_jump_input: bool = input_space and current_substate != Substate.JUMP
 	var is_run_input: bool = input_x == -wall_direction and current_substate != Substate.RUN
 	var is_slide_input: bool = input_x == wall_direction and current_substate != Substate.SLIDE
-	var is_jump_cling_triggered: bool = current_substate == Substate.JUMP#a and ninja_owner.animation_player.current_animation == "wall_jump_windup_v"
-	#var is_cling_input: bool = input_x == 0 and current_substate != Substate.CLING
+	var is_jump_cling_triggered: bool = current_substate == Substate.JUMP
 	
 	var jump_clinged: bool = false
 	var jumped: bool = false

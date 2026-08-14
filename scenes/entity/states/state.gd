@@ -140,7 +140,7 @@ func check_wall_exit(wall_direction: float) -> String:
 	if ninja_owner.just_grounded:
 		return StateMachine.LAND
 	elif wall_direction == 0:
-		return StateMachine.FALL
+		return StateMachine.JUMP
 	return ""
 
 # -------- 
@@ -149,9 +149,6 @@ func check_wall_exit(wall_direction: float) -> String:
 
 func land_state_triggered() -> bool:
 	return ninja_owner.just_grounded and sname != StateMachine.LAND
-
-func fall_state_triggered() -> bool:
-	return not ninja_owner.animation_player.is_playing() and ninja_owner.animation_player.current_animation == "jump_curl" and ninja_owner.velocity.y > 0 and sname != StateMachine.FALL #and not ninja_owner.get_ninja_grounded()
 
 func attack_triggered() -> bool:
 	var input_buffer = ninja_owner.ninja_controller.attack_input_buffer
