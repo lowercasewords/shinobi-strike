@@ -20,7 +20,7 @@ var current_attack_node: ComboNode
 var before_combo_velocity: Vector2
 
 func set_thurst(thrust_velocity: Vector2 = Vector2(200, 0)) -> void:
-	ninja_owner.apply_velocity(thrust_velocity)
+	velocity_requested.emit(thrust_velocity)
 
 func attempt_eradication(ninja_enemy: NinjaEnemy) -> void:
 	if ninja_owner is NinjaPlayer:
@@ -40,7 +40,7 @@ func enter() -> void:
 
 func exit() -> void:
 	super.exit()
-	ninja_owner.velocity = before_combo_velocity/2
+	velocity_requested.emit(before_combo_velocity / 2)
 	
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -51,7 +51,7 @@ func physics_update(_delta: float) -> void:
 		apply_gravity(_delta)
 		
 func apply_attack_area() -> void:
-	ninja_owner.apply_attack_area()
+	attack_area_requested.emit()
 
 ## Attempts to perform either the first attack or continue combo
 func attempt_next_attack() -> bool:

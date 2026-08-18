@@ -1,5 +1,7 @@
 class_name HurtState extends State
 
+signal damage_received(attacker: Ninja, attack_node: ComboNode)
+
 func enter():
 	super.enter()
 
@@ -13,7 +15,7 @@ func exit():
 	super.exit()
 
 func apply_incoming_damage(attacker: Ninja, attack_node: ComboNode): 
-	ninja_owner.apply_incoming_damage(attacker, attack_node)
+	damage_received.emit(attacker, attack_node)
 
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED

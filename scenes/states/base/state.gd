@@ -1,6 +1,15 @@
 ## Each State acts as a simple, self-contained "Brain" for the ninja_owner (such as player).
 class_name State extends Node2D
 
+signal transition_requested(state_name: String)
+signal animation_requested(animation_name: String)
+signal animation_backwards_requested(animation_name: String)
+signal velocity_requested(new_velocity: Vector2)
+signal velocity_delta_requested(delta_velocity: Vector2)
+signal forward_direction_requested(direction: int)
+signal gravity_requested(delta: float)
+signal attack_area_requested
+
 ## The default continuous walking speed 
 const DEFAULT_SPEED = 200.0
 ## The default jump strength (upwards)
@@ -53,7 +62,7 @@ func physics_update(_delta: float) -> void: pass
 	#ninja_owner.animation_player.speed_scale = 1
 	
 func switch_state(state_name: String):
-	ninja_owner.state_machine.transition_state(self, state_name)
+	transition_requested.emit(state_name)
 
 ## Defines the space this state is supposed to occupy
 func get_state_space() -> STATE_SPACE:
@@ -65,7 +74,7 @@ func on_owner_animation_finished(_animation_name: String) -> void: pass
 func on_owner_frame_changed(): pass
 	
 func set_animation(animation: String):
-	ninja_owner.set_animation(animation)
+	animation_requested.emit(animation)
 
 func set_physics_grounded() -> void:
 	friction = DEFAULT_GROUNDED_FRICTION
@@ -78,12 +87,12 @@ func set_physics_airborne() -> void:
 	max_speed = DEFAULT_SPEED
 
 func apply_gravity(_delta) -> void:
-	ninja_owner.apply_gravity(_delta)
+	gravity_requested.emit(_delta)
 
 ## Similar to the `allow_movement`, but only applies friction without player movement and acceleration
 func apply_friction(delta: float) -> float:
 	var applied_force = move_toward(ninja_owner.velocity.x, 0, friction * delta)
-	ninja_owner.velocity.x = applied_force
+	velocity_requested.emit(Vector2(applied_force, ninja_owner.velocity.y))
 	
 	return applied_force
 
@@ -101,7 +110,7 @@ func mario_jump_update(_delta: float, MARIO_JUMP_STRENGTH: float) -> void:
 		
 	# Mario jump is applied
 	if not ninja_owner.mario_jump_timer.is_stopped() and not ninja_owner.is_on_floor():
-		ninja_owner.velocity.y += MARIO_JUMP_STRENGTH
+		velocity_delta_requested.emit(Vector2(0, MARIO_JUMP_STRENGTH))
 
 ## Returns the direction (-1 or 1) opposite to the wall the player is grabbing onto
 func get_wall_direction() -> int:
@@ -131,7 +140,7 @@ func allow_movement(delta: float) -> float:
 	#print("extra_force: " + str(extra_force))
 	#print("applied force: " + str(applied_force) + "\n")
 	
-	ninja_owner.velocity.x = applied_force
+	velocity_requested.emit(Vector2(applied_force, ninja_owner.velocity.y))
 	
 	return applied_force
 

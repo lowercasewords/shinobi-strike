@@ -6,7 +6,7 @@ func enter():
 	set_physics_wallcrawl()
 	set_animation("wall_slide_v")
 	
-	ninja_owner.velocity.y /= 2
+	velocity_requested.emit(Vector2(ninja_owner.velocity.x, ninja_owner.velocity.y / 2))
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -16,11 +16,12 @@ func physics_update(_delta: float) -> void:
 	var wall_direction: int = get_wall_direction()
 	
 	# Apply gravity while sliding, clamped to max slide speed
-	ninja_owner.velocity.y = clamp(
+	var slide_velocity_y = clamp(
 		move_toward(ninja_owner.velocity.y, MAX_SLIDE_SPEED, SLIDE_GRAVITY * _delta),
 		0,
 		MAX_SLIDE_SPEED
 	)
+	velocity_requested.emit(Vector2(ninja_owner.velocity.x, slide_velocity_y))
 	
 	# Check for exit conditions
 	if check_wall_exit():

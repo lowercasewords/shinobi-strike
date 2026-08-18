@@ -12,8 +12,8 @@ func enter() -> void:
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)
 	
-	ninja_owner.animation_player.play("walk_turn")
-	ninja_owner.velocity.x /= 10
+	set_animation("walk_turn")
+	velocity_requested.emit(Vector2(ninja_owner.velocity.x / 10, ninja_owner.velocity.y))
 	
 	acceleration = TURN_ACCELERATION
 	friction = TURN_FRICTION

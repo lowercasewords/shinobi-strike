@@ -6,7 +6,7 @@ func enter():
 	set_physics_wallcrawl()
 	set_animation("wall_run_v")
 	
-	ninja_owner.velocity.y /= 2
+	velocity_requested.emit(Vector2(ninja_owner.velocity.x, ninja_owner.velocity.y / 2))
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -17,18 +17,17 @@ func physics_update(_delta: float) -> void:
 	
 	# Exited the wall - fall and push away
 	if abs(wall_direction) != 1:
-		ninja_owner.velocity.y = -250
-		ninja_owner.velocity.x = 10
+		velocity_requested.emit(Vector2(10, -250))
 		apply_gravity(_delta)
 		return
 	
 	# Running up the wall
-	ninja_owner.velocity.y = move_toward(
+	var run_velocity_y = move_toward(
 		ninja_owner.velocity.y,
 		WALL_RUN_SPEED,
 		WALL_RUN_ACCELERATION * _delta
 	)
-	ninja_owner.velocity.x = 0
+	velocity_requested.emit(Vector2(0, run_velocity_y))
 	
 	# Check for exit conditions
 	if check_wall_exit():

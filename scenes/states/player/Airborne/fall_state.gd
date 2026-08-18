@@ -25,10 +25,10 @@ func play_fall_animation() -> void:
 	var animation: String = ninja_owner.animation_player.current_animation
 	if abs(ninja_owner.velocity.x) > VERTICAL_FALL_SPEED_THRESHOLD:
 		if animation != "fall":
-			ninja_owner.animation_player.play("fall")
+			set_animation("fall")
 	else:
 		if animation != "fall_v":
-			ninja_owner.animation_player.play("fall_v")
+			set_animation("fall_v")
 			
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.AIRBORNE

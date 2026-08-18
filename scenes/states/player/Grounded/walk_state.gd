@@ -58,10 +58,10 @@ func switch_state(state_name: String):
 	super.switch_state(state_name)
 
 func start_walking() -> void:
-	ninja_owner.animation_player.play("walk")
+	set_animation("walk")
 
 func start_windup() -> void:
-	ninja_owner.animation_player.play("walk_windup")
+		set_animation("walk_windup")
 func end_windup() -> void:
 	## Fired when the walk windup is finished
 	if ninja_owner.is_on_floor():

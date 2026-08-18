@@ -18,9 +18,10 @@ func enter():
 	# Set initial jump velocity
 	set_animation("wall_jump_windup_v")
 	ninja_owner.mario_jump_timer.start()
-	
-	ninja_owner.velocity.x = JUMP_SPEED_INITIAL.x * ninja_owner.forward_direction_h
-	ninja_owner.velocity.y = JUMP_SPEED_INITIAL.y
+	velocity_requested.emit(Vector2(
+		JUMP_SPEED_INITIAL.x * ninja_owner.forward_direction_h,
+		JUMP_SPEED_INITIAL.y
+	))
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -43,8 +44,7 @@ func physics_update(_delta: float) -> void:
 		# Re-enter cling state if jumping has ended
 		if ninja_owner.mario_jump_timer.is_stopped():
 			set_animation("wall_jump_cling_v")
-			ninja_owner.velocity.x = 0
-			ninja_owner.velocity.y /= 2
+			velocity_requested.emit(Vector2(0, ninja_owner.velocity.y / 2))
 			switch_state(StateMachine.WALLCLING)
 
 func on_owner_animation_finished(_animation_name: String) -> void:

@@ -29,11 +29,19 @@ const HURT = "hurtstate"
 # Mapping of state nodes to their string names
 var states: Dictionary = {}
 
-func start_state_machine() -> void:
-	# Loop through all children and add them to the dictionary
+func _ready() -> void:
+	_register_states()
+
+func _register_states() -> void:
 	for child in get_children():
 		if child is State:
 			states[child.name.to_lower()] = child
+			var transition_handler := _on_transition_requested.bind(child)
+			if not child.transition_requested.is_connected(transition_handler):
+				child.transition_requested.connect(transition_handler)
+
+func start_state_machine() -> void:
+	_register_states()
 	
 	# Get the first state
 	if not initial_state:
@@ -68,6 +76,9 @@ func transition_state(state: State, new_state_name: String) -> void:
 		
 	set_current_state(new_state)
 	new_state.enter()
+
+func _on_transition_requested(new_state_name: String, requesting_state: State) -> void:
+	transition_state(requesting_state, new_state_name)
 
 func set_current_state(new_state: State) -> void:
 	var current_state_name: String = current_state.name.to_lower()

@@ -253,6 +253,7 @@ func _ready() -> void:
 	attack_area_collision_layer = attack_area.collision_layer
 	
 	is_grounded = is_on_floor()
+	connect_state_signals()
 	
 	# Activate state machine
 	state_machine.start_state_machine()
@@ -290,12 +291,48 @@ func connect_all_signals() -> void:
 	connect_signal(animation_player.animation_finished, on_animation_finished)
 	#connect_signal(animation_player.frame_changed, _on_frame_changed)
 
+func connect_state_signals() -> void:
+	for state in state_machine.states.values():
+		connect_signal(state.animation_requested, _on_state_animation_requested)
+		connect_signal(state.animation_backwards_requested, _on_state_animation_backwards_requested)
+		connect_signal(state.velocity_requested, _on_state_velocity_requested)
+		connect_signal(state.velocity_delta_requested, _on_state_velocity_delta_requested)
+		connect_signal(state.forward_direction_requested, _on_state_forward_direction_requested)
+		connect_signal(state.gravity_requested, _on_state_gravity_requested)
+		connect_signal(state.attack_area_requested, _on_state_attack_area_requested)
+		if state is HurtState:
+			connect_signal(state.damage_received, _on_state_damage_received)
+
 func disconnect_all_signals() -> void:
 	## Disconnects all signals of this classs. Typically used upon exiting the scene tree
 	#disconnect_signal(wall_cast.body_entered, on_sensor_body_entered)
 	#disconnect_signal(wall_cast.body_exited, on_sensor_body_exited)
 	disconnect_signal(animation_player.animation_finished, on_animation_finished)
 	#disconnect_signal(animation_player.frame_changed, _on_frame_changed)
+
+func _on_state_animation_requested(animation_name: String) -> void:
+	set_animation(animation_name)
+
+func _on_state_animation_backwards_requested(animation_name: String) -> void:
+	animation_player.play_backwards(animation_name)
+
+func _on_state_velocity_requested(new_velocity: Vector2) -> void:
+	velocity = new_velocity
+
+func _on_state_velocity_delta_requested(delta_velocity: Vector2) -> void:
+	velocity += delta_velocity
+
+func _on_state_forward_direction_requested(direction: int) -> void:
+	set_forward_direction_h(direction)
+
+func _on_state_gravity_requested(delta: float) -> void:
+	apply_gravity(delta)
+
+func _on_state_attack_area_requested() -> void:
+	apply_attack_area()
+
+func _on_state_damage_received(attacker: Ninja, attack_node: ComboNode) -> void:
+	apply_incoming_damage(attacker, attack_node)
 
 ## Returns if the signal needed to be connected
 func connect_signal(signal_instance: Signal, callable: Callable) -> bool:

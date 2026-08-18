@@ -4,7 +4,7 @@ class_name LandState extends State
 
 func enter() -> void:
 	super.enter()
-	ninja_owner.animation_player.play("land")
+	set_animation("land")
 	
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)

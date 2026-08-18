@@ -7,7 +7,7 @@ func enter() -> void:
 		await ninja_owner.ready
 		
 	if abs(ninja_owner.velocity.x) > 0:
-		ninja_owner.animation_player.play_backwards("walk_windup")
+		animation_backwards_requested.emit("walk_windup")
 	else:
 		set_animation("idle")
 	

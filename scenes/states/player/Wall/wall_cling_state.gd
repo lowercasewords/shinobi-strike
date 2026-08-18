@@ -14,8 +14,7 @@ func enter():
 	
 	# Orient player away from wall
 	update_forward_direction_h(-wall_direction)
-	ninja_owner.velocity.x = 0
-	ninja_owner.velocity.y /= 2
+	velocity_requested.emit(Vector2(0, ninja_owner.velocity.y / 2))
 
 func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
@@ -25,7 +24,7 @@ func physics_update(_delta: float) -> void:
 	var wall_direction: int = get_wall_direction()
 	
 	# Maintain cling position
-	ninja_owner.velocity.y = 0
+	velocity_requested.emit(Vector2(ninja_owner.velocity.x, 0))
 	
 	# Check for exit conditions
 	if check_wall_exit():

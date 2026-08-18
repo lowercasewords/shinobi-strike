@@ -20,7 +20,7 @@ func windup_finsh() -> void:
 	if ninja_owner.get_ninja_grounded():
 		ninja_owner.mario_jump_timer.start()
 		set_animation('jump')
-		ninja_owner.velocity.y = DEFAULT_JUMP_THURST
+		velocity_delta_requested.emit(Vector2(0, DEFAULT_JUMP_THURST - ninja_owner.velocity.y))
 
 func physics_update(delta: float) -> void:
 	super.physics_update(delta)
