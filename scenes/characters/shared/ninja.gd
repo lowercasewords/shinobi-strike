@@ -8,7 +8,7 @@ const MAX_ATTACK_INPUT_BUFFER_SIZE: int = 10
 const STRIKE_DISTANCE_H: float = 200
 
 ## When the player is landing on the ground, this dust is spawned on the ground for visual feedback
-const DUST_EFFECT_SCENE: PackedScene = preload("res://scenes/entity/dust_effect.tscn")
+const DUST_EFFECT_SCENE: PackedScene = preload("res://scenes/systems/effects/dust_effect.tscn")
 
 ## Many animations can be different depending on how "intact" the enemy's body is,
 ## For example, if enemy is fully intact it will play "idle" animation, but if missing 

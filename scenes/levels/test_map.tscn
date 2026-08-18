@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://bj2u3rpy8wy7q"]
 
-[ext_resource type="PackedScene" uid="uid://c6g6agxbnf61l" path="res://scenes/entity/player/NinjaPlayer.tscn" id="1_d141s"]
+[ext_resource type="PackedScene" uid="uid://c6g6agxbnf61l" path="res://scenes/characters/player/NinjaPlayer.tscn" id="1_d141s"]
 [ext_resource type="Texture2D" uid="uid://b3lh63j2chett" path="res://assets/sprites/level/test_tile.png" id="1_s11cq"]
 [ext_resource type="PackedScene" uid="uid://bxcoasukg5wwo" path="res://scenes/levels/test_wall_bg.tscn" id="3_rp362"]
-[ext_resource type="PackedScene" uid="uid://c41uiw0ucssp2" path="res://scenes/entity/enemies/NinjaEnemy.tscn" id="4_ymjof"]
+[ext_resource type="PackedScene" uid="uid://c41uiw0ucssp2" path="res://scenes/characters/enemy/NinjaEnemy.tscn" id="4_ymjof"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s11cq"]
 texture = ExtResource("1_s11cq")

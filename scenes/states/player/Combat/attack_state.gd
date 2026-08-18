@@ -12,7 +12,7 @@ const DEFAULT_H_THURST: float = 50
 const DEFAULT_V_THURST: float = 1.0
 
 @export var sword_whoosh: AudioStreamPlayer2D
-@onready var _root_combo: ComboNode = preload("res://scenes/entity/player/states/Combat/Combo/combo_neutral.tres")
+@onready var _root_combo: ComboNode = preload("res://scenes/states/player/Combat/Combo/combo_neutral.tres")
 
 var current_attack_node: ComboNode
 

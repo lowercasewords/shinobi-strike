@@ -1,6 +1,6 @@
 class_name DismembermentMachine extends Node
 
-const DISMEMBERED_PIECE_SCENE = preload("res://scenes/entity/enemies/EradicatedPiece.tscn")
+const DISMEMBERED_PIECE_SCENE = preload("res://scenes/characters/enemy/EradicatedPiece.tscn")
 
 func get_default_linear_velocity() -> Vector2:
 	return Vector2(randi_range(50, 200), randi_range(-100, -250))

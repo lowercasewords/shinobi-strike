@@ -6,8 +6,8 @@ const eradication_zoom: float = 1.2
 const eradication_impact_zoom: float = eradication_zoom + 0.5
 
 const ERADICATIONS: Dictionary[String, Eradication] = {
-	"era_ground_na": preload("res://scenes/entity/player/states/Eradications/era_ground_na.tres"),
-	"era_ground_nl": preload("res://scenes/entity/player/states/Eradications/era_ground_nl.tres")
+	"era_ground_na": preload("res://scenes/states/player/Eradications/era_ground_na.tres"),
+	"era_ground_nl": preload("res://scenes/states/player/Eradications/era_ground_nl.tres")
 }
 
 var current_eradication: Eradication

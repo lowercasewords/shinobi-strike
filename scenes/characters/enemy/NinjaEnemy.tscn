@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://c41uiw0ucssp2"]
 
-[ext_resource type="Script" uid="uid://banmwrgyq0u7v" path="res://scenes/entity/player/ninja_enemy.gd" id="1_c85yp"]
-[ext_resource type="Script" uid="uid://dh3v818ece5uk" path="res://scenes/entity/states/hurt_state.gd" id="4_0gvwv"]
-[ext_resource type="Script" uid="uid://c3ycpeq6t3ykw" path="res://scenes/entity/state_machine.gd" id="4_u7cqt"]
-[ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/entity/player/states/Grounded/idle_state.gd" id="5_67vnk"]
-[ext_resource type="Script" uid="uid://db7uxw1awmy6m" path="res://scenes/entity/ninja_enemy_controller.gd" id="5_c85yp"]
-[ext_resource type="Script" uid="uid://ce0qj2dqnqg0l" path="res://scenes/entity/states/recover_state.gd" id="5_ii643"]
+[ext_resource type="Script" uid="uid://banmwrgyq0u7v" path="res://scenes/characters/enemy/ninja_enemy.gd" id="1_c85yp"]
+[ext_resource type="Script" uid="uid://dh3v818ece5uk" path="res://scenes/states/base/hurt_state.gd" id="4_0gvwv"]
+[ext_resource type="Script" uid="uid://c3ycpeq6t3ykw" path="res://scenes/states/base/state_machine.gd" id="4_u7cqt"]
+[ext_resource type="Script" uid="uid://bedamvreg4ic1" path="res://scenes/states/player/Grounded/idle_state.gd" id="5_67vnk"]
+[ext_resource type="Script" uid="uid://db7uxw1awmy6m" path="res://scenes/characters/enemy/ninja_enemy_controller.gd" id="5_c85yp"]
+[ext_resource type="Script" uid="uid://ce0qj2dqnqg0l" path="res://scenes/states/base/recover_state.gd" id="5_ii643"]
 [ext_resource type="AudioStream" uid="uid://bs13psisdbg0l" path="res://assets/sounds/footstep_1.wav" id="7_disna"]
 [ext_resource type="Texture2D" uid="uid://7pjs8324i46" path="res://assets/sprites/enemy/hurt_na.png" id="7_g2td2"]
 [ext_resource type="Texture2D" uid="uid://2elrntgai54q" path="res://assets/sprites/enemy/hurt.png" id="7_ii643"]
@@ -27,7 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://bw2nbk817xmkx" path="res://assets/sprites/enemy/lost_legs_na.png" id="22_ag82l"]
 [ext_resource type="Texture2D" uid="uid://cy56y1iyg1e5g" path="res://assets/sprites/enemy/blood_splatter.png" id="23_37gmy"]
 [ext_resource type="AudioStream" uid="uid://dd6a2o4aavc0u" path="res://assets/sounds/dismemberment/sword_slash.wav" id="24_2vebm"]
-[ext_resource type="Script" uid="uid://bjapab7wqgjmo" path="res://scenes/entity/enemies/dismemberment_machine.gd" id="28_exw1g"]
+[ext_resource type="Script" uid="uid://bjapab7wqgjmo" path="res://scenes/characters/enemy/dismemberment_machine.gd" id="28_exw1g"]
 
 [sub_resource type="Animation" id="Animation_exw1g"]
 length = 0.6666667

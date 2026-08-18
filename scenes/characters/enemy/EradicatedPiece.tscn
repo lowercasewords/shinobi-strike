@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://t6fe4jbnix6r"]
 
-[ext_resource type="Script" uid="uid://xvyqkyqb3bja" path="res://scenes/entity/enemies/eradicated_piece.gd" id="1_sybe2"]
+[ext_resource type="Script" uid="uid://xvyqkyqb3bja" path="res://scenes/characters/enemy/eradicated_piece.gd" id="1_sybe2"]
 [ext_resource type="Texture2D" uid="uid://b71l5eh1gnurl" path="res://assets/sprites/enemy/pieces.png" id="2_k02f2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sybe2"]
