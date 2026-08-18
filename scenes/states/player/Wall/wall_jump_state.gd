@@ -3,7 +3,6 @@ class_name WallJumpState extends WallBaseState
 
 func enter():
 	super.enter()
-	set_physics_wallcrawl()
 	
 	var wall_direction: int = get_wall_direction()
 	
@@ -17,37 +16,37 @@ func enter():
 	
 	# Set initial jump velocity
 	set_animation("wall_jump_windup_v")
-	ninja_owner.mario_jump_timer.start()
+	#ninja_owner.mario_jump_timer.start()
 	velocity_requested.emit(Vector2(
 		JUMP_SPEED_INITIAL.x * ninja_owner.forward_direction_h,
 		JUMP_SPEED_INITIAL.y
 	))
-
-func physics_update(_delta: float) -> void:
-	super.physics_update(_delta)
-	
-	var input_x: float = ninja_owner.ninja_controller.get_input_direction_h()
-	var input_jump: bool = ninja_owner.ninja_controller.get_input_pressed_jump()
-	var wall_direction: int = get_wall_direction()
-	
-	# Apply movement and gravity
-	allow_movement(_delta)
-	mario_jump_update(_delta, MARIO_JUMP_STRENGTH)
-	apply_gravity(_delta)
-	
-	# Check for exit conditions first
-	if check_wall_exit():
-		return
-	
-	# If we re-touch a wall while jumping
-	if wall_direction != 0:
-		# Re-enter cling state if jumping has ended
-		if ninja_owner.mario_jump_timer.is_stopped():
-			set_animation("wall_jump_cling_v")
-			velocity_requested.emit(Vector2(0, ninja_owner.velocity.y / 2))
-			switch_state(StateMachine.WALLCLING)
-
+#
+#func physics_update(_delta: float) -> void:
+	#super.physics_update(_delta)
+	#
+	#var input_x: float = ninja_owner.ninja_controller.get_input_direction_h()
+	#var input_jump: bool = ninja_owner.ninja_controller.get_input_pressed_jump()
+	#var wall_direction: int = get_wall_direction()
+	#
+	## Apply movement and gravity
+	#allow_movement(_delta)
+	#mario_jump_update(_delta, MARIO_JUMP_STRENGTH)
+	#apply_gravity(_delta)
+	#
+	## Check for exit conditions first
+	#if check_wall_exit():
+		#return
+	#
+	## If we re-touch a wall while jumping
+	#if wall_direction != 0:
+		## Re-enter cling state if jumping has ended
+		#if ninja_owner.mario_jump_timer.is_stopped():
+			#set_animation("wall_jump_cling_v")
+			#velocity_requested.emit(Vector2(0, ninja_owner.velocity.y / 2))
+			#switch_state(StateMachine.WALLCLING)
+#
 func on_owner_animation_finished(_animation_name: String) -> void:
-	if _animation_name == "wall_jump_windup_v":
-		# Continue with the jump
-		pass
+	match _animation_name:
+		"wall_jump_windup_v":
+			switch_state(StateMachine.JUMP)

@@ -14,6 +14,10 @@ const JUMP_ACCELERATION: float = DEFAULT_AIRBONE_ACCELERATION/2
 const JUMP_FRICTION: float = DEFAULT_AIRBONE_FRICTION/3
 const MARIO_JUMP_STRENGTH: float = -4
 
+func enter():
+	super.enter()
+	set_physics_wallcrawl()
+	
 func set_physics_wallcrawl():
 	friction = WALL_FRICTION
 	acceleration = WALL_RUN_ACCELERATION

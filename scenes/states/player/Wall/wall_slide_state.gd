@@ -3,7 +3,6 @@ class_name WallSlideState extends WallBaseState
 
 func enter():
 	super.enter()
-	set_physics_wallcrawl()
 	set_animation("wall_slide_v")
 	
 	velocity_requested.emit(Vector2(ninja_owner.velocity.x, ninja_owner.velocity.y / 2))

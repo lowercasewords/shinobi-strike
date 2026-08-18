@@ -3,7 +3,6 @@ class_name WallClingState extends WallBaseState
 
 func enter():
 	super.enter()
-	set_physics_wallcrawl()
 	set_animation("wall_cling_v")
 	
 	var wall_direction: int = get_wall_direction()

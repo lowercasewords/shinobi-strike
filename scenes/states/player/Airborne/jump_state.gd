@@ -1,6 +1,5 @@
 class_name JumpState extends State
 
-#const MARIO_JUMP_TIME: float = 1
 const MARIO_JUMP_STRENGTH: float = -8
 
 func enter() -> void:
@@ -9,12 +8,16 @@ func enter() -> void:
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)
 	
-	if ninja_owner.state_machine.psnameprev == StateMachine.WALLCLING:
-		set_animation("wall_run_fall_v")
-	elif ninja_owner.get_ninja_grounded():
-		set_animation("jump_windup")
-	else:
-		windup_finsh()
+	match ninja_owner.state_machine.psnameprev:
+		StateMachine.WALLJUMP:
+			set_animation("wall_jump_v")
+		StateMachine.WALLCLING:
+			set_animation("wall_run_fall_v")
+		_:
+			if ninja_owner.get_ninja_grounded():
+				set_animation("jump_windup")
+			else:
+				windup_finsh()
 	
 func windup_finsh() -> void:
 	if ninja_owner.get_ninja_grounded():
