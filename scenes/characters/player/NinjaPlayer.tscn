@@ -28,7 +28,10 @@
 [ext_resource type="AudioStream" uid="uid://difyipfkv5sxl" path="res://assets/sounds/turn_1.wav" id="42_4ntn1"]
 [ext_resource type="Script" uid="uid://c3ycpeq6t3ykw" path="res://scenes/states/base/state_machine.gd" id="46_jlnkn"]
 [ext_resource type="Script" uid="uid://bt4sxdqgb50lo" path="res://scenes/states/player/Grounded/walk_state.gd" id="48_jlnkn"]
-[ext_resource type="Script" uid="uid://bycc8lffu2b80" path="res://scenes/states/player/wall_state.gd" id="48_q4eru"]
+[ext_resource type="Script" uid="uid://d2hf1s5g6k3a" path="res://scenes/states/player/Wall/wall_cling_state.gd" id="48_q4eru"]
+[ext_resource type="Script" uid="uid://e3ig2s7g7k4b" path="res://scenes/states/player/Wall/wall_slide_state.gd" id="48_q4erv"]
+[ext_resource type="Script" uid="uid://f4jh3t8h8k5c" path="res://scenes/states/player/Wall/wall_jump_state.gd" id="48_q4erw"]
+[ext_resource type="Script" uid="uid://g5ki4u9i9k6d" path="res://scenes/states/player/Wall/wall_run_state.gd" id="48_q4erx"]
 [ext_resource type="Script" uid="uid://bgyft4w7ld2h5" path="res://scenes/states/player/Combat/attack_state.gd" id="63_jlnkn"]
 [ext_resource type="Script" uid="uid://c5qiqtavmo8qg" path="res://scenes/characters/player/ninja_player_controller.gd" id="65_jlnkn"]
 [ext_resource type="AudioStream" uid="uid://d3yvlq5omvitt" path="res://assets/sounds/sword_wind_whoosh.wav" id="79_we34s"]
@@ -1813,13 +1816,21 @@ metadata/_custom_type_script = "uid://bqf4onwxnfx6u"
 stream = ExtResource("39_pysui")
 volume_db = -10.0
 
-[node name="WallState" type="Node2D" parent="StateMachine" unique_id=716599347]
+[node name="WallClingState" type="Node2D" parent="StateMachine" unique_id=716599347]
 script = ExtResource("48_q4eru")
-metadata/_custom_type_script = "uid://bycc8lffu2b80"
+metadata/_custom_type_script = "uid://d2hf1s5g6k3a"
 
-[node name="Timer" type="Timer" parent="StateMachine/WallState" unique_id=737249304]
-wait_time = 0.2
-one_shot = true
+[node name="WallSlideState" type="Node2D" parent="StateMachine" unique_id=716599348]
+script = ExtResource("48_q4erv")
+metadata/_custom_type_script = "uid://e3ig2s7g7k4b"
+
+[node name="WallJumpState" type="Node2D" parent="StateMachine" unique_id=716599349]
+script = ExtResource("48_q4erw")
+metadata/_custom_type_script = "uid://f4jh3t8h8k5c"
+
+[node name="WallRunState" type="Node2D" parent="StateMachine" unique_id=716599350]
+script = ExtResource("48_q4erx")
+metadata/_custom_type_script = "uid://g5ki4u9i9k6d"
 
 [node name="AttackState" type="Node2D" parent="StateMachine" unique_id=1764644332 node_paths=PackedStringArray("sword_whoosh")]
 script = ExtResource("63_jlnkn")

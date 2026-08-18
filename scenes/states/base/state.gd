@@ -135,13 +135,9 @@ func allow_movement(delta: float) -> float:
 	
 	return applied_force
 
-func check_wall_exit(wall_direction: float) -> String:
-	var _input_direction_h: float = ninja_owner.ninja_controller.get_input_direction_h()
-	if ninja_owner.just_grounded:
-		return StateMachine.LAND
-	elif wall_direction == 0:
-		return StateMachine.JUMP
-	return ""
+## Abstract function
+func check_wall_exit() -> bool:
+	return false
 
 # -------- 
 # -------- State Trigger Checks

@@ -17,7 +17,7 @@ func physics_update(_delta: float) -> void:
 	
 	
 	if wall_state_triggered():
-		switch_state(StateMachine.WALL)
+		switch_state(StateMachine.WALLCLING)
 	elif land_state_triggered():
 		switch_state(StateMachine.LAND)
 		

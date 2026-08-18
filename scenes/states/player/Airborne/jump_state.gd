@@ -9,7 +9,7 @@ func enter() -> void:
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)
 	
-	if ninja_owner.state_machine.psnameprev == StateMachine.WALL:
+	if ninja_owner.state_machine.psnameprev == StateMachine.WALLCLING:
 		set_animation("wall_run_fall_v")
 	elif ninja_owner.get_ninja_grounded():
 		set_animation("jump_windup")
@@ -30,7 +30,7 @@ func physics_update(delta: float) -> void:
 	apply_gravity(delta)
 	
 	if wall_state_triggered():
-		switch_state(StateMachine.WALL)
+		switch_state(StateMachine.WALLCLING)
 	elif land_state_triggered():
 		switch_state(StateMachine.LAND)
 		
