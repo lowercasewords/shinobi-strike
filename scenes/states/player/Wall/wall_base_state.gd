@@ -23,6 +23,13 @@ func set_physics_wallcrawl():
 	acceleration = WALL_RUN_ACCELERATION
 	max_speed = WALL_RUN_SPEED
 
+func physics_update(_delta: float) -> void:
+	super.physics_update(_delta)
+	var wall_direction: int = get_wall_direction()
+	# Check for exit conditions
+	if check_wall_exit():
+		return
+		
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.WALLCRAWL
 

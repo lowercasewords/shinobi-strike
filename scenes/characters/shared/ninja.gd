@@ -113,9 +113,15 @@ func apply_incoming_damage(_attacker: Ninja, _attack_node: ComboNode): pass
 ### ----------------------------
 ### ----------------------------
 
+## Get the reference to the current state node
+func get_state_current() -> State: return state_machine.state_current 
+
+## Get the reference to the previous state node
+func get_state_previous() -> State: return state_machine.state_previous
+
 ## Returns the current attack node information for combos
 func get_current_attack_node() -> ComboNode:
-	var attack_state: AttackState = state_machine.current_state as AttackState
+	var attack_state: AttackState = state_machine.state_current as AttackState
 	var applied_attack_info: ComboNode = null
 	if attack_state != null:
 		applied_attack_info = attack_state.current_attack_node as ComboNode
@@ -173,7 +179,7 @@ func get_attack_area_collision_mask() -> int: return attack_area_collision_mask
 
 
 func update_speed_scale(_delta):
-	var state_max_speed: float = abs(state_machine.current_state.get_max_speed())
+	var state_max_speed: float = abs(state_machine.state_current.get_max_speed())
 	var current_speed: Vector2 = abs(velocity)
 	var highest_speed_scale = 1 + max(current_speed.x / state_max_speed, current_speed.y / state_max_speed) / 2
 	#print(current_speed)
@@ -351,13 +357,13 @@ func disconnect_signal(signal_instance: Signal, callable: Callable) -> bool:
 func on_attack_registered(body: Node2D, applied_attack_info: ComboNode):
 	if body is Ninja:
 		var ninja: Ninja = (body as Ninja)
-		if ninja.state_machine.current_state != HurtState:
-			ninja.state_machine.current_state.switch_state(state_machine.HURT)
-			(ninja.state_machine.current_state as HurtState).apply_incoming_damage(self, applied_attack_info)
+		if ninja.state_machine.state_current != HurtState:
+			ninja.state_machine.state_current.switch_state(state_machine.HURT)
+			(ninja.state_machine.state_current as HurtState).apply_incoming_damage(self, applied_attack_info)
 
 func on_animation_finished(animation_name: String): 
-	if state_machine != null and state_machine.current_state != null and animation_player != null:
-		state_machine.current_state.on_owner_animation_finished(animation_name)
+	if state_machine != null and state_machine.state_current != null and animation_player != null:
+		state_machine.state_current.on_owner_animation_finished(animation_name)
 	
 func on_sensor_body_entered(_area):
 	just_entered_wallbg = true

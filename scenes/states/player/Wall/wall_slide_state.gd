@@ -22,10 +22,6 @@ func physics_update(_delta: float) -> void:
 	)
 	velocity_requested.emit(Vector2(ninja_owner.velocity.x, slide_velocity_y))
 	
-	# Check for exit conditions
-	if check_wall_exit():
-		return
-	
 	# Check for state transitions
 	if input_jump:
 		switch_state(StateMachine.WALLJUMP)

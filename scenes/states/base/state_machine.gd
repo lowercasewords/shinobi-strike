@@ -2,9 +2,9 @@ class_name StateMachine extends Node2D
 
 @export var initial_state: State
 
-var current_state: State = null
+var state_current: State = null
 ## The name of the previous state
-var psnameprev: String
+var state_previous: State = null
 
 const IDLE = "idlestate"
 const WALK = "walkstate"
@@ -20,7 +20,7 @@ const RECOVER = "recoverstate"
 const HURT = "hurtstate"
 
 ######
-#public state current_state;
+#public state state_current;
 # on update
 #-> input ->
 #switch state.run -> run()
@@ -49,20 +49,20 @@ func start_state_machine() -> void:
 	
 	if initial_state:
 		initial_state.enter()
-		current_state = initial_state
-		set_current_state(current_state)
+		state_current = initial_state
+		set_state_current(state_current)
 
 func process(delta: float) -> void:
-	if current_state:
-		current_state.update(delta)
+	if state_current:
+		state_current.update(delta)
 
 func physics_process(delta: float) -> void:
-	if current_state:
-		current_state.physics_update(delta)
+	if state_current:
+		state_current.physics_update(delta)
 
 func transition_state(state: State, new_state_name: String) -> void:
 	# Ignore if a state that isn't currently active tries to transition
-	if state != current_state:
+	if state != state_current:
 		return
 		
 	var new_state = states.get(new_state_name.to_lower())
@@ -71,19 +71,15 @@ func transition_state(state: State, new_state_name: String) -> void:
 		return
 		
 	# Clean up the old state, boot up the new one
-	if current_state:
-		current_state.exit()
+	if state_current:
+		state_current.exit()
 		
-	set_current_state(new_state)
+	set_state_current(new_state)
 	new_state.enter()
 
 func _on_transition_requested(new_state_name: String, requesting_state: State) -> void:
 	transition_state(requesting_state, new_state_name)
 
-func set_current_state(new_state: State) -> void:
-	var current_state_name: String = current_state.name.to_lower()
-	var new_state_name: String = new_state.name.to_lower()
-	
-	psnameprev = current_state_name
-	current_state = new_state
-	current_state.sname = new_state_name
+func set_state_current(new_state: State) -> void:
+	state_previous = state_current
+	state_current = new_state

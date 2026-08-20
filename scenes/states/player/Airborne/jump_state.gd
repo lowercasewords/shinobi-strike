@@ -7,18 +7,14 @@ func enter() -> void:
 	
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)
-	
-	match ninja_owner.state_machine.psnameprev:
-		StateMachine.WALLJUMP:
-			set_animation("wall_jump_v")
-		StateMachine.WALLCLING:
-			set_animation("wall_run_fall_v")
-		_:
-			if ninja_owner.get_ninja_grounded():
-				set_animation("jump_windup")
-			else:
-				windup_finsh()
-	
+
+	if ninja_owner.get_state_previous() is WallBaseState and not ninja_owner.get_state_current() is WallJumpState:
+		set_animation("jump_curl")
+	elif ninja_owner.get_ninja_grounded():
+		set_animation("jump_windup")
+	else:
+		windup_finsh()
+
 func windup_finsh() -> void:
 	if ninja_owner.get_ninja_grounded():
 		ninja_owner.mario_jump_timer.start()
@@ -36,7 +32,6 @@ func physics_update(delta: float) -> void:
 		switch_state(StateMachine.WALLCLING)
 	elif land_state_triggered():
 		switch_state(StateMachine.LAND)
-		
 
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.AIRBORNE

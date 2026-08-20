@@ -63,7 +63,7 @@ func physics_update(_delta: float) -> void: pass
 	
 func switch_state(state_name: String):
 	transition_requested.emit(state_name)
-
+	
 ## Defines the space this state is supposed to occupy
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.UNKNOWN

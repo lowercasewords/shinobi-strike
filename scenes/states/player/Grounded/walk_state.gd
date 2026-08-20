@@ -9,8 +9,8 @@ func enter() -> void:
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)
 	
-	var prev_state_name: String = ninja_owner.state_machine.psnameprev
-	if prev_state_name == StateMachine.TURN:
+	var prev_state_name: State = ninja_owner.state_machine.state_previous
+	if prev_state_name is TurnState:
 		start_walking()
 	else:
 		start_windup()

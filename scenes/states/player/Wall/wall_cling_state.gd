@@ -25,10 +25,6 @@ func physics_update(_delta: float) -> void:
 	# Maintain cling position
 	velocity_requested.emit(Vector2(ninja_owner.velocity.x, 0))
 	
-	# Check for exit conditions
-	if check_wall_exit():
-		return
-	
 	# Check for state transitions
 	if input_jump:
 		switch_state(StateMachine.WALLJUMP)
