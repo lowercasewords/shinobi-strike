@@ -5,7 +5,7 @@ const TURN_FRICTION = DEFAULT_GROUNDED_FRICTION*1.1
 
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
-func enter() -> void:
+func enter(...args: Array) -> void:
 	super.enter()
 	
 	# Changing walking get_input_direction_h() 

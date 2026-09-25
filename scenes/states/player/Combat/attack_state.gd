@@ -30,8 +30,9 @@ func attempt_eradication(ninja_enemy: NinjaEnemy) -> void:
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED
 	
-func enter() -> void:
-	super.enter()
+func enter(...args: Array) -> void:
+	super.enter(args)
+	
 	before_combo_velocity = abs(ninja_owner.velocity)
 	current_attack_node = _root_combo
 	var success: bool = attempt_next_attack()

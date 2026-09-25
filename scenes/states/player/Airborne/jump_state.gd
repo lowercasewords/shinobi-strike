@@ -2,7 +2,7 @@ class_name JumpState extends State
 
 const MARIO_JUMP_STRENGTH: float = -8
 
-func enter() -> void:
+func enter(...args: Array) -> void:
 	super.enter()
 	
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
@@ -26,6 +26,12 @@ func windup_finsh() -> void:
 		set_animation('jump')
 		velocity_delta_requested.emit(Vector2(0, DEFAULT_JUMP_THURST - ninja_owner.velocity.y))
 
+## Returns true regardless whether there's a valid target to perform an enemy step on because such 
+## enemy targed is checked and returned by the NinjaPlayer directly. This function just checks for inputs and positioning
+func enemy_step_state_triggered() -> NinjaEnemy:
+	var target = (owner as NinjaPlayer).get_enemy_step_target()
+	return target
+	
 func physics_update(delta: float) -> void:
 	super.physics_update(delta)
 	

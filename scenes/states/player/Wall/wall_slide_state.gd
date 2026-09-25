@@ -1,7 +1,7 @@
 ## State for sliding down a vertical wall
 class_name WallSlideState extends WallBaseState
 
-func enter():
+func enter(...args: Array):
 	super.enter()
 	set_animation("wall_slide_v")
 	

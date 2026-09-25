@@ -2,7 +2,7 @@ class_name LandState extends State
 
 @export var audio_stream: AudioStreamPlayer2D
 
-func enter() -> void:
+func enter(...args: Array) -> void:
 	super.enter()
 	set_animation("land")
 	

@@ -1,7 +1,7 @@
 ## State for clinging to a vertical wall with minimal movement
 class_name WallClingState extends WallBaseState
 
-func enter():
+func enter(...args: Array):
 	super.enter()
 	set_animation("wall_cling_v")
 	

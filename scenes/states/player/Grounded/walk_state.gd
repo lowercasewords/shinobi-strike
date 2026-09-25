@@ -4,7 +4,7 @@ class_name WalkState extends State
 var windup_movement = 100.0
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
-func enter() -> void:
+func enter(...args: Array) -> void:
 	super.enter()
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)

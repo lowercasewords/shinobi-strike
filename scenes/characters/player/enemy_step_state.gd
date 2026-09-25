@@ -10,7 +10,7 @@ func _ready():
 	self.add_child(jump_delay)
 	jump_delay.timeout.connect(_on_jump_delay_timeout)
 	
-func enter():
+func enter(...args: Array):
 	super.enter()
 	
 	var ninja_player: NinjaPlayer = (ninja_owner as NinjaPlayer)

@@ -1,6 +1,6 @@
 class_name IdleState extends State
 
-func enter() -> void:
+func enter(...args: Array) -> void:
 	super.enter()
 	# Play idle animation here if you have one
 	if not ninja_owner.is_node_ready():

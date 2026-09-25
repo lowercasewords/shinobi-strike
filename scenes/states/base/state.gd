@@ -46,7 +46,7 @@ func get_max_speed() -> float:
 	return max_speed
 
 ## Called upon by the state machine on _ready
-func enter(): 
+func enter(...args: Array): 
 	if get_state_space() == STATE_SPACE.GROUNDED:
 		set_physics_grounded()
 	elif get_state_space() == STATE_SPACE.AIRBORNE:
@@ -152,11 +152,6 @@ func check_wall_exit() -> bool:
 # -------- 
 # -------- State Trigger Checks
 # -------- 
-
-## Returns true regardless whether there's a valid target to perform an enemy step on because such 
-## enemy targed is checked and returned by the NinjaPlayer directly. This function just checks for inputs and positioning
-func enemy_step_state_triggered() -> bool:
-	return sname != StateMachine.ENEMYSTEP and ninja_owner is NinjaPlayer and ninja_owner.ninja_controller.get_input_pressed_jump() and not ninja_owner.is_grounded
 	
 func land_state_triggered() -> bool:
 	return ninja_owner.just_grounded and sname != StateMachine.LAND

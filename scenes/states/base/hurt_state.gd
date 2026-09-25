@@ -2,7 +2,7 @@ class_name HurtState extends State
 
 signal damage_received(attacker: Ninja, attack_node: ComboNode)
 
-func enter():
+func enter(...args: Array):
 	super.enter()
 
 func physics_update(_delta: float) -> void:
