@@ -18,6 +18,7 @@ const WALLRUN = "wallrunstate"
 const ATTACK = "attackstate"
 const RECOVER = "recoverstate"
 const HURT = "hurtstate"
+const ENEMYSTEP = "enemystepstate"
 
 ######
 #public state state_current;

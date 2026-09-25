@@ -167,6 +167,23 @@ func set_animation(animation: String):
 func get_attack_area_collision_layer() -> int: return attack_area_collision_layer
 func get_attack_area_collision_mask() -> int: return attack_area_collision_mask
 
+## Returns the closest body to the self
+func get_closest_body(bodies: Array[Node2D]) -> Node2D:
+	var closest_body: Node2D = null
+	var min_distance: float = INF
+	
+	for body in bodies:
+		# Skip self_body if needed
+		if body == self:
+			continue
+			
+		var dist = global_position.distance_to(body.global_position)
+		if dist < min_distance:
+			min_distance = dist
+			closest_body = body
+			
+	return closest_body
+
 ### ----------------------------
 ### ----------------------------
 ### ----------------------------
@@ -298,11 +315,12 @@ func connect_all_signals() -> void:
 	#connect_signal(animation_player.frame_changed, _on_frame_changed)
 
 func connect_state_signals() -> void:
-	for state in state_machine.states.values():
+	for state: State in state_machine.states.values():
 		connect_signal(state.animation_requested, _on_state_animation_requested)
 		connect_signal(state.animation_backwards_requested, _on_state_animation_backwards_requested)
 		connect_signal(state.velocity_requested, _on_state_velocity_requested)
 		connect_signal(state.velocity_delta_requested, _on_state_velocity_delta_requested)
+		connect_signal(state.global_position_requested, _on_state_global_position_requested)
 		connect_signal(state.forward_direction_requested, _on_state_forward_direction_requested)
 		connect_signal(state.gravity_requested, _on_state_gravity_requested)
 		connect_signal(state.attack_area_requested, _on_state_attack_area_requested)
@@ -327,6 +345,9 @@ func _on_state_velocity_requested(new_velocity: Vector2) -> void:
 
 func _on_state_velocity_delta_requested(delta_velocity: Vector2) -> void:
 	velocity += delta_velocity
+	
+func _on_state_global_position_requested(new_global_position: Vector2) -> void:
+	global_position = new_global_position
 
 func _on_state_forward_direction_requested(direction: int) -> void:
 	set_forward_direction_h(direction)

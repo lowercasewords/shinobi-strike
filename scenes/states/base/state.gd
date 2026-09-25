@@ -6,6 +6,7 @@ signal animation_requested(animation_name: String)
 signal animation_backwards_requested(animation_name: String)
 signal velocity_requested(new_velocity: Vector2)
 signal velocity_delta_requested(delta_velocity: Vector2)
+signal global_position_requested(new_global_position: Vector2)
 signal forward_direction_requested(direction: int)
 signal gravity_requested(delta: float)
 signal attack_area_requested
@@ -152,6 +153,11 @@ func check_wall_exit() -> bool:
 # -------- State Trigger Checks
 # -------- 
 
+## Returns true regardless whether there's a valid target to perform an enemy step on because such 
+## enemy targed is checked and returned by the NinjaPlayer directly. This function just checks for inputs and positioning
+func enemy_step_state_triggered() -> bool:
+	return sname != StateMachine.ENEMYSTEP and ninja_owner is NinjaPlayer and ninja_owner.ninja_controller.get_input_pressed_jump() and not ninja_owner.is_grounded
+	
 func land_state_triggered() -> bool:
 	return ninja_owner.just_grounded and sname != StateMachine.LAND
 

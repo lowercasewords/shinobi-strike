@@ -10,6 +10,7 @@ var _input_direction_h: float = 0.0
 var _input_direction_v: float = 0.0
 var _input_pressing_jump: bool = false
 var _input_pressed_jump: bool = false
+var _input_released_jump: bool = false
 var _input_pressed_light_attack: bool = false
 var _input_pressed_heavy_attack: bool = false
 
@@ -25,6 +26,9 @@ func get_input_pressing_jump() -> bool:
 func get_input_pressed_jump() -> bool: 
 	## Does this entity just input the jump button this tic?
 	return _input_pressed_jump
+func get_input_released_jump() -> bool: 
+	## Does this entity released the jump button this tic?
+	return _input_released_jump
 func get_input_pressed_light_attack() -> bool: 
 	## Did this entity just input the light attack this tic?
 	return _input_pressed_light_attack
@@ -39,6 +43,8 @@ func set_input_direction_v() -> void:
 func set_input_pressing_jump() -> void: 
 	raise_unimplemented()
 func set_input_pressed_jump() -> void: 
+	raise_unimplemented()
+func set_input_released_jump() -> void: 
 	raise_unimplemented()
 func set_input_pressed_light_attack() -> void: 
 	raise_unimplemented()
@@ -57,6 +63,7 @@ func process(_delta):
 	set_input_direction_v()
 	set_input_pressing_jump()
 	set_input_pressed_jump()
+	set_input_released_jump()
 	set_input_pressed_light_attack()
 	set_input_pressed_heavy_attack()
 	

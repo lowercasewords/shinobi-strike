@@ -11,7 +11,14 @@ const ERADICATIONS: Dictionary[String, Eradication] = {
 }
 
 var current_eradication: Eradication
+@export var enemy_step_area: Area2D
 
+## Returns closest enemy to perform an enemy step on, returns null if no enemies are found nearby
+func get_enemy_step_target() -> NinjaEnemy:
+	var ninja_enemies: Array[Node2D] = self.enemy_step_area.get_overlapping_bodies()
+	var closest_enemy: NinjaEnemy = ninja_enemies if ninja_enemies == null else (get_closest_body(ninja_enemies) as NinjaEnemy)
+	return closest_enemy 
+	
 func _process(delta):
 	super._process(delta)
 	
