@@ -2,6 +2,7 @@ class_name IdleState extends State
 
 func enter(args: Array) -> void:
 	super.enter(args)
+	print('idle ')
 	# Play idle animation here if you have one
 	if not ninja_owner.is_node_ready():
 		await ninja_owner.ready

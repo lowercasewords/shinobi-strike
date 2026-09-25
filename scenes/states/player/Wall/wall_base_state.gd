@@ -41,7 +41,7 @@ func check_wall_exit() -> bool:
 	if land_state_triggered():
 		switch_state(StateMachine.LAND)
 		switched = true
-	elif wall_direction == 0 and sname != StateMachine.WALLJUMP:
+	elif wall_direction == 0 and not same_state(StateMachine.WALLJUMP):
 		switch_state(StateMachine.JUMP)
 		switched = true
 	

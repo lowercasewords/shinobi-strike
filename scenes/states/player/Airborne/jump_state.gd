@@ -30,7 +30,13 @@ func windup_finsh() -> void:
 ## Returns true regardless whether there's a valid target to perform an enemy step on because such 
 ## enemy targed is checked and returned by the NinjaPlayer directly. This function just checks for inputs and positioning
 func enemy_step_state_triggered() -> NinjaEnemy:
-	var target = (owner as NinjaPlayer).get_enemy_step_target()
+	var target = null
+	
+	var using_enemy_step_already: bool = same_state(StateMachine.ENEMYSTEP)
+	var just_used_enemy_step_prior: bool = same_state((owner as NinjaPlayer).get_state_previous().get_name(), StateMachine.ENEMYSTEP)
+	if not using_enemy_step_already and not just_used_enemy_step_prior:
+		target = (owner as NinjaPlayer).get_enemy_step_target()
+	
 	return target
 	
 func physics_update(delta: float) -> void:

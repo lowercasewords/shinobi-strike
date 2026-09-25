@@ -35,8 +35,6 @@ enum STATE_SPACE {
 }
 @onready var ninja_owner: Ninja = owner
 
-## The name of the current state
-var sname: String
 ## The name for the current animations
 var max_speed: float = 0.0
 var friction: float = 0.0
@@ -68,6 +66,13 @@ func switch_state(state_name: String, args: Array = []):
 ## Defines the space this state is supposed to occupy
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.UNKNOWN
+	
+## Returns true if the name of this state is the same as the name of the other state. 
+## Optionally, can compare two arbitrary states instead
+func same_state(other_state_name: String, optional_state: String = "") -> bool: 
+	if optional_state != null:
+		return optional_state.to_lower() == other_state_name.to_lower()
+	return self.get_name().to_lower() == other_state_name.to_lower()
 	
 func windup_finsh() -> void: pass
 ## Modified version for `_on_animation_finished`, supplying the animation name of the state owner automatically
@@ -154,7 +159,7 @@ func check_wall_exit() -> bool:
 # -------- 
 	
 func land_state_triggered() -> bool:
-	return ninja_owner.just_grounded and sname != StateMachine.LAND
+	return ninja_owner.just_grounded and not same_state(StateMachine.LAND)
 
 func attack_triggered() -> bool:
 	var input_buffer = ninja_owner.ninja_controller.attack_input_buffer
@@ -164,21 +169,21 @@ func attack_triggered() -> bool:
 	return valid_attack_is_next
 
 func idle_state_triggered() -> bool:
-	return ninja_owner.ninja_controller.get_input_direction_h() == 0 and sname != StateMachine.IDLE
+	return ninja_owner.ninja_controller.get_input_direction_h() == 0 and not same_state(StateMachine.IDLE)
 
 func jump_state_triggered() -> bool:
 	## Is jump state triggered this tic?
-	var is_jumping: bool = ninja_owner.ninja_controller.get_input_pressing_jump() and sname != StateMachine.JUMP
+	var is_jumping: bool = ninja_owner.ninja_controller.get_input_pressing_jump() and not same_state(StateMachine.JUMP)
 	return is_jumping
 
 func walk_state_triggered() -> bool:
-	return ninja_owner.ninja_controller.get_input_direction_h() != 0 and sname != StateMachine.WALK
+	return ninja_owner.ninja_controller.get_input_direction_h() != 0 and not same_state(StateMachine.WALK)
 	
 func turn_state_triggered() -> bool:
 	## Is turn state triggered this tic?
 	var has_switched_movement_direction : bool = ninja_owner.just_changed_directions
 	var fast_enough: bool = abs(ninja_owner.velocity.x) > TURN_SPEED_THRESHOLD 
-	var not_turning_already: bool = sname != StateMachine.TURN
+	var not_turning_already: bool = not same_state(StateMachine.TURN)
 	
 	return has_switched_movement_direction and fast_enough and not_turning_already
 
