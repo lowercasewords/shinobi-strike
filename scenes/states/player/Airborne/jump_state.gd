@@ -31,11 +31,13 @@ func windup_finsh() -> void:
 ## enemy targed is checked and returned by the NinjaPlayer directly. This function just checks for inputs and positioning
 func enemy_step_state_triggered() -> NinjaEnemy:
 	var target = null
-	
+	var player_owner = (owner as NinjaPlayer)
 	var using_enemy_step_already: bool = same_state(StateMachine.ENEMYSTEP)
-	var just_used_enemy_step_prior: bool = same_state((owner as NinjaPlayer).get_state_previous().get_name(), StateMachine.ENEMYSTEP)
-	if not using_enemy_step_already and not just_used_enemy_step_prior:
-		target = (owner as NinjaPlayer).get_enemy_step_target()
+	#var just_used_enemy_step_prior: bool = same_state(player_owner.get_state_previous().get_name(), StateMachine.ENEMYSTEP)
+	var just_pressed_jump: bool = player_owner.ninja_controller.get_input_pressed_jump()
+	
+	if not using_enemy_step_already and just_pressed_jump:
+		target = player_owner.get_enemy_step_target()
 	
 	return target
 	
