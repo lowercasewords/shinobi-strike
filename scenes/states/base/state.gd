@@ -1,7 +1,7 @@
 ## Each State acts as a simple, self-contained "Brain" for the ninja_owner (such as player).
 class_name State extends Node2D
 
-signal transition_requested(state_name: String)
+signal transition_requested(new_state_info: NewStateInfo)
 signal animation_requested(animation_name: String)
 signal animation_backwards_requested(animation_name: String)
 signal velocity_requested(new_velocity: Vector2)
@@ -46,7 +46,7 @@ func get_max_speed() -> float:
 	return max_speed
 
 ## Called upon by the state machine on _ready
-func enter(...args: Array): 
+func enter(args: Array): 
 	if get_state_space() == STATE_SPACE.GROUNDED:
 		set_physics_grounded()
 	elif get_state_space() == STATE_SPACE.AIRBORNE:
@@ -62,8 +62,8 @@ func update(_delta: float): pass
 func physics_update(_delta: float) -> void: pass
 	#ninja_owner.animation_player.speed_scale = 1
 	
-func switch_state(state_name: String):
-	transition_requested.emit(state_name)
+func switch_state(state_name: String, args: Array = []):
+	transition_requested.emit(NewStateInfo.new(state_name, args))
 	
 ## Defines the space this state is supposed to occupy
 func get_state_space() -> STATE_SPACE:

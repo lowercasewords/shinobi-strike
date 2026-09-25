@@ -2,8 +2,8 @@ class_name LandState extends State
 
 @export var audio_stream: AudioStreamPlayer2D
 
-func enter(...args: Array) -> void:
-	super.enter()
+func enter(args: Array) -> void:
+	super.enter(args)
 	set_animation("land")
 	
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())

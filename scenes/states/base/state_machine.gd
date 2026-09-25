@@ -49,7 +49,7 @@ func start_state_machine() -> void:
 		initial_state = get_children()[0]
 	
 	if initial_state:
-		initial_state.enter()
+		initial_state.enter([])
 		state_current = initial_state
 		set_state_current(state_current)
 
@@ -61,11 +61,14 @@ func physics_process(delta: float) -> void:
 	if state_current:
 		state_current.physics_update(delta)
 
-func transition_state(state: State, new_state_name: String) -> void:
+func transition_state(state: State, new_state_info: NewStateInfo) -> void:
 	# Ignore if a state that isn't currently active tries to transition
 	if state != state_current:
 		return
-		
+	
+	var new_state_name: String = new_state_info.get_new_state_name()
+	var new_state_args: Array = new_state_info.get_new_args()
+	
 	var new_state = states.get(new_state_name.to_lower())
 	if not new_state:
 		push_warning("State not found: ", new_state_name)
@@ -76,10 +79,10 @@ func transition_state(state: State, new_state_name: String) -> void:
 		state_current.exit()
 		
 	set_state_current(new_state)
-	new_state.enter()
+	new_state.enter(new_state_args)
 
-func _on_transition_requested(new_state_name: String, requesting_state: State) -> void:
-	transition_state(requesting_state, new_state_name)
+func _on_transition_requested(new_state_info: NewStateInfo, requesting_state: State) -> void:
+	transition_state(requesting_state, new_state_info)
 
 func set_state_current(new_state: State) -> void:
 	state_previous = state_current

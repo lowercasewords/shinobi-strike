@@ -2,8 +2,8 @@ class_name FallState extends State
 
 const VERTICAL_FALL_SPEED_THRESHOLD: float = 5.0
 
-func enter(...args: Array):
-	super.enter()
+func enter(args: Array):
+	super.enter(args)
 	
 	
 	#else:

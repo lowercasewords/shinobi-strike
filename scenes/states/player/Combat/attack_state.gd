@@ -30,7 +30,7 @@ func attempt_eradication(ninja_enemy: NinjaEnemy) -> void:
 func get_state_space() -> STATE_SPACE:
 	return STATE_SPACE.GROUNDED
 	
-func enter(...args: Array) -> void:
+func enter(args: Array) -> void:
 	super.enter(args)
 	
 	before_combo_velocity = abs(ninja_owner.velocity)

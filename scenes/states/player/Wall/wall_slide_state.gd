@@ -1,8 +1,8 @@
 ## State for sliding down a vertical wall
 class_name WallSlideState extends WallBaseState
 
-func enter(...args: Array):
-	super.enter()
+func enter(args: Array):
+	super.enter(args)
 	set_animation("wall_slide_v")
 	
 	velocity_requested.emit(Vector2(ninja_owner.velocity.x, ninja_owner.velocity.y / 2))

@@ -1,8 +1,8 @@
 ## State for jumping off a vertical wall with momentum
 class_name WallJumpState extends WallBaseState
 
-func enter(...args: Array):
-	super.enter()
+func enter(args: Array):
+	super.enter(args)
 	
 	var wall_direction: int = get_wall_direction()
 	

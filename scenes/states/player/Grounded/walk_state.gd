@@ -4,8 +4,8 @@ class_name WalkState extends State
 var windup_movement = 100.0
 @onready var audio_stream: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
-func enter(...args: Array) -> void:
-	super.enter()
+func enter(args: Array) -> void:
+	super.enter(args)
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)
 	
@@ -52,10 +52,6 @@ func physics_update(_delta: float) -> void:
 		#var new_state: String = get_ninja_grounded_transitions()
 		#if new_state == StateMachine.IDLE:
 			#
-
-func switch_state(state_name: String):
-	#ninja_owner.animation_player.speed_scale = 1.0
-	super.switch_state(state_name)
 
 func start_walking() -> void:
 	set_animation("walk")

@@ -1,8 +1,8 @@
 ## State for running upward along a vertical wall
 class_name WallRunState extends WallBaseState
 
-func enter(...args: Array):
-	super.enter()
+func enter(args: Array):
+	super.enter(args)
 	set_physics_wallcrawl()
 	set_animation("wall_run_v")
 	

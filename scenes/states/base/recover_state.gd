@@ -1,7 +1,7 @@
 class_name RecoverState extends State
 
-func enter(...args: Array):
-	super.enter()
+func enter(args: Array):
+	super.enter(args)
 	switch_state(StateMachine.IDLE)
 
 func exit():

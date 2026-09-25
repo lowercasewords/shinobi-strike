@@ -2,15 +2,16 @@ class_name JumpState extends State
 
 const MARIO_JUMP_STRENGTH: float = -8
 
-func enter(...args: Array) -> void:
-	super.enter()
+func enter(args: Array) -> void:
+	super.enter(args)
 	
 	var input_direction: int = int(ninja_owner.ninja_controller.get_input_direction_h())
 	var _new_direction: int = update_forward_direction_h(input_direction)
-
 	
 	if ninja_owner.get_state_previous() is WallBaseState and not ninja_owner.get_state_current() is WallJumpState:
 		set_animation("jump_curl")
+	elif ninja_owner.get_state_previous() is EnemyStepState:
+		set_animation("jump_windup")
 	elif ninja_owner.is_grounded:
 		set_animation("jump_windup")
 	else:
